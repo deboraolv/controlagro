@@ -95,6 +95,15 @@
     .badge-alimento { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
     .badge-lote { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
     .badge-venda { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .badge-entrada { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .badge-saida { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+    .badge-categoria { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+    .mini-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; padding: 18px 20px; border-bottom: 1px solid var(--border); }
+    .mini-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+    .mini-card span { display: block; color: var(--text-muted); font-size: 0.72rem; text-transform: uppercase; margin-bottom: 6px; }
+    .mini-card strong { font-size: 1.15rem; }
+    .modal.modal-wide { max-width: 760px; max-height: 90vh; overflow-y: auto; }
+    .helper-text { color: var(--text-muted); font-size: 0.75rem; line-height: 1.4; }
 
     /* BOTÕES DE AÇÃO */
     .btn-action { background: transparent; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 4px; transition: 0.2s; }
@@ -127,10 +136,13 @@
           <span>📊</span> <span class="nav-text">Dashboard Geral</span>
         </div>
         <div class="nav-link" onclick="trocarAba('aba-rebanho', this)">
-          <span>🐂</span> <span class="nav-text">Controle Bovino</span>
+          <span>🐂</span> <span class="nav-text">Caderno do Rebanho</span>
         </div>
         <div class="nav-link" onclick="trocarAba('aba-financeiro', this)">
           <span>💸</span> <span class="nav-text">Insumos e Despesas</span>
+        </div>
+        <div class="nav-link" onclick="trocarAba('aba-estoque', this)">
+          <span>🌾</span> <span class="nav-text">Estoque de Alimentos</span>
         </div>
         <div class="nav-link" onclick="trocarAba('aba-vendas', this)">
           <span>💰</span> <span class="nav-text">Vendas de Gado</span>
@@ -151,7 +163,8 @@
       </div>
       <div class="header-actions">
         <button class="btn btn-primary" onclick="abrirModalCadastroGado()">+ Cadastrar Animal</button>
-        <button class="btn btn-secondary" onclick="abrirModalCadastroOutros()">+ Lançar Gasto/Insumo</button>
+        <button class="btn btn-secondary" onclick="abrirModalCadastroOutros()">+ Lançar Despesa</button>
+        <button class="btn btn-secondary" onclick="abrirModalEstoque()">+ Movimentar Estoque</button>
         <button class="btn btn-success" onclick="abrirModalCadastroVenda()">+ Registrar Venda</button>
       </div>
     </header>
@@ -169,9 +182,9 @@
         <div class="kpi-sub" id="cardArrobaMedia">Carcaça: 0 @ | Vivo: 0 @</div>
       </div>
       <div class="kpi-card">
-        <h3>Estoque de Alimento (Mês)</h3>
+        <h3>Estoque Atual de Alimentos</h3>
         <div class="kpi-value" id="cardRacao">0 kg</div>
-        <div class="kpi-sub">Silagem e Ração</div>
+        <div class="kpi-sub">Entradas − Saídas/Consumo</div>
       </div>
       <div class="kpi-card" style="border-left-color: var(--danger);">
         <h3>Gastos Totais (Mês)</h3>
@@ -206,7 +219,8 @@
               <th>Brinco / ID</th>
               <th>Lote</th>
               <th>Categoria</th>
-              <th>Peso (kg)</th>
+              <th>Peso Entrada</th>
+              <th>Peso Atual</th>
               <th>Carcaça (15kg = 1@)</th>
               <th>Peso Vivo (30kg = 1@)</th>
               <th>Data Entrada</th>
@@ -232,7 +246,7 @@
         <table>
           <thead>
             <tr>
-              <th>Tipo</th>
+              <th>Categoria da Despesa</th>
               <th>Descrição</th>
               <th>Quantidade</th>
               <th>Valor (R$)</th>
@@ -245,7 +259,38 @@
       </div>
     </div>
 
-    <!-- ABA 4: VENDAS DE GADO -->
+    <!-- ABA 4: ESTOQUE DE ALIMENTOS -->
+    <div id="aba-estoque" class="content-section">
+      <div class="table-box">
+        <div class="table-header">
+          <h3>Movimentações de Estoque de Ração / Silagem</h3>
+          <div class="search-group">
+            <button class="btn btn-primary" onclick="abrirModalEstoque()">+ Nova Movimentação</button>
+            <input type="text" class="search-input" placeholder="Buscar produto..." onkeyup="filtrarTabela('tabelaEstoque', this.value)">
+          </div>
+        </div>
+        <div class="mini-summary">
+          <div class="mini-card"><span>Entradas no mês</span><strong id="estoqueEntradasMes">0 kg</strong></div>
+          <div class="mini-card"><span>Saídas / consumo no mês</span><strong id="estoqueSaidasMes">0 kg</strong></div>
+          <div class="mini-card"><span>Saldo atual</span><strong id="estoqueSaldoAtual">0 kg</strong></div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Movimento</th>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Valor da Compra</th>
+              <th>Data</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaEstoque"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ABA 5: VENDAS DE GADO -->
     <div id="aba-vendas" class="content-section">
       <div class="table-box">
         <div class="table-header">
@@ -279,8 +324,10 @@
         <input type="text" id="numBrinco" placeholder="Nº Brinco / ID (ex: 101)" required>
         <input type="text" id="loteGado" placeholder="Lote / Setor (ex: Lote 01, Pasto 2)" required>
         <input type="text" id="categoriaGado" placeholder="Categoria (ex: Vaca, Garrote, Novilha)" required>
+        <input type="number" id="pesoEntradaGado" placeholder="Peso de Entrada (kg)" step="0.1" required>
         <input type="number" id="pesoGado" placeholder="Peso Atual (kg)" step="0.1" required>
         <input type="date" id="dataEntrada" required>
+        <div class="helper-text">Ao cadastrar um novo animal, o peso de entrada também será registrado como a primeira pesagem do histórico.</div>
         <div style="display: flex; gap: 10px; margin-top: 10px;">
           <button type="submit" class="btn btn-primary" style="flex:1;">Salvar Animal</button>
           <button type="button" class="btn btn-secondary" onclick="fecharModal('modalGado')">Cancelar</button>
@@ -292,16 +339,20 @@
   <!-- MODAL OUTROS -->
   <div class="modal-overlay" id="modalOutros">
     <div class="modal">
-      <h2 id="modalOutrosTitulo">💸 Lançar Insumo ou Despesa</h2>
+      <h2 id="modalOutrosTitulo">💸 Lançar Despesa</h2>
       <form id="formOutros" class="form-group">
         <input type="hidden" id="editOutroId">
-        <select id="tipoOutros" required>
-          <option value="">Selecione o tipo...</option>
-          <option value="alimento">Estoque de Alimento</option>
-          <option value="gasto">Despesa / Gasto Geral</option>
+        <select id="categoriaOutros" required>
+          <option value="">Selecione a categoria da despesa...</option>
+          <option value="Alimentação">Alimentação / Compra de ração e silagem</option>
+          <option value="Medicamentos">Medicamentos</option>
+          <option value="Combustível">Combustível</option>
+          <option value="Mão de obra">Mão de obra</option>
+          <option value="Manutenção">Manutenção</option>
+          <option value="Outros">Outros</option>
         </select>
-        <input type="text" id="descOutros" placeholder="Descrição (ex: Ração Concentrada, Sal)" required>
-        <input type="number" id="qtdOutros" placeholder="Quantidade (kg ou un)" step="0.01" required>
+        <input type="text" id="descOutros" placeholder="Descrição da despesa" required>
+        <input type="number" id="qtdOutros" placeholder="Quantidade (kg, litros ou un) - opcional" step="0.01">
         <input type="number" id="valorOutros" placeholder="Valor Total (R$)" step="0.01" required>
         <input type="date" id="dataOutros" required>
         <div style="display: flex; gap: 10px; margin-top: 10px;">
@@ -309,6 +360,62 @@
           <button type="button" class="btn btn-secondary" onclick="fecharModal('modalOutros')">Cancelar</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL ESTOQUE -->
+  <div class="modal-overlay" id="modalEstoque">
+    <div class="modal">
+      <h2>🌾 Movimentar Estoque</h2>
+      <form id="formEstoque" class="form-group">
+        <select id="tipoMovEstoque" required>
+          <option value="entrada">Entrada de estoque / Compra</option>
+          <option value="saida">Saída / Consumo diário</option>
+        </select>
+        <select id="produtoEstoque" required>
+          <option value="">Selecione o produto...</option>
+          <option value="Ração">Ração</option>
+          <option value="Silagem">Silagem</option>
+          <option value="Sal mineral">Sal mineral</option>
+          <option value="Suplemento">Suplemento</option>
+          <option value="Outro alimento">Outro alimento</option>
+        </select>
+        <input type="number" id="qtdEstoque" placeholder="Quantidade (kg)" step="0.01" min="0.01" required>
+        <input type="number" id="valorEstoque" placeholder="Valor da compra (R$) - opcional" step="0.01" min="0">
+        <input type="date" id="dataEstoque" required>
+        <label style="display:flex; gap:8px; align-items:center; font-size:0.82rem; color:var(--text-muted);">
+          <input type="checkbox" id="registrarDespesaEstoque" checked> Registrar compra também como despesa de Alimentação
+        </label>
+        <div class="helper-text">Para saídas/consumo, o valor da compra e a opção de despesa são ignorados.</div>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <button type="submit" class="btn btn-primary" style="flex:1;">Salvar Movimentação</button>
+          <button type="button" class="btn btn-secondary" onclick="fecharModal('modalEstoque')">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL HISTÓRICO DE PESAGENS -->
+  <div class="modal-overlay" id="modalPesagens">
+    <div class="modal modal-wide">
+      <h2 id="modalPesagensTitulo">⚖️ Histórico de Pesagens</h2>
+      <form id="formPesagem" class="form-group" style="margin-bottom:20px;">
+        <input type="hidden" id="pesagemAnimalId">
+        <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;">
+          <input type="date" id="dataPesagem" required>
+          <input type="number" id="pesoPesagem" placeholder="Peso (kg)" step="0.1" min="0.1" required>
+          <button type="submit" class="btn btn-primary">+ Pesagem</button>
+        </div>
+      </form>
+      <div class="table-box" style="margin-bottom:0;">
+        <table>
+          <thead><tr><th>Data da Pesagem</th><th>Peso</th><th>Variação</th><th>Ações</th></tr></thead>
+          <tbody id="tabelaPesagens"></tbody>
+        </table>
+      </div>
+      <div style="display:flex; justify-content:flex-end; margin-top:15px;">
+        <button type="button" class="btn btn-secondary" onclick="fecharModal('modalPesagens')">Fechar</button>
+      </div>
     </div>
   </div>
 
@@ -351,7 +458,9 @@
 
     let gadoLista = [];
     let outrosLista = [];
+    let estoqueLista = [];
     let vendasLista = [];
+    let pesagensAtuais = [];
     let chartGado, chartFinanceiro;
 
     function toggleSidebar() {
@@ -394,6 +503,14 @@
         atualizarInterface();
       });
 
+    // ESCUTAR TEMPO REAL - ESTOQUE DE ALIMENTOS
+    db.collection('fazenda_sao_francisco').doc('estoque').collection('movimentacoes')
+      .onSnapshot(snapshot => {
+        estoqueLista = [];
+        snapshot.forEach(doc => estoqueLista.push({ id: doc.id, ...doc.data() }));
+        atualizarInterface();
+      });
+
     // ESCUTAR TEMPO REAL - VENDAS
     db.collection('fazenda_sao_francisco').doc('comercial').collection('vendas')
       .onSnapshot(snapshot => {
@@ -417,6 +534,8 @@
     function atualizarInterface() {
       atualizarTabelaGado();
       atualizarTabelaOutros();
+      atualizarTabelaEstoque();
+      atualizarResumoEstoque();
       atualizarTabelaVendas();
       atualizarCards();
       atualizarGraficos();
@@ -450,7 +569,9 @@
 
       const outrosFiltrados = obterOutrosFiltradosPorMes();
 
-      const totalRacao = outrosFiltrados.filter(d => d.tipo === 'alimento').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
+      const entradasEstoque = estoqueLista.filter(m => m.tipo === 'entrada').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
+      const saidasEstoque = estoqueLista.filter(m => m.tipo === 'saida').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
+      const totalRacao = entradasEstoque - saidasEstoque;
       const totalGastosEAlimentos = outrosFiltrados.reduce((acc, cur) => acc + Number(cur.valor || 0), 0);
 
       document.getElementById('cardGado').innerText = `${totalGado} cab.`;
@@ -477,11 +598,13 @@
           <td><strong style="color: var(--accent);">#${item.brinco}</strong></td>
           <td><span class="badge badge-lote">${item.lote || 'Geral'}</span></td>
           <td>${item.categoria}</td>
+          <td>${Number(item.pesoEntrada ?? item.peso ?? 0)} kg</td>
           <td>${peso} kg</td>
           <td>${arrobaCarc} @</td>
           <td>${arrobaVivo} @</td>
           <td>${item.dataEntrada}</td>
           <td>
+            <button class="btn-action btn-edit" onclick="abrirPesagens('${item.id}')">⚖️ Pesagens</button>
             <button class="btn-action btn-edit" onclick="editarAnimal('${item.id}')">✏️ Editar</button>
             <button class="btn-action btn-delete" onclick="excluirAnimal('${item.id}')">✕ Excluir</button>
           </td>
@@ -499,15 +622,52 @@
       outrosFiltrados.slice().reverse().forEach(item => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><span class="badge badge-${item.tipo}">${item.tipo}</span></td>
+          <td><span class="badge badge-categoria">${item.categoria || (item.tipo === 'alimento' ? 'Alimentação' : 'Outros')}</span></td>
           <td><strong>${item.descricao}</strong></td>
-          <td>${item.quantidade} ${item.tipo === 'alimento' ? 'kg' : 'un'}</td>
+          <td>${Number(item.quantidade || 0).toLocaleString('pt-BR')} ${item.unidade || 'un'}</td>
           <td>R$ ${Number(item.valor).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
           <td>${item.data}</td>
           <td>
             <button class="btn-action btn-edit" onclick="editarOutro('${item.id}')">✏️ Editar</button>
             <button class="btn-action btn-delete" onclick="excluirOutro('${item.id}')">✕ Excluir</button>
           </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function obterMovimentosEstoquePorMes() {
+      const mesSel = document.getElementById('filtroMes').value;
+      if (!mesSel) return estoqueLista;
+      return estoqueLista.filter(item => item.data && item.data.startsWith(mesSel));
+    }
+
+    function atualizarResumoEstoque() {
+      const movimentosMes = obterMovimentosEstoquePorMes();
+      const entradasMes = movimentosMes.filter(m => m.tipo === 'entrada').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
+      const saidasMes = movimentosMes.filter(m => m.tipo === 'saida').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
+      const entradasTotal = estoqueLista.filter(m => m.tipo === 'entrada').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
+      const saidasTotal = estoqueLista.filter(m => m.tipo === 'saida').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
+      const saldo = entradasTotal - saidasTotal;
+
+      document.getElementById('estoqueEntradasMes').innerText = `${entradasMes.toLocaleString('pt-BR')} kg`;
+      document.getElementById('estoqueSaidasMes').innerText = `${saidasMes.toLocaleString('pt-BR')} kg`;
+      document.getElementById('estoqueSaldoAtual').innerText = `${saldo.toLocaleString('pt-BR')} kg`;
+    }
+
+    function atualizarTabelaEstoque() {
+      const tbody = document.getElementById('tabelaEstoque');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      estoqueLista.slice().sort((a,b) => String(b.data || '').localeCompare(String(a.data || ''))).forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="badge badge-${item.tipo}">${item.tipo === 'entrada' ? 'Entrada' : 'Saída / Consumo'}</span></td>
+          <td><strong>${item.produto || '-'}</strong></td>
+          <td>${Number(item.quantidade || 0).toLocaleString('pt-BR')} kg</td>
+          <td>${Number(item.valor || 0) > 0 ? `R$ ${Number(item.valor).toLocaleString('pt-BR', {minimumFractionDigits: 2})}` : '-'}</td>
+          <td>${item.data || '-'}</td>
+          <td><button class="btn-action btn-delete" onclick="excluirMovimentoEstoque('${item.id}')">✕ Excluir</button></td>
         `;
         tbody.appendChild(tr);
       });
@@ -568,7 +728,7 @@
 
       const labels = outrosFiltrados.map(d => d.descricao);
       const valores = outrosFiltrados.map(d => d.valor);
-      const coresValores = outrosFiltrados.map(d => d.tipo === 'alimento' ? '#f59e0b' : '#ef4444');
+      const coresValores = outrosFiltrados.map(d => (d.categoria === 'Alimentação' || d.tipo === 'alimento') ? '#f59e0b' : '#ef4444');
 
       chartFinanceiro = new Chart(document.getElementById('chartFinanceiro'), {
         type: 'bar',
@@ -583,7 +743,7 @@
         },
         options: {
           plugins: {
-            title: { display: true, text: 'Custos e Insumos do Mês (Vermelho: Gastos | Amarelo: Alimentos)', color: '#f9fafb' },
+            title: { display: true, text: 'Despesas do Mês por Lançamento', color: '#f9fafb' },
             legend: { display: false }
           }
         }
@@ -608,6 +768,7 @@
       document.getElementById('numBrinco').value = animal.brinco;
       document.getElementById('loteGado').value = animal.lote || 'Geral';
       document.getElementById('categoriaGado').value = animal.categoria;
+      document.getElementById('pesoEntradaGado').value = animal.pesoEntrada ?? animal.peso;
       document.getElementById('pesoGado').value = animal.peso;
       document.getElementById('dataEntrada').value = animal.dataEntrada;
       abrirModal('modalGado');
@@ -615,7 +776,7 @@
 
     // MODAIS OUTROS
     function abrirModalCadastroOutros() {
-      document.getElementById('modalOutrosTitulo').innerText = "💸 Lançar Insumo ou Despesa";
+      document.getElementById('modalOutrosTitulo').innerText = "💸 Lançar Despesa";
       document.getElementById('editOutroId').value = "";
       document.getElementById('formOutros').reset();
       document.getElementById('dataOutros').value = new Date().toISOString().split('T')[0];
@@ -628,12 +789,55 @@
 
       document.getElementById('modalOutrosTitulo').innerText = "✏️ Editar Lançamento";
       document.getElementById('editOutroId').value = item.id;
-      document.getElementById('tipoOutros').value = item.tipo;
+      document.getElementById('categoriaOutros').value = item.categoria || (item.tipo === 'alimento' ? 'Alimentação' : 'Outros');
       document.getElementById('descOutros').value = item.descricao;
       document.getElementById('qtdOutros').value = item.quantidade;
       document.getElementById('valorOutros').value = item.valor;
       document.getElementById('dataOutros').value = item.data;
       abrirModal('modalOutros');
+    }
+
+    // MODAL ESTOQUE
+    function abrirModalEstoque() {
+      document.getElementById('formEstoque').reset();
+      document.getElementById('tipoMovEstoque').value = 'entrada';
+      document.getElementById('registrarDespesaEstoque').checked = true;
+      document.getElementById('dataEstoque').value = new Date().toISOString().split('T')[0];
+      abrirModal('modalEstoque');
+    }
+
+    // HISTÓRICO DE PESAGENS
+    async function abrirPesagens(animalId) {
+      const animal = gadoLista.find(a => a.id === animalId);
+      if (!animal) return;
+      document.getElementById('pesagemAnimalId').value = animalId;
+      document.getElementById('modalPesagensTitulo').innerText = `⚖️ Histórico de Pesagens - #${animal.brinco}`;
+      document.getElementById('dataPesagem').value = new Date().toISOString().split('T')[0];
+      document.getElementById('pesoPesagem').value = animal.peso || '';
+      await carregarHistoricoPesagens(animalId);
+      abrirModal('modalPesagens');
+    }
+
+    async function carregarHistoricoPesagens(animalId) {
+      const snapshot = await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').doc(animalId).collection('pesagens').get();
+      pesagensAtuais = [];
+      snapshot.forEach(doc => pesagensAtuais.push({ id: doc.id, ...doc.data() }));
+      pesagensAtuais.sort((a,b) => String(b.data || '').localeCompare(String(a.data || '')));
+
+      const tbody = document.getElementById('tabelaPesagens');
+      tbody.innerHTML = '';
+      pesagensAtuais.forEach((p, index) => {
+        const anterior = pesagensAtuais[index + 1];
+        const variacao = anterior ? Number(p.peso || 0) - Number(anterior.peso || 0) : null;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${p.data || '-'}</td>
+          <td><strong>${Number(p.peso || 0).toFixed(1)} kg</strong></td>
+          <td>${variacao === null ? '-' : `${variacao >= 0 ? '+' : ''}${variacao.toFixed(1)} kg`}</td>
+          <td><button class="btn-action btn-delete" onclick="excluirPesagem('${animalId}','${p.id}')">✕ Excluir</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
     // MODAIS VENDAS
@@ -664,10 +868,12 @@
     document.getElementById('formGado').addEventListener('submit', async (e) => {
       e.preventDefault();
       const id = document.getElementById('editGadoId').value;
+      const pesoEntrada = Number(document.getElementById('pesoEntradaGado').value);
       const dados = {
         brinco: document.getElementById('numBrinco').value,
         lote: document.getElementById('loteGado').value || 'Geral',
         categoria: document.getElementById('categoriaGado').value,
+        pesoEntrada: pesoEntrada,
         peso: Number(document.getElementById('pesoGado').value),
         dataEntrada: document.getElementById('dataEntrada').value
       };
@@ -676,7 +882,13 @@
         await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').doc(id).update(dados);
       } else {
         dados.criadoEm = firebase.firestore.FieldValue.serverTimestamp();
-        await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').add(dados);
+        const animalRef = await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').add(dados);
+        await animalRef.collection('pesagens').add({
+          data: dados.dataEntrada,
+          peso: pesoEntrada,
+          tipo: 'entrada',
+          criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        });
       }
       
       fecharModal('modalGado');
@@ -687,10 +899,13 @@
     document.getElementById('formOutros').addEventListener('submit', async (e) => {
       e.preventDefault();
       const id = document.getElementById('editOutroId').value;
+      const categoria = document.getElementById('categoriaOutros').value;
       const dados = {
-        tipo: document.getElementById('tipoOutros').value,
+        tipo: categoria === 'Alimentação' ? 'alimento' : 'gasto',
+        categoria: categoria,
         descricao: document.getElementById('descOutros').value,
-        quantidade: Number(document.getElementById('qtdOutros').value),
+        quantidade: Number(document.getElementById('qtdOutros').value || 0),
+        unidade: categoria === 'Alimentação' ? 'kg' : 'un',
         valor: Number(document.getElementById('valorOutros').value),
         data: document.getElementById('dataOutros').value
       };
@@ -704,6 +919,57 @@
 
       fecharModal('modalOutros');
       e.target.reset();
+    });
+
+    // FIREBASE - SALVAR MOVIMENTAÇÃO DE ESTOQUE
+    document.getElementById('formEstoque').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const tipo = document.getElementById('tipoMovEstoque').value;
+      const produto = document.getElementById('produtoEstoque').value;
+      const quantidade = Number(document.getElementById('qtdEstoque').value);
+      const valor = Number(document.getElementById('valorEstoque').value || 0);
+      const data = document.getElementById('dataEstoque').value;
+
+      const movimentoRef = await db.collection('fazenda_sao_francisco').doc('estoque').collection('movimentacoes').add({
+        tipo, produto, quantidade, valor: tipo === 'entrada' ? valor : 0, data,
+        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      if (tipo === 'entrada' && valor > 0 && document.getElementById('registrarDespesaEstoque').checked) {
+        const despesaRef = await db.collection('fazenda_sao_francisco').doc('financeiro').collection('lancamentos').add({
+          tipo: 'alimento',
+          categoria: 'Alimentação',
+          descricao: `Compra de ${produto}`,
+          quantidade,
+          unidade: 'kg',
+          valor,
+          data,
+          origemEstoqueId: movimentoRef.id,
+          criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        await movimentoRef.update({ financeiroId: despesaRef.id });
+      }
+
+      fecharModal('modalEstoque');
+      e.target.reset();
+    });
+
+    // FIREBASE - SALVAR NOVA PESAGEM
+    document.getElementById('formPesagem').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const animalId = document.getElementById('pesagemAnimalId').value;
+      const data = document.getElementById('dataPesagem').value;
+      const peso = Number(document.getElementById('pesoPesagem').value);
+      if (!animalId) return;
+
+      const animalRef = db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').doc(animalId);
+      await animalRef.collection('pesagens').add({
+        data, peso, tipo: 'pesagem',
+        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      await animalRef.update({ peso, ultimaPesagem: data });
+      await carregarHistoricoPesagens(animalId);
+      document.getElementById('pesoPesagem').value = '';
     });
 
     // FIREBASE - SALVAR VENDAS
@@ -730,6 +996,29 @@
       e.target.reset();
     });
 
+    async function excluirMovimentoEstoque(id) {
+      if (!confirm('Excluir esta movimentação de estoque?')) return;
+      const ref = db.collection('fazenda_sao_francisco').doc('estoque').collection('movimentacoes').doc(id);
+      const snap = await ref.get();
+      const dados = snap.exists ? snap.data() : null;
+      if (dados && dados.financeiroId) {
+        await db.collection('fazenda_sao_francisco').doc('financeiro').collection('lancamentos').doc(dados.financeiroId).delete();
+      }
+      await ref.delete();
+    }
+
+    async function excluirPesagem(animalId, pesagemId) {
+      if (!confirm('Excluir esta pesagem?')) return;
+      const animalRef = db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').doc(animalId);
+      await animalRef.collection('pesagens').doc(pesagemId).delete();
+      const restantes = await animalRef.collection('pesagens').get();
+      const lista = [];
+      restantes.forEach(doc => lista.push(doc.data()));
+      lista.sort((a,b) => String(b.data || '').localeCompare(String(a.data || '')));
+      if (lista.length) await animalRef.update({ peso: Number(lista[0].peso || 0), ultimaPesagem: lista[0].data || null });
+      await carregarHistoricoPesagens(animalId);
+    }
+
     async function excluirAnimal(id) {
       if (confirm("Excluir animal de todos os dispositivos?")) {
         await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').doc(id).delete();
@@ -751,6 +1040,8 @@
     const dataHojeFormatada = `${anoAtual}-${mesAtual}-${String(hoje.getDate()).padStart(2, '0')}`;
     document.getElementById('dataEntrada').value = dataHojeFormatada;
     document.getElementById('dataOutros').value = dataHojeFormatada;
+    document.getElementById('dataEstoque').value = dataHojeFormatada;
+    document.getElementById('dataPesagem').value = dataHojeFormatada;
     document.getElementById('dataVenda').value = dataHojeFormatada;
   </script>
 </body>
