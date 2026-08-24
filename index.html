@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ControlAgro - Fazenda São Francisco do Rio Verde</title>
+  <title>ControlAgro Pro - Fazenda São Francisco do Rio Verde</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -11,17 +11,19 @@
       --bg: #090d16;
       --sidebar-bg: #111827;
       --card-bg: #1f2937;
+      --card-hover: #2d3748;
       --accent: #10b981;
       --text: #f9fafb;
       --text-muted: #9ca3af;
       --border: #374151;
       --danger: #ef4444;
+      --warning: #f59e0b;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
 
-    /* SIDEBAR */
+    /* SIDEBAR NAV */
     aside { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 25px 20px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; }
     .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 35px; }
     .brand-icon { width: 38px; height: 38px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
@@ -29,45 +31,67 @@
     .brand-title span { color: var(--accent); font-size: 0.75rem; display: block; font-weight: 500; }
 
     nav { display: flex; flex-direction: column; gap: 8px; }
-    .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 14px; color: var(--accent); background: rgba(16, 185, 129, 0.15); border-radius: 8px; font-weight: 500; font-size: 0.9rem; }
+    .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 14px; color: var(--text-muted); border-radius: 8px; font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: 0.2s; }
+    .nav-link:hover, .nav-link.active { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
 
-    /* MAIN */
+    /* MAIN CONTENT */
     main { flex: 1; padding: 30px; max-width: 1400px; overflow-y: auto; }
+
     header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
-
-    .btn { padding: 10px 18px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
-    .btn-primary { background: var(--accent); color: #000; }
-    .btn-secondary { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
-
-    .sync-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--accent); background: rgba(16, 185, 129, 0.1); padding: 4px 10px; border-radius: 20px; margin-top: 6px; }
+    .header-info h1 { font-size: 1.6rem; font-weight: 700; }
+    
+    .sync-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--accent); background: rgba(16, 185, 129, 0.1); padding: 4px 10px; border-radius: 20px; margin-top: 4px; }
     .sync-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; }
 
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.3; }
-      100% { opacity: 1; }
-    }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
+    .header-actions { display: flex; gap: 10px; }
+    .btn { padding: 10px 18px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+    .btn-primary { background: var(--accent); color: #000; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-secondary { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); }
+
+    /* CARDS KPI */
     .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
-    .kpi-card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 12px; border-left: 4px solid var(--accent); }
-    .kpi-card h3 { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+    .kpi-card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 12px; position: relative; border-left: 4px solid var(--accent); }
+    .kpi-card h3 { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 10px; }
     .kpi-value { font-size: 1.8rem; font-weight: 700; }
+    .kpi-sub { font-size: 0.8rem; color: var(--accent); margin-top: 6px; }
 
+    /* SEÇÕES DE CONTEÚDO */
+    .content-section { display: none; }
+    .content-section.active { display: block; }
+
+    .grid-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin-bottom: 30px; }
+    .chart-box { background: var(--card-bg); border: 1px solid var(--border); padding: 22px; border-radius: 12px; }
+
+    /* TABLES */
     .table-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 30px; }
+    .table-header { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+    .search-input { background: var(--bg); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; color: var(--text); font-size: 0.85rem; outline: none; width: 220px; }
+    
     table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { background: #111827; padding: 14px 20px; color: var(--text-muted); font-size: 0.75rem; border-bottom: 1px solid var(--border); }
+    th { background: #111827; padding: 14px 20px; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; border-bottom: 1px solid var(--border); }
     td { padding: 16px 20px; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    tr:hover { background: var(--card-hover); }
 
+    .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+    .badge-gasto { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+    .badge-alimento { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+
+    /* MODAIS */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; }
     .modal-overlay.active { display: flex; }
     .modal { background: var(--card-bg); border: 1px solid var(--border); padding: 25px; border-radius: 14px; width: 100%; max-width: 480px; }
+    .modal h2 { font-size: 1.2rem; margin-bottom: 20px; }
     .form-group { display: flex; flex-direction: column; gap: 12px; }
     .form-group input, .form-group select { background: var(--bg); border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: var(--text); outline: none; }
   </style>
 </head>
 <body>
 
-  <!-- SIDEBAR FIXA -->
+  <!-- SIDEBAR -->
   <aside>
     <div>
       <div class="brand">
@@ -75,71 +99,142 @@
         <div class="brand-title">ControlAgro <span>São Francisco do Rio Verde</span></div>
       </div>
       <nav>
-        <div class="nav-link">📊 Painel em Tempo Real</div>
+        <div class="nav-link active" onclick="trocarAba('aba-dashboard', this)">📊 Dashboard Geral</div>
+        <div class="nav-link" onclick="trocarAba('aba-rebanho', this)">🐂 Caderno do Rebanho</div>
+        <div class="nav-link" onclick="trocarAba('aba-financeiro', this)">💸 Insumos e Despesas</div>
       </nav>
     </div>
     <div>
-      <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">Acesso livre e integrado para toda a equipe.</p>
+      <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">Sincronização em nuvem ativa em tempo real.</p>
     </div>
   </aside>
 
-  <!-- MAIN -->
+  <!-- MAIN AREA -->
   <main>
     <header>
-      <div>
-        <h1>Gestão Integrada da Fazenda</h1>
+      <div class="header-info">
+        <h1 id="tituloAba">Dashboard Geral</h1>
         <div class="sync-badge"><span class="sync-dot"></span> Sincronizado ao vivo entre todos os dispositivos</div>
       </div>
-      <div>
+      <div class="header-actions">
         <button class="btn btn-primary" onclick="abrirModal('modalGado')">+ Cadastrar Animal</button>
+        <button class="btn btn-secondary" onclick="abrirModal('modalOutros')">+ Lançar Gasto/Insumo</button>
       </div>
     </header>
 
+    <!-- CARDS INDICADORES COMPLETOS -->
     <div class="grid-cards">
       <div class="kpi-card">
         <h3>Total do Rebanho</h3>
         <div class="kpi-value" id="cardGado">0 cab.</div>
+        <div class="kpi-sub">Animais Ativos</div>
       </div>
       <div class="kpi-card">
         <h3>Peso Médio</h3>
         <div class="kpi-value" id="cardPesoMedio">0 kg</div>
+        <div class="kpi-sub" id="cardArrobaMedia">0 @ por cabeça</div>
       </div>
       <div class="kpi-card">
-        <h3>Média de Arrobas</h3>
-        <div class="kpi-value" id="cardArrobas">0 @</div>
+        <h3>Estoque de Alimento</h3>
+        <div class="kpi-value" id="cardRacao">0 kg</div>
+        <div class="kpi-sub">Silagem e Ração</div>
+      </div>
+      <div class="kpi-card" style="border-left-color: var(--danger);">
+        <h3>Despesas Totais</h3>
+        <div class="kpi-value" id="cardGastos">R$ 0,00</div>
+        <div class="kpi-sub" style="color: var(--danger);">Custos Operacionais Lançados</div>
       </div>
     </div>
 
-    <div class="table-box">
-      <h3 style="padding: 18px 20px; border-bottom: 1px solid var(--border);">📋 Caderno do Rebanho</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Brinco / ID</th>
-            <th>Categoria</th>
-            <th>Peso (kg)</th>
-            <th>Arrobas (@)</th>
-            <th>Data Entrada</th>
-            <th>Ação</th>
-          </tr>
-        </thead>
-        <tbody id="tabelaGado"></tbody>
-      </table>
+    <!-- ABA 1: DASHBOARD GERAL COM GRÁFICOS -->
+    <div id="aba-dashboard" class="content-section active">
+      <div class="grid-charts">
+        <div class="chart-box"><canvas id="chartGado"></canvas></div>
+        <div class="chart-box"><canvas id="chartFinanceiro"></canvas></div>
+      </div>
+    </div>
+
+    <!-- ABA 2: CADERNO DO REBANHO -->
+    <div id="aba-rebanho" class="content-section">
+      <div class="table-box">
+        <div class="table-header">
+          <h3>Animais Cadastrados (Ao Vivo)</h3>
+          <input type="text" class="search-input" placeholder="Buscar por Brinco ou Categoria..." onkeyup="filtrarTabela('tabelaGado', this.value)">
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Brinco / ID</th>
+              <th>Categoria</th>
+              <th>Peso (kg)</th>
+              <th>Arrobas (@)</th>
+              <th>Data de Entrada</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaGado"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ABA 3: INSUMOS E DESPESAS -->
+    <div id="aba-financeiro" class="content-section">
+      <div class="table-box">
+        <div class="table-header">
+          <h3>Histórico Financeiro & Suprimentos (Ao Vivo)</h3>
+          <input type="text" class="search-input" placeholder="Buscar descrição..." onkeyup="filtrarTabela('tabelaOutros', this.value)">
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Descrição</th>
+              <th>Quantidade</th>
+              <th>Valor (R$)</th>
+              <th>Data</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaOutros"></tbody>
+        </table>
+      </div>
     </div>
   </main>
 
   <!-- MODAL GADO -->
   <div class="modal-overlay" id="modalGado">
     <div class="modal">
-      <h2>Cadastrar Animal</h2>
+      <h2>🐂 Cadastrar Novo Animal</h2>
       <form id="formGado" class="form-group">
-        <input type="text" id="numBrinco" placeholder="Nº Brinco / ID" required>
-        <input type="text" id="categoriaGado" placeholder="Categoria (ex: Vaca, Bezerro)" required>
-        <input type="number" id="pesoGado" placeholder="Peso (kg)" step="0.1" required>
+        <input type="text" id="numBrinco" placeholder="Nº Brinco / ID (ex: 101)" required>
+        <input type="text" id="categoriaGado" placeholder="Categoria (ex: Vaca, Garrote, Novilha)" required>
+        <input type="number" id="pesoGado" placeholder="Peso Atual (kg)" step="0.1" required>
         <input type="date" id="dataEntrada" required>
         <div style="display: flex; gap: 10px; margin-top: 10px;">
-          <button type="submit" class="btn btn-primary" style="flex:1;">Salvar Registro</button>
+          <button type="submit" class="btn btn-primary" style="flex:1;">Salvar Animal</button>
           <button type="button" class="btn btn-secondary" onclick="fecharModal('modalGado')">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL OUTROS -->
+  <div class="modal-overlay" id="modalOutros">
+    <div class="modal">
+      <h2>💸 Lançar Insumo ou Despesa</h2>
+      <form id="formOutros" class="form-group">
+        <select id="tipoOutros" required>
+          <option value="">Selecione o tipo...</option>
+          <option value="alimento">Estoque de Alimento</option>
+          <option value="gasto">Despesa / Gasto Geral</option>
+        </select>
+        <input type="text" id="descOutros" placeholder="Descrição (ex: Ração Concentrada, Sal)" required>
+        <input type="number" id="qtdOutros" placeholder="Quantidade (kg ou un)" step="0.01" required>
+        <input type="number" id="valorOutros" placeholder="Valor Total (R$)" step="0.01" required>
+        <input type="date" id="dataOutros" required>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <button type="submit" class="btn btn-primary" style="flex:1;">Salvar Lançamento</button>
+          <button type="button" class="btn btn-secondary" onclick="fecharModal('modalOutros')">Cancelar</button>
         </div>
       </form>
     </div>
@@ -150,7 +245,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // CHAVES DO SEU PROJETO NO FIREBASE
     const firebaseConfig = {
       apiKey: "AIzaSyD78bi-EKrmwRF0JBhvymuhlWGFaToAuY0",
       authDomain: "controlagro-949e8.firebaseapp.com",
@@ -163,74 +257,173 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    let gadoLista = [];
+    let outrosLista = [];
+    let chartGado, chartFinanceiro;
+
     function abrirModal(id) { document.getElementById(id).classList.add('active'); }
     function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    // ESCUTAR BANCO DE DADOS EM TEMPO REAL
-    db.collection('fazenda_sao_francisco')
-      .doc('rebanho')
-      .collection('animais')
+    function trocarAba(idAba, elemento) {
+      document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+      document.getElementById(idAba).classList.add('active');
+      elemento.classList.add('active');
+      document.getElementById('tituloAba').innerText = elemento.innerText.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+    }
+
+    // ESCUTAR TEMPO REAL - REBANHO
+    db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais')
       .onSnapshot(snapshot => {
-        const listaAnimais = [];
-        snapshot.forEach(doc => {
-          listaAnimais.push({ id: doc.id, ...doc.data() });
-        });
-        desenharTabela(listaAnimais);
+        gadoLista = [];
+        snapshot.forEach(doc => gadoLista.push({ id: doc.id, ...doc.data() }));
+        atualizarInterface();
       });
 
-    // ATUALIZAR TABELA E CARDS
-    function desenharTabela(animais) {
+    // ESCUTAR TEMPO REAL - INSUMOS E GASTOS
+    db.collection('fazenda_sao_francisco').doc('financeiro').collection('lancamentos')
+      .onSnapshot(snapshot => {
+        outrosLista = [];
+        snapshot.forEach(doc => outrosLista.push({ id: doc.id, ...doc.data() }));
+        atualizarInterface();
+      });
+
+    function atualizarInterface() {
+      atualizarTabelaGado();
+      atualizarTabelaOutros();
+      atualizarCards();
+      atualizarGraficos();
+    }
+
+    function atualizarCards() {
+      const totalGado = gadoLista.length;
+      const somaPeso = gadoLista.reduce((acc, cur) => acc + Number(cur.peso || 0), 0);
+      const pesoMedio = totalGado > 0 ? (somaPeso / totalGado).toFixed(1) : 0;
+      const arrobaMedia = totalGado > 0 ? (pesoMedio / 15).toFixed(1) : 0;
+
+      const totalRacao = outrosLista.filter(d => d.tipo === 'alimento').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
+      const totalGastos = outrosLista.filter(d => d.tipo === 'gasto').reduce((acc, cur) => acc + Number(cur.valor || 0), 0);
+
+      document.getElementById('cardGado').innerText = `${totalGado} cab.`;
+      document.getElementById('cardPesoMedio').innerText = `${pesoMedio} kg`;
+      document.getElementById('cardArrobaMedia').innerText = `${arrobaMedia} @ por cabeça`;
+      document.getElementById('cardRacao').innerText = `${totalRacao.toLocaleString('pt-BR')} kg`;
+      document.getElementById('cardGastos').innerText = `R$ ${totalGastos.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+    }
+
+    function atualizarTabelaGado() {
       const tbody = document.getElementById('tabelaGado');
       tbody.innerHTML = '';
-      let somaPeso = 0;
-
-      animais.forEach(item => {
-        somaPeso += Number(item.peso);
+      gadoLista.slice().reverse().forEach(item => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><strong>#${item.brinco}</strong></td>
+          <td><strong style="color: var(--accent);">#${item.brinco}</strong></td>
           <td>${item.categoria}</td>
           <td>${item.peso} kg</td>
           <td>${(item.peso / 15).toFixed(1)} @</td>
           <td>${item.dataEntrada}</td>
-          <td><button style="color:var(--danger); background:none; border:none; cursor:pointer;" onclick="excluirAnimal('${item.id}')">✕ Excluir</button></td>
+          <td><button style="background:transparent; border:none; color:var(--danger); cursor:pointer;" onclick="excluirAnimal('${item.id}')">✕ Excluir</button></td>
         `;
         tbody.appendChild(tr);
       });
-
-      const total = animais.length;
-      const pesoMedio = total > 0 ? (somaPeso / total).toFixed(1) : 0;
-      
-      document.getElementById('cardGado').innerText = `${total} cab.`;
-      document.getElementById('cardPesoMedio').innerText = `${pesoMedio} kg`;
-      document.getElementById('cardArrobas').innerText = `${(pesoMedio / 15).toFixed(1)} @`;
     }
 
-    // SALVAR NO BANCO
+    function atualizarTabelaOutros() {
+      const tbody = document.getElementById('tabelaOutros');
+      tbody.innerHTML = '';
+      outrosLista.slice().reverse().forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="badge badge-${item.tipo}">${item.tipo}</span></td>
+          <td><strong>${item.descricao}</strong></td>
+          <td>${item.quantidade} ${item.tipo === 'alimento' ? 'kg' : 'un'}</td>
+          <td>R$ ${Number(item.valor).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+          <td>${item.data}</td>
+          <td><button style="background:transparent; border:none; color:var(--danger); cursor:pointer;" onclick="excluirOutro('${item.id}')">✕ Excluir</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filtrarTabela(idTabela, termo) {
+      const linhas = document.querySelectorAll(`#${idTabela} tr`);
+      termo = termo.toLowerCase();
+      linhas.forEach(linha => {
+        const texto = linha.innerText.toLowerCase();
+        linha.style.display = texto.includes(termo) ? '' : 'none';
+      });
+    }
+
+    function atualizarGraficos() {
+      if (chartGado) chartGado.destroy();
+      if (chartFinanceiro) chartFinanceiro.destroy();
+
+      Chart.defaults.color = '#9ca3af';
+      Chart.defaults.borderColor = '#374151';
+
+      const categorias = {};
+      gadoLista.forEach(g => categorias[g.categoria] = (categorias[g.categoria] || 0) + 1);
+
+      chartGado = new Chart(document.getElementById('chartGado'), {
+        type: 'doughnut',
+        data: { labels: Object.keys(categorias), datasets: [{ data: Object.values(categorias), backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6'] }] },
+        options: { plugins: { title: { display: true, text: 'Distribuição do Rebanho por Categoria', color: '#f9fafb' } } }
+      });
+
+      const gastoItems = outrosLista.filter(d => d.tipo === 'gasto');
+      chartFinanceiro = new Chart(document.getElementById('chartFinanceiro'), {
+        type: 'bar',
+        data: { labels: gastoItems.map(d => d.descricao), datasets: [{ label: 'Despesas (R$)', data: gastoItems.map(d => d.valor), backgroundColor: '#ef4444', borderRadius: 6 }] },
+        options: { plugins: { title: { display: true, text: 'Lançamentos de Despesas', color: '#f9fafb' } } }
+      });
+    }
+
+    // SALVAR GADO NO FIREBASE
     document.getElementById('formGado').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const novoAnimal = {
+      await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').add({
         brinco: document.getElementById('numBrinco').value,
         categoria: document.getElementById('categoriaGado').value,
         peso: Number(document.getElementById('pesoGado').value),
         dataEntrada: document.getElementById('dataEntrada').value,
         criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-      };
-
-      await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').add(novoAnimal);
+      });
       fecharModal('modalGado');
       e.target.reset();
       document.getElementById('dataEntrada').value = new Date().toISOString().split('T')[0];
     });
 
-    // EXCLUIR DO BANCO
+    // SALVAR OUTROS NO FIREBASE
+    document.getElementById('formOutros').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await db.collection('fazenda_sao_francisco').doc('financeiro').collection('lancamentos').add({
+        tipo: document.getElementById('tipoOutros').value,
+        descricao: document.getElementById('descOutros').value,
+        quantidade: Number(document.getElementById('qtdOutros').value),
+        valor: Number(document.getElementById('valorOutros').value),
+        data: document.getElementById('dataOutros').value,
+        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      fecharModal('modalOutros');
+      e.target.reset();
+      document.getElementById('dataOutros').value = new Date().toISOString().split('T')[0];
+    });
+
     async function excluirAnimal(id) {
-      if (confirm("Deseja realmente excluir este animal? A alteração refletirá em todos os dispositivos.")) {
+      if (confirm("Excluir animal de todos os dispositivos?")) {
         await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').doc(id).delete();
       }
     }
 
-    document.getElementById('dataEntrada').value = new Date().toISOString().split('T')[0];
+    async function excluirOutro(id) {
+      if (confirm("Excluir registro de todos os dispositivos?")) {
+        await db.collection('fazenda_sao_francisco').doc('financeiro').collection('lancamentos').doc(id).delete();
+      }
+    }
+
+    const hoje = new Date().toISOString().split('T')[0];
+    document.getElementById('dataEntrada').value = hoje;
+    document.getElementById('dataOutros').value = hoje;
   </script>
 </body>
 </html>
