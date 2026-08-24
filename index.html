@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -18,20 +18,34 @@
       --border: #374151;
       --danger: #ef4444;
       --warning: #f59e0b;
+      --info: #3b82f6;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
 
-    /* SIDEBAR NAV */
-    aside { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 25px 20px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; }
+    /* SIDEBAR E TRANSIÇÃO DE MINIMIZAR */
+    aside { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 25px 20px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; transition: width 0.3s ease, padding 0.3s ease; position: relative; }
+    
+    /* SIDEBAR MINIMIZADA */
+    aside.collapsed { width: 80px; padding: 25px 12px; }
+    aside.collapsed .brand-title, 
+    aside.collapsed .nav-text, 
+    aside.collapsed .footer-text { display: none; }
+    aside.collapsed .brand { justify-content: center; }
+    aside.collapsed .nav-link { justify-content: center; padding: 12px; }
+
+    /* BOTÃO TOGGLE LATERAL */
+    .btn-toggle-sidebar { position: absolute; top: 25px; right: -14px; background: var(--accent); color: #000; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; box-shadow: 0 2px 6px rgba(0,0,0,0.4); z-index: 100; transition: transform 0.3s ease; }
+    aside.collapsed .btn-toggle-sidebar { transform: rotate(180deg); }
+
     .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 35px; }
-    .brand-icon { width: 38px; height: 38px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-    .brand-title { font-weight: 700; font-size: 1.1rem; }
+    .brand-icon { width: 38px; height: 38px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .brand-title { font-weight: 700; font-size: 1.1rem; white-space: nowrap; }
     .brand-title span { color: var(--accent); font-size: 0.75rem; display: block; font-weight: 500; }
 
     nav { display: flex; flex-direction: column; gap: 8px; }
-    .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 14px; color: var(--text-muted); border-radius: 8px; font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: 0.2s; }
+    .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 14px; color: var(--text-muted); border-radius: 8px; font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: 0.2s; white-space: nowrap; }
     .nav-link:hover, .nav-link.active { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
 
     /* MAIN CONTENT */
@@ -54,7 +68,7 @@
 
     /* CARDS KPI */
     .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
-    .kpi-card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 12px; position: relative; border-left: 4px solid var(--accent); }
+    .kpi-card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 12px; border-left: 4px solid var(--accent); }
     .kpi-card h3 { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 10px; }
     .kpi-value { font-size: 1.8rem; font-weight: 700; }
     .kpi-sub { font-size: 0.8rem; color: var(--accent); margin-top: 6px; }
@@ -69,7 +83,8 @@
     /* TABLES */
     .table-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 30px; }
     .table-header { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
-    .search-input { background: var(--bg); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; color: var(--text); font-size: 0.85rem; outline: none; width: 220px; }
+    .search-group { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .search-input, .select-input { background: var(--bg); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; color: var(--text); font-size: 0.85rem; outline: none; }
     
     table { width: 100%; border-collapse: collapse; text-align: left; }
     th { background: #111827; padding: 14px 20px; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; border-bottom: 1px solid var(--border); }
@@ -79,6 +94,14 @@
     .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
     .badge-gasto { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
     .badge-alimento { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .badge-lote { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+
+    /* BOTÕES DE AÇÃO */
+    .btn-action { background: transparent; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 4px; transition: 0.2s; }
+    .btn-edit { color: var(--info); }
+    .btn-edit:hover { background: rgba(59, 130, 246, 0.1); }
+    .btn-delete { color: var(--danger); }
+    .btn-delete:hover { background: rgba(239, 68, 68, 0.1); }
 
     /* MODAIS */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; }
@@ -92,19 +115,26 @@
 <body>
 
   <!-- SIDEBAR -->
-  <aside>
+  <aside id="sidebar">
+    <button class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Minimizar / Expandir Menu">◀</button>
     <div>
       <div class="brand">
         <div class="brand-icon">🌱</div>
         <div class="brand-title">ControlAgro <span>São Francisco do Rio Verde</span></div>
       </div>
       <nav>
-        <div class="nav-link active" onclick="trocarAba('aba-dashboard', this)">📊 Dashboard Geral</div>
-        <div class="nav-link" onclick="trocarAba('aba-rebanho', this)">🐂 Caderno do Rebanho</div>
-        <div class="nav-link" onclick="trocarAba('aba-financeiro', this)">💸 Insumos e Despesas</div>
+        <div class="nav-link active" onclick="trocarAba('aba-dashboard', this)">
+          <span>📊</span> <span class="nav-text">Dashboard Geral</span>
+        </div>
+        <div class="nav-link" onclick="trocarAba('aba-rebanho', this)">
+          <span>🐂</span> <span class="nav-text">Caderno do Rebanho</span>
+        </div>
+        <div class="nav-link" onclick="trocarAba('aba-financeiro', this)">
+          <span>💸</span> <span class="nav-text">Insumos e Despesas</span>
+        </div>
       </nav>
     </div>
-    <div>
+    <div class="footer-text">
       <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">Sincronização em nuvem ativa em tempo real.</p>
     </div>
   </aside>
@@ -117,8 +147,8 @@
         <div class="sync-badge"><span class="sync-dot"></span> Sincronizado ao vivo entre todos os dispositivos</div>
       </div>
       <div class="header-actions">
-        <button class="btn btn-primary" onclick="abrirModal('modalGado')">+ Cadastrar Animal</button>
-        <button class="btn btn-secondary" onclick="abrirModal('modalOutros')">+ Lançar Gasto/Insumo</button>
+        <button class="btn btn-primary" onclick="abrirModalCadastroGado()">+ Cadastrar Animal</button>
+        <button class="btn btn-secondary" onclick="abrirModalCadastroOutros()">+ Lançar Gasto/Insumo</button>
       </div>
     </header>
 
@@ -135,14 +165,14 @@
         <div class="kpi-sub" id="cardArrobaMedia">0 @ por cabeça</div>
       </div>
       <div class="kpi-card">
-        <h3>Estoque de Alimento</h3>
+        <h3>Estoque de Alimento (Mês Selecionado)</h3>
         <div class="kpi-value" id="cardRacao">0 kg</div>
         <div class="kpi-sub">Silagem e Ração</div>
       </div>
       <div class="kpi-card" style="border-left-color: var(--danger);">
-        <h3>Despesas Totais</h3>
+        <h3>Gastos Totais (Mês Selecionado)</h3>
         <div class="kpi-value" id="cardGastos">R$ 0,00</div>
-        <div class="kpi-sub" style="color: var(--danger);">Custos Operacionais Lançados</div>
+        <div class="kpi-sub" style="color: var(--danger);" id="subGastoMes">Custos + Alimentos do Mês</div>
       </div>
     </div>
 
@@ -159,17 +189,23 @@
       <div class="table-box">
         <div class="table-header">
           <h3>Animais Cadastrados (Ao Vivo)</h3>
-          <input type="text" class="search-input" placeholder="Buscar por Brinco ou Categoria..." onkeyup="filtrarTabela('tabelaGado', this.value)">
+          <div class="search-group">
+            <select id="filtroLote" class="select-input" onchange="atualizarTabelaGado()">
+              <option value="todos">Todos os Lotes</option>
+            </select>
+            <input type="text" class="search-input" placeholder="Buscar por Brinco ou Categoria..." onkeyup="filtrarTabela('tabelaGado', this.value)">
+          </div>
         </div>
         <table>
           <thead>
             <tr>
               <th>Brinco / ID</th>
+              <th>Lote</th>
               <th>Categoria</th>
               <th>Peso (kg)</th>
               <th>Arrobas (@)</th>
-              <th>Data de Entrada</th>
-              <th>Ação</th>
+              <th>Data Entrada</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody id="tabelaGado"></tbody>
@@ -182,7 +218,11 @@
       <div class="table-box">
         <div class="table-header">
           <h3>Histórico Financeiro & Suprimentos (Ao Vivo)</h3>
-          <input type="text" class="search-input" placeholder="Buscar descrição..." onkeyup="filtrarTabela('tabelaOutros', this.value)">
+          <div class="search-group">
+            <label style="font-size: 0.85rem; color: var(--text-muted);">📅 Mês:</label>
+            <input type="month" id="filtroMes" class="select-input" onchange="atualizarInterface()">
+            <input type="text" class="search-input" placeholder="Buscar descrição..." onkeyup="filtrarTabela('tabelaOutros', this.value)">
+          </div>
         </div>
         <table>
           <thead>
@@ -192,7 +232,7 @@
               <th>Quantidade</th>
               <th>Valor (R$)</th>
               <th>Data</th>
-              <th>Ação</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody id="tabelaOutros"></tbody>
@@ -201,12 +241,14 @@
     </div>
   </main>
 
-  <!-- MODAL GADO -->
+  <!-- MODAL GADO (CADASTRO E EDIÇÃO) -->
   <div class="modal-overlay" id="modalGado">
     <div class="modal">
-      <h2>🐂 Cadastrar Novo Animal</h2>
+      <h2 id="modalGadoTitulo">🐂 Cadastrar Novo Animal</h2>
       <form id="formGado" class="form-group">
+        <input type="hidden" id="editGadoId">
         <input type="text" id="numBrinco" placeholder="Nº Brinco / ID (ex: 101)" required>
+        <input type="text" id="loteGado" placeholder="Lote / Setor (ex: Lote 01, Pasto 2)" required>
         <input type="text" id="categoriaGado" placeholder="Categoria (ex: Vaca, Garrote, Novilha)" required>
         <input type="number" id="pesoGado" placeholder="Peso Atual (kg)" step="0.1" required>
         <input type="date" id="dataEntrada" required>
@@ -218,11 +260,12 @@
     </div>
   </div>
 
-  <!-- MODAL OUTROS -->
+  <!-- MODAL OUTROS (CADASTRO E EDIÇÃO) -->
   <div class="modal-overlay" id="modalOutros">
     <div class="modal">
-      <h2>💸 Lançar Insumo ou Despesa</h2>
+      <h2 id="modalOutrosTitulo">💸 Lançar Insumo ou Despesa</h2>
       <form id="formOutros" class="form-group">
+        <input type="hidden" id="editOutroId">
         <select id="tipoOutros" required>
           <option value="">Selecione o tipo...</option>
           <option value="alimento">Estoque de Alimento</option>
@@ -261,6 +304,18 @@
     let outrosLista = [];
     let chartGado, chartFinanceiro;
 
+    // MINIMIZAR / EXPANDIR SIDEBAR
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('collapsed');
+    }
+
+    // DEFINIR MÊS ATUAL COMO PADRÃO
+    const hoje = new Date();
+    const anoAtual = hoje.getFullYear();
+    const mesAtual = String(hoje.getMonth() + 1).padStart(2, '0');
+    document.getElementById('filtroMes').value = `${anoAtual}-${mesAtual}`;
+
     function abrirModal(id) { document.getElementById(id).classList.add('active'); }
     function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
 
@@ -269,7 +324,9 @@
       document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
       document.getElementById(idAba).classList.add('active');
       elemento.classList.add('active');
-      document.getElementById('tituloAba').innerText = elemento.innerText.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+      
+      const textoAba = elemento.querySelector('.nav-text') ? elemento.querySelector('.nav-text').innerText : elemento.innerText;
+      document.getElementById('tituloAba').innerText = textoAba;
     }
 
     // ESCUTAR TEMPO REAL - REBANHO
@@ -277,6 +334,7 @@
       .onSnapshot(snapshot => {
         gadoLista = [];
         snapshot.forEach(doc => gadoLista.push({ id: doc.id, ...doc.data() }));
+        atualizarOpcoesLote();
         atualizarInterface();
       });
 
@@ -288,11 +346,34 @@
         atualizarInterface();
       });
 
+    function obterOutrosFiltradosPorMes() {
+      const mesSel = document.getElementById('filtroMes').value;
+      if (!mesSel) return outrosLista;
+      return outrosLista.filter(item => item.data && item.data.startsWith(mesSel));
+    }
+
     function atualizarInterface() {
       atualizarTabelaGado();
       atualizarTabelaOutros();
       atualizarCards();
       atualizarGraficos();
+    }
+
+    function atualizarOpcoesLote() {
+      const selectLote = document.getElementById('filtroLote');
+      const loteSelecionado = selectLote.value;
+      
+      const lotesUnicos = [...new Set(gadoLista.map(g => g.lote || 'Geral'))];
+      selectLote.innerHTML = '<option value="todos">Todos os Lotes</option>';
+      
+      lotesUnicos.forEach(lote => {
+        const option = document.createElement('option');
+        option.value = lote;
+        option.innerText = lote;
+        selectLote.appendChild(option);
+      });
+
+      selectLote.value = loteSelecionado;
     }
 
     function atualizarCards() {
@@ -301,28 +382,38 @@
       const pesoMedio = totalGado > 0 ? (somaPeso / totalGado).toFixed(1) : 0;
       const arrobaMedia = totalGado > 0 ? (pesoMedio / 15).toFixed(1) : 0;
 
-      const totalRacao = outrosLista.filter(d => d.tipo === 'alimento').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
-      const totalGastos = outrosLista.filter(d => d.tipo === 'gasto').reduce((acc, cur) => acc + Number(cur.valor || 0), 0);
+      const outrosFiltrados = obterOutrosFiltradosPorMes();
+
+      const totalRacao = outrosFiltrados.filter(d => d.tipo === 'alimento').reduce((acc, cur) => acc + Number(cur.quantidade || 0), 0);
+      const totalGastosEAlimentos = outrosFiltrados.reduce((acc, cur) => acc + Number(cur.valor || 0), 0);
 
       document.getElementById('cardGado').innerText = `${totalGado} cab.`;
       document.getElementById('cardPesoMedio').innerText = `${pesoMedio} kg`;
       document.getElementById('cardArrobaMedia').innerText = `${arrobaMedia} @ por cabeça`;
       document.getElementById('cardRacao').innerText = `${totalRacao.toLocaleString('pt-BR')} kg`;
-      document.getElementById('cardGastos').innerText = `R$ ${totalGastos.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+      document.getElementById('cardGastos').innerText = `R$ ${totalGastosEAlimentos.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
     }
 
     function atualizarTabelaGado() {
       const tbody = document.getElementById('tabelaGado');
       tbody.innerHTML = '';
-      gadoLista.slice().reverse().forEach(item => {
+
+      const filtroLote = document.getElementById('filtroLote').value;
+      const listaExibicao = filtroLote === 'todos' ? gadoLista : gadoLista.filter(g => (g.lote || 'Geral') === filtroLote);
+
+      listaExibicao.slice().reverse().forEach(item => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><strong style="color: var(--accent);">#${item.brinco}</strong></td>
+          <td><span class="badge badge-lote">${item.lote || 'Geral'}</span></td>
           <td>${item.categoria}</td>
           <td>${item.peso} kg</td>
           <td>${(item.peso / 15).toFixed(1)} @</td>
           <td>${item.dataEntrada}</td>
-          <td><button style="background:transparent; border:none; color:var(--danger); cursor:pointer;" onclick="excluirAnimal('${item.id}')">✕ Excluir</button></td>
+          <td>
+            <button class="btn-action btn-edit" onclick="editarAnimal('${item.id}')">✏️ Editar</button>
+            <button class="btn-action btn-delete" onclick="excluirAnimal('${item.id}')">✕ Excluir</button>
+          </td>
         `;
         tbody.appendChild(tr);
       });
@@ -331,7 +422,10 @@
     function atualizarTabelaOutros() {
       const tbody = document.getElementById('tabelaOutros');
       tbody.innerHTML = '';
-      outrosLista.slice().reverse().forEach(item => {
+
+      const outrosFiltrados = obterOutrosFiltradosPorMes();
+
+      outrosFiltrados.slice().reverse().forEach(item => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><span class="badge badge-${item.tipo}">${item.tipo}</span></td>
@@ -339,7 +433,10 @@
           <td>${item.quantidade} ${item.tipo === 'alimento' ? 'kg' : 'un'}</td>
           <td>R$ ${Number(item.valor).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
           <td>${item.data}</td>
-          <td><button style="background:transparent; border:none; color:var(--danger); cursor:pointer;" onclick="excluirOutro('${item.id}')">✕ Excluir</button></td>
+          <td>
+            <button class="btn-action btn-edit" onclick="editarOutro('${item.id}')">✏️ Editar</button>
+            <button class="btn-action btn-delete" onclick="excluirOutro('${item.id}')">✕ Excluir</button>
+          </td>
         `;
         tbody.appendChild(tr);
       });
@@ -361,6 +458,7 @@
       Chart.defaults.color = '#9ca3af';
       Chart.defaults.borderColor = '#374151';
 
+      // 1. GRAFICO REBANHO
       const categorias = {};
       gadoLista.forEach(g => categorias[g.categoria] = (categorias[g.categoria] || 0) + 1);
 
@@ -370,43 +468,121 @@
         options: { plugins: { title: { display: true, text: 'Distribuição do Rebanho por Categoria', color: '#f9fafb' } } }
       });
 
-      const gastoItems = outrosLista.filter(d => d.tipo === 'gasto');
+      // 2. GRAFICO FINANCEIRO
+      const outrosFiltrados = obterOutrosFiltradosPorMes();
+
+      const labels = outrosFiltrados.map(d => d.descricao);
+      const valores = outrosFiltrados.map(d => d.valor);
+      const coresValores = outrosFiltrados.map(d => d.tipo === 'alimento' ? '#f59e0b' : '#ef4444');
+
       chartFinanceiro = new Chart(document.getElementById('chartFinanceiro'), {
         type: 'bar',
-        data: { labels: gastoItems.map(d => d.descricao), datasets: [{ label: 'Despesas (R$)', data: gastoItems.map(d => d.valor), backgroundColor: '#ef4444', borderRadius: 6 }] },
-        options: { plugins: { title: { display: true, text: 'Lançamentos de Despesas', color: '#f9fafb' } } }
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Custo R$',
+            data: valores,
+            backgroundColor: coresValores,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          plugins: {
+            title: { display: true, text: 'Custos e Insumos do Mês (Vermelho: Gastos | Amarelo: Alimentos)', color: '#f9fafb' },
+            legend: { display: false }
+          }
+        }
       });
     }
 
-    // SALVAR GADO NO FIREBASE
+    // MODAIS
+    function abrirModalCadastroGado() {
+      document.getElementById('modalGadoTitulo').innerText = "🐂 Cadastrar Novo Animal";
+      document.getElementById('editGadoId').value = "";
+      document.getElementById('formGado').reset();
+      document.getElementById('dataEntrada').value = new Date().toISOString().split('T')[0];
+      abrirModal('modalGado');
+    }
+
+    function editarAnimal(id) {
+      const animal = gadoLista.find(item => item.id === id);
+      if (!animal) return;
+
+      document.getElementById('modalGadoTitulo').innerText = "✏️ Editar Animal";
+      document.getElementById('editGadoId').value = animal.id;
+      document.getElementById('numBrinco').value = animal.brinco;
+      document.getElementById('loteGado').value = animal.lote || 'Geral';
+      document.getElementById('categoriaGado').value = animal.categoria;
+      document.getElementById('pesoGado').value = animal.peso;
+      document.getElementById('dataEntrada').value = animal.dataEntrada;
+      abrirModal('modalGado');
+    }
+
+    function abrirModalCadastroOutros() {
+      document.getElementById('modalOutrosTitulo').innerText = "💸 Lançar Insumo ou Despesa";
+      document.getElementById('editOutroId').value = "";
+      document.getElementById('formOutros').reset();
+      document.getElementById('dataOutros').value = new Date().toISOString().split('T')[0];
+      abrirModal('modalOutros');
+    }
+
+    function editarOutro(id) {
+      const item = outrosLista.find(i => i.id === id);
+      if (!item) return;
+
+      document.getElementById('modalOutrosTitulo').innerText = "✏️ Editar Lançamento";
+      document.getElementById('editOutroId').value = item.id;
+      document.getElementById('tipoOutros').value = item.tipo;
+      document.getElementById('descOutros').value = item.descricao;
+      document.getElementById('qtdOutros').value = item.quantidade;
+      document.getElementById('valorOutros').value = item.valor;
+      document.getElementById('dataOutros').value = item.data;
+      abrirModal('modalOutros');
+    }
+
+    // FIREBASE - OPERAÇÕES
     document.getElementById('formGado').addEventListener('submit', async (e) => {
       e.preventDefault();
-      await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').add({
+      const id = document.getElementById('editGadoId').value;
+      const dados = {
         brinco: document.getElementById('numBrinco').value,
+        lote: document.getElementById('loteGado').value || 'Geral',
         categoria: document.getElementById('categoriaGado').value,
         peso: Number(document.getElementById('pesoGado').value),
-        dataEntrada: document.getElementById('dataEntrada').value,
-        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-      });
+        dataEntrada: document.getElementById('dataEntrada').value
+      };
+
+      if (id) {
+        await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').doc(id).update(dados);
+      } else {
+        dados.criadoEm = firebase.firestore.FieldValue.serverTimestamp();
+        await db.collection('fazenda_sao_francisco').doc('rebanho').collection('animais').add(dados);
+      }
+      
       fecharModal('modalGado');
       e.target.reset();
-      document.getElementById('dataEntrada').value = new Date().toISOString().split('T')[0];
     });
 
-    // SALVAR OUTROS NO FIREBASE
     document.getElementById('formOutros').addEventListener('submit', async (e) => {
       e.preventDefault();
-      await db.collection('fazenda_sao_francisco').doc('financeiro').collection('lancamentos').add({
+      const id = document.getElementById('editOutroId').value;
+      const dados = {
         tipo: document.getElementById('tipoOutros').value,
         descricao: document.getElementById('descOutros').value,
         quantidade: Number(document.getElementById('qtdOutros').value),
         valor: Number(document.getElementById('valorOutros').value),
-        data: document.getElementById('dataOutros').value,
-        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-      });
+        data: document.getElementById('dataOutros').value
+      };
+
+      if (id) {
+        await db.collection('fazenda_sao_francisco').doc('financeiro').collection('lancamentos').doc(id).update(dados);
+      } else {
+        dados.criadoEm = firebase.firestore.FieldValue.serverTimestamp();
+        await db.collection('fazenda_sao_francisco').doc('financeiro').collection('lancamentos').add(dados);
+      }
+
       fecharModal('modalOutros');
       e.target.reset();
-      document.getElementById('dataOutros').value = new Date().toISOString().split('T')[0];
     });
 
     async function excluirAnimal(id) {
@@ -421,9 +597,9 @@
       }
     }
 
-    const hoje = new Date().toISOString().split('T')[0];
-    document.getElementById('dataEntrada').value = hoje;
-    document.getElementById('dataOutros').value = hoje;
+    const dataHojeFormatada = `${anoAtual}-${mesAtual}-${String(hoje.getDate()).padStart(2, '0')}`;
+    document.getElementById('dataEntrada').value = dataHojeFormatada;
+    document.getElementById('dataOutros').value = dataHojeFormatada;
   </script>
 </body>
 </html>
