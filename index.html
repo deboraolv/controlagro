@@ -960,8 +960,8 @@ td {
                 <span class="kpi-label">REBANHO ATUAL</span>
                 <div class="kpi-icon green">🐂</div>
             </div>
-            <div class="kpi-value">248</div>
-            <div class="kpi-change">↑ 8,2% este ano</div>
+            <div class="kpi-value" id="kpiTotalRebanho">248</div>
+            <div class="kpi-change">Tempo real nuvem</div>
         </div>
 
         <div class="kpi-card">
@@ -1188,7 +1188,7 @@ td {
             <p>Controle e acompanhamento individual dos animais.</p>
         </div>
 
-        <button class="primary-btn" onclick="alert('Novo animal')">
+        <button class="primary-btn" onclick="cadastrarAnimalNuvem()">
             + Novo animal
         </button>
 
@@ -1198,12 +1198,12 @@ td {
 
         <div class="kpi-card">
             <span class="kpi-label">TOTAL</span>
-            <div class="kpi-value">248</div>
+            <div class="kpi-value" id="kpiRebanhoTotal">248</div>
         </div>
 
         <div class="kpi-card">
             <span class="kpi-label">PESO MÉDIO</span>
-            <div class="kpi-value">412 kg</div>
+            <div class="kpi-value" id="kpiRebanhoPesoMedio">412 kg</div>
         </div>
 
         <div class="kpi-card">
@@ -1245,60 +1245,8 @@ td {
                     </tr>
                 </thead>
 
-                <tbody>
-
-                    <tr>
-                        <td class="animal-id">#102</td>
-                        <td>Garrote</td>
-                        <td>Lote 03</td>
-                        <td>12/03/2026</td>
-                        <td>395 kg</td>
-                        <td>0,78 kg</td>
-                        <td><span class="badge badge-green">Bom</span></td>
-                        <td>
-                            <button class="view-btn" onclick="openAnimal()">Ver ficha</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="animal-id">#118</td>
-                        <td>Novilha</td>
-                        <td>Lote 02</td>
-                        <td>04/02/2026</td>
-                        <td>362 kg</td>
-                        <td>0,64 kg</td>
-                        <td><span class="badge badge-green">Bom</span></td>
-                        <td>
-                            <button class="view-btn" onclick="openAnimal()">Ver ficha</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="animal-id">#145</td>
-                        <td>Bezerro</td>
-                        <td>Lote 05</td>
-                        <td>20/05/2026</td>
-                        <td>210 kg</td>
-                        <td>0,81 kg</td>
-                        <td><span class="badge badge-green">Bom</span></td>
-                        <td>
-                            <button class="view-btn" onclick="openAnimal()">Ver ficha</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="animal-id">#187</td>
-                        <td>Garrote</td>
-                        <td>Lote 04</td>
-                        <td>15/01/2026</td>
-                        <td>388 kg</td>
-                        <td>0,48 kg</td>
-                        <td><span class="badge badge-yellow">Atenção</span></td>
-                        <td>
-                            <button class="view-btn" onclick="openAnimal()">Ver ficha</button>
-                        </td>
-                    </tr>
-
+                <tbody id="tabelaRebanhoCorpo">
+                    <!-- Dinâmico Firebase -->
                 </tbody>
 
             </table>
@@ -1512,7 +1460,7 @@ td {
             <p>Controle financeiro e resultado da propriedade.</p>
         </div>
 
-        <button class="primary-btn">
+        <button class="primary-btn" onclick="cadastrarFinanceiroNuvem()">
             + Novo lançamento
         </button>
 
@@ -1522,17 +1470,17 @@ td {
 
         <div class="finance-card">
             <small>RECEITAS</small>
-            <strong class="finance-positive">R$ 86.400</strong>
+            <strong class="finance-positive" id="finReceitas">R$ 86.400</strong>
         </div>
 
         <div class="finance-card">
             <small>DESPESAS</small>
-            <strong class="finance-negative">R$ 61.600</strong>
+            <strong class="finance-negative" id="finDespesas">R$ 61.600</strong>
         </div>
 
         <div class="finance-card">
             <small>LUCRO ESTIMADO</small>
-            <strong class="finance-positive">R$ 24.800</strong>
+            <strong class="finance-positive" id="finLucro">R$ 24.800</strong>
         </div>
 
         <div class="finance-card">
@@ -1567,35 +1515,8 @@ td {
                     </tr>
                 </thead>
 
-                <tbody>
-
-                    <tr>
-                        <td>22/08/2026</td>
-                        <td>Venda Lote 03</td>
-                        <td>Venda de animais</td>
-                        <td>Receita</td>
-                        <td class="finance-positive">+ R$ 42.800</td>
-                        <td><span class="badge badge-green">Recebido</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>20/08/2026</td>
-                        <td>Compra de ração</td>
-                        <td>Alimentação</td>
-                        <td>Despesa</td>
-                        <td class="finance-negative">- R$ 8.420</td>
-                        <td><span class="badge badge-green">Pago</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>18/08/2026</td>
-                        <td>Medicamentos</td>
-                        <td>Sanidade</td>
-                        <td>Despesa</td>
-                        <td class="finance-negative">- R$ 2.180</td>
-                        <td><span class="badge badge-green">Pago</span></td>
-                    </tr>
-
+                <tbody id="tabelaFinanceiroCorpo">
+                    <!-- Dinâmico Firebase -->
                 </tbody>
 
             </table>
@@ -1620,7 +1541,7 @@ td {
             <p>Controle de comercialização do rebanho.</p>
         </div>
 
-        <button class="primary-btn">
+        <button class="primary-btn" onclick="cadastrarVendaNuvem()">
             + Registrar venda
         </button>
 
@@ -1648,26 +1569,8 @@ td {
                     </tr>
                 </thead>
 
-                <tbody>
-
-                    <tr>
-                        <td>22/08/2026</td>
-                        <td>Lote 03</td>
-                        <td>32</td>
-                        <td>12.480 kg</td>
-                        <td>R$ 42.800</td>
-                        <td class="finance-positive">28,4%</td>
-                    </tr>
-
-                    <tr>
-                        <td>05/07/2026</td>
-                        <td>Lote 01</td>
-                        <td>24</td>
-                        <td>9.640 kg</td>
-                        <td>R$ 31.700</td>
-                        <td class="finance-positive">24,8%</td>
-                    </tr>
-
+                <tbody id="tabelaVendasCorpo">
+                    <!-- Dinâmico Firebase -->
                 </tbody>
 
             </table>
@@ -1850,8 +1753,8 @@ td {
                 <div class="animal-avatar">🐂</div>
 
                 <div>
-                    <h2>Animal #102</h2>
-                    <p>Garrote • Lote 03 • Fazenda São Francisco</p>
+                    <h2 id="modalAnimalTitulo">Animal #102</h2>
+                    <p id="modalAnimalSub">Garrote • Lote 03 • Fazenda São Francisco</p>
                 </div>
 
             </div>
@@ -1860,7 +1763,7 @@ td {
 
         </div>
 
-        <div class="animal-grid">
+        <div class="animal-grid" id="modalAnimalGridContent">
 
             <div class="info-box">
                 <small>CATEGORIA</small>
@@ -1941,8 +1844,185 @@ td {
 
 </div>
 
+<!-- FIREBASE SDKS -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
+
+/* =========================
+   CONFIGURAÇÃO FIREBASE & NUVEM
+========================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyD78bi-EKrmwRF0JBhvymuhlWGFaToAuY0",
+  authDomain: "controlagro-949e8.firebaseapp.com",
+  projectId: "controlagro-949e8",
+  storageBucket: "controlagro-949e8.firebasestorage.app",
+  messagingSenderId: "136436406720",
+  appId: "1:136436406720:web:ae7476e06505d91cc31025"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+let rebanhoGlobal = [];
+let financeiroGlobal = [];
+let vendasGlobal = [];
+
+let rebanhoChartInstancia = null;
+let financeChartInstancia = null;
+let pesoChartInstancia = null;
+let composicaoChartInstancia = null;
+
+// Sincronização em tempo real (OnSnapshot)
+function iniciarSincronizacaoFirebase() {
+    db.collection("fazenda_sao_francisco").doc("rebanho").collection("animais")
+      .onSnapshot(snapshot => {
+          rebanhoGlobal = [];
+          snapshot.forEach(doc => rebanhoGlobal.push({ id: doc.id, ...doc.data() }));
+          atualizarTabelaRebanhoNuvem();
+          atualizarDashboardDinamico();
+      });
+
+    db.collection("fazenda_sao_francisco").doc("financeiro").collection("lancamentos")
+      .onSnapshot(snapshot => {
+          financeiroGlobal = [];
+          snapshot.forEach(doc => financeiroGlobal.push({ id: doc.id, ...doc.data() }));
+          atualizarTabelaFinanceiroNuvem();
+          atualizarDashboardDinamico();
+      });
+
+    db.collection("fazenda_sao_francisco").doc("comercial").collection("vendas")
+      .onSnapshot(snapshot => {
+          vendasGlobal = [];
+          snapshot.forEach(doc => vendasGlobal.push({ id: doc.id, ...doc.data() }));
+          atualizarTabelaVendasNuvem();
+          atualizarDashboardDinamico();
+      });
+}
+
+function atualizarTabelaRebanhoNuvem() {
+    const tbody = document.getElementById("tabelaRebanhoCorpo");
+    if (!tbody) return;
+    if (rebanhoGlobal.length === 0) return; // Se vazio, mantém o estático de exemplo
+    
+    tbody.innerHTML = "";
+    rebanhoGlobal.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td class="animal-id">#${item.brinco || '---'}</td>
+            <td>${item.categoria || 'Geral'}</td>
+            <td>${item.lote || 'Lote 01'}</td>
+            <td>${item.dataEntrada || '---'}</td>
+            <td>${item.peso || 0} kg</td>
+            <td>0,75 kg</td>
+            <td><span class="badge badge-green">Bom</span></td>
+            <td><button class="view-btn" onclick="openAnimal()">Ver ficha</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function atualizarTabelaFinanceiroNuvem() {
+    const tbody = document.getElementById("tabelaFinanceiroCorpo");
+    if (!tbody) return;
+    if (financeiroGlobal.length === 0) return;
+
+    tbody.innerHTML = "";
+    financeiroGlobal.forEach(item => {
+        const isRec = item.tipo === "Receita";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${item.data || '---'}</td>
+            <td>${item.descricao || ''}</td>
+            <td>${item.categoria || ''}</td>
+            <td>${item.tipo || 'Despesa'}</td>
+            <td class="${isRec ? 'finance-positive' : 'finance-negative'}">${isRec ? '+' : '-'} R$ ${Number(item.valor || 0).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+            <td><span class="badge badge-green">OK</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function atualizarTabelaVendasNuvem() {
+    const tbody = document.getElementById("tabelaVendasCorpo");
+    if (!tbody) return;
+    if (vendasGlobal.length === 0) return;
+
+    tbody.innerHTML = "";
+    vendasGlobal.forEach(v => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${v.data || '---'}</td>
+            <td>${v.lote || 'Lote'}</td>
+            <td>${v.animais || 0}</td>
+            <td>${v.pesoTotal || 0} kg</td>
+            <td>R$ ${Number(v.valor || 0).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+            <td class="finance-positive">28%</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function atualizarDashboardDinamico() {
+    if (rebanhoGlobal.length > 0) {
+        const total = rebanhoGlobal.length;
+        document.getElementById("kpiRebanhoTotal").innerText = total;
+        
+        let somaPeso = 0;
+        rebanhoGlobal.forEach(a => somaPeso += Number(a.peso || 0));
+        const media = Math.round(somaPeso / total);
+        document.getElementById("kpiRebanhoPesoMedio").innerText = `${media} kg`;
+    }
+}
+
+// Funções de inserção rápida via prompt vinculadas aos botões originais
+async function cadastrarAnimalNuvem() {
+    const brinco = prompt("Número do Brinco (ex: 150):");
+    if (!brinco) return;
+    const categoria = prompt("Categoria (Garrote, Novilha, Bezerro, Vaca):", "Garrote");
+    const lote = prompt("Lote (ex: Lote 03):", "Lote 03");
+    const peso = prompt("Peso atual (kg):", "380");
+
+    await db.collection("fazenda_sao_francisco").doc("rebanho").collection("animais").add({
+        brinco, categoria, lote, peso: Number(peso) || 350,
+        dataEntrada: new Date().toLocaleDateString('pt-BR')
+    });
+    alert("Animal salvo e sincronizado na nuvem!");
+}
+
+async function cadastrarVendaNuvem() {
+    const lote = prompt("Lote vendido:", "Lote 03");
+    if (!lote) return;
+    const animais = prompt("Qtd animais:", "30");
+    const pesoTotal = prompt("Peso total (kg):", "12000");
+    const valor = prompt("Valor total (R$):", "45000");
+
+    await db.collection("fazenda_sao_francisco").doc("comercial").collection("vendas").add({
+        lote, animais: Number(animais), pesoTotal: Number(pesoTotal), valor: Number(valor),
+        data: new Date().toLocaleDateString('pt-BR')
+    });
+    alert("Venda registrada na nuvem!");
+}
+
+async function cadastrarFinanceiroNuvem() {
+    const descricao = prompt("Descrição:");
+    if (!descricao) return;
+    const categoria = prompt("Categoria:", "Alimentação");
+    const tipo = prompt("Tipo (Receita ou Despesa):", "Despesa");
+    const valor = prompt("Valor (R$):", "1500");
+
+    await db.collection("fazenda_sao_francisco").doc("financeiro").collection("lancamentos").add({
+        descricao, categoria, tipo, valor: Number(valor),
+        data: new Date().toLocaleDateString('pt-BR')
+    });
+    alert("Lançamento salvo na nuvem!");
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    iniciarSincronizacaoFirebase();
+});
+
 
 /* =========================
    NAVEGAÇÃO
