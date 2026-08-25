@@ -824,6 +824,362 @@ td {
         font-size: 20px;
     }
 }
+
+/* =========================
+   MELHORIAS FUNCIONAIS
+========================= */
+button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--texto-secundario);
+}
+
+.form-control {
+    width: 100%;
+    min-height: 42px;
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+    background: #fff;
+    padding: 9px 11px;
+    font: inherit;
+    color: var(--texto);
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: var(--verde-acento);
+    box-shadow: 0 0 0 3px rgba(53,166,107,.12);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 86px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.ghost-btn {
+    border: 1px solid var(--borda);
+    background: #fff;
+    color: var(--texto);
+    padding: 10px 14px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.empty-state {
+    padding: 28px 12px;
+    text-align: center;
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+.filter-summary {
+    margin: -4px 0 14px;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+    background: #f8faf9;
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.filter-summary.show {
+    display: flex;
+}
+
+.toast-container {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: min(360px, calc(100vw - 30px));
+}
+
+.toast {
+    background: #fff;
+    border: 1px solid var(--borda);
+    border-left: 4px solid var(--verde);
+    box-shadow: 0 14px 35px rgba(0,0,0,.13);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px;
+    animation: toastIn .18s ease-out;
+}
+
+.toast.error { border-left-color: var(--vermelho); }
+.toast.warning { border-left-color: var(--amarelo); }
+
+@keyframes toastIn {
+    from { transform: translateY(8px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.cloud-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 10px;
+    background: #f2f4f3;
+    color: var(--texto-secundario);
+}
+
+.cloud-status.online {
+    background: var(--verde-claro);
+    color: var(--verde);
+}
+
+.cloud-status.offline {
+    background: var(--amarelo-bg);
+    color: #8c6200;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 20px;
+}
+
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-row {
+    padding: 13px 0;
+    border-bottom: 1px solid var(--borda);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+}
+
+.settings-row:last-child {
+    border-bottom: 0;
+}
+
+.settings-row small {
+    color: var(--texto-secundario);
+    display: block;
+    margin-top: 3px;
+}
+
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.28);
+    z-index: 90;
+}
+
+.sidebar-backdrop.show {
+    display: block;
+}
+
+.data-source-note {
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--texto-secundario);
+}
+
+@media (max-width: 800px) {
+    .form-grid,
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-box {
+        padding: 20px;
+    }
+}
+
+@media print {
+    .sidebar,
+    .topbar,
+    .page-title button,
+    .secondary-btn,
+    .primary-btn {
+        display: none !important;
+    }
+
+    .main {
+        margin-left: 0 !important;
+    }
+
+    .page {
+        display: none !important;
+    }
+
+    .page.active {
+        display: block !important;
+    }
+
+    body {
+        background: #fff;
+    }
+
+    .panel,
+    .kpi-card,
+    .finance-card {
+        box-shadow: none !important;
+        break-inside: avoid;
+    }
+}
+
+
+/* =========================
+   FILTRO MENSAL + AÇÕES CRUD
+========================= */
+.period-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding: 13px 15px;
+    background: #fff;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+}
+
+.period-filter-info {
+    min-width: 0;
+}
+
+.period-filter-info strong {
+    display: block;
+    font-size: 12px;
+}
+
+.period-filter-info small {
+    display: block;
+    margin-top: 3px;
+    color: var(--texto-secundario);
+    font-size: 10px;
+}
+
+.period-filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.period-filter-controls select {
+    min-width: 190px;
+}
+
+.table-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.action-btn {
+    border: 1px solid var(--borda);
+    background: #fff;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 9px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.action-btn:hover {
+    background: #f4f7f5;
+}
+
+.action-btn.edit {
+    color: var(--verde);
+}
+
+.action-btn.delete {
+    color: var(--vermelho);
+}
+
+.action-btn.delete:hover {
+    background: var(--vermelho-bg);
+    border-color: #f2cccc;
+}
+
+.stock-actions {
+    margin-top: 9px;
+    display: flex;
+    gap: 7px;
+    justify-content: flex-end;
+}
+
+.record-meta {
+    color: var(--texto-secundario);
+    font-size: 10px;
+}
+
+@media (max-width: 700px) {
+    .period-filter-bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .period-filter-controls,
+    .period-filter-controls select {
+        width: 100%;
+    }
+
+    .period-filter-controls .form-control {
+        flex: 1;
+    }
+
+    .table-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .action-btn {
+        height: 36px;
+    }
+}
+
 </style>
 </head>
 
@@ -889,7 +1245,7 @@ td {
         Relatórios
     </button>
 
-    <button class="menu-item">
+    <button class="menu-item" onclick="showPage('configuracoes', this)">
         <span class="menu-icon">⚙️</span>
         Configurações
     </button>
@@ -934,6 +1290,22 @@ td {
 
 <div class="content">
 
+
+<div class="period-filter-bar" id="periodFilterBar">
+    <div class="period-filter-info">
+        <strong>📅 Mês de referência</strong>
+        <small>O histórico é preservado. Novos meses entram automaticamente no filtro.</small>
+    </div>
+    <div class="period-filter-controls">
+        <select class="form-control" id="globalMonthFilter" aria-label="Filtrar por mês">
+            <option value="all">Todos os meses</option>
+        </select>
+        <button class="secondary-btn" type="button" onclick="irMesAtual()">Mês atual</button>
+        <button class="ghost-btn" type="button" onclick="limparFiltroMes()">Ver todo histórico</button>
+    </div>
+</div>
+
+
 <!-- =========================
      DASHBOARD
 ========================= -->
@@ -946,7 +1318,7 @@ td {
             <p>Acompanhe os principais indicadores da sua fazenda.</p>
         </div>
 
-        <button class="primary-btn" onclick="alert('Atualização dos dados iniciada!')">
+        <button class="primary-btn" onclick="atualizarDados(this)">
             ↻ Atualizar dados
         </button>
     </div>
@@ -1223,7 +1595,7 @@ td {
         <div class="panel-header">
             <h2>Animais cadastrados</h2>
 
-            <button class="secondary-btn">
+            <button class="secondary-btn" onclick="filtrarRebanho()">
                 🔎 Filtrar
             </button>
         </div>
@@ -1241,7 +1613,7 @@ td {
                         <th>Peso</th>
                         <th>GMD</th>
                         <th>Status</th>
-                        <th></th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
 
@@ -1271,7 +1643,7 @@ td {
             <p>Histórico de evolução de peso dos animais.</p>
         </div>
 
-        <button class="primary-btn">
+        <button class="primary-btn" onclick="abrirModalPesagem()">
             + Registrar pesagem
         </button>
 
@@ -1297,6 +1669,7 @@ td {
                         <th>Peso atual</th>
                         <th>Ganho</th>
                         <th>GMD</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
 
@@ -1356,8 +1729,8 @@ td {
             <p>Acompanhe quantidade, consumo e previsão de estoque.</p>
         </div>
 
-        <button class="primary-btn">
-            + Entrada de estoque
+        <button class="primary-btn" onclick="abrirModalEstoque()">
+            + Movimentar estoque
         </button>
 
     </div>
@@ -1495,7 +1868,7 @@ td {
         <div class="panel-header">
             <h2>Movimentações financeiras</h2>
 
-            <button class="secondary-btn">
+            <button class="secondary-btn" onclick="filtrarFinanceiro()">
                 🔎 Filtrar período
             </button>
         </div>
@@ -1512,6 +1885,7 @@ td {
                         <th>Tipo</th>
                         <th>Valor</th>
                         <th>Status</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
 
@@ -1566,6 +1940,7 @@ td {
                         <th>Peso total</th>
                         <th>Valor</th>
                         <th>Margem</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
 
@@ -1595,7 +1970,7 @@ td {
             <p>Registro das atividades realizadas na propriedade.</p>
         </div>
 
-        <button class="primary-btn">
+        <button class="primary-btn" onclick="abrirModalOperacao()">
             + Nova operação
         </button>
 
@@ -1680,7 +2055,7 @@ td {
             <p>Gere relatórios completos da sua propriedade.</p>
         </div>
 
-        <button class="primary-btn" onclick="generateReport()">
+        <button class="primary-btn" onclick="gerarRelatorio('geral')">
             📄 Gerar relatório da fazenda
         </button>
 
@@ -1692,46 +2067,125 @@ td {
             <div class="report-icon">📊</div>
             <h3>Relatório geral</h3>
             <p>Resumo da propriedade com indicadores, gráficos e situação financeira.</p>
-            <button class="secondary-btn" onclick="generateReport()">📥 Exportar PDF</button>
+            <button class="secondary-btn" onclick="gerarRelatorio('geral')">📥 Exportar PDF</button>
         </div>
 
         <div class="report-card">
             <div class="report-icon">🐂</div>
             <h3>Relatório do rebanho</h3>
             <p>Lista completa dos animais, categorias, pesos e lotes.</p>
-            <button class="secondary-btn">📥 Exportar Excel</button>
+            <button class="secondary-btn" onclick="exportarCSV('rebanho')">📥 Exportar Excel/CSV</button>
         </div>
 
         <div class="report-card">
             <div class="report-icon">⚖️</div>
             <h3>Histórico de pesagens</h3>
             <p>Evolução de peso e ganho médio diário dos animais.</p>
-            <button class="secondary-btn">📥 Exportar PDF</button>
+            <button class="secondary-btn" onclick="gerarRelatorio('pesagens')">📥 Exportar PDF</button>
         </div>
 
         <div class="report-card">
             <div class="report-icon">💰</div>
             <h3>Relatório financeiro</h3>
             <p>Receitas, despesas, lucro e margem da propriedade.</p>
-            <button class="secondary-btn">📥 Exportar PDF</button>
+            <button class="secondary-btn" onclick="gerarRelatorio('financeiro')">📥 Exportar PDF</button>
         </div>
 
         <div class="report-card">
             <div class="report-icon">🌾</div>
             <h3>Relatório de estoque</h3>
             <p>Produtos, quantidades, consumo e previsão de duração.</p>
-            <button class="secondary-btn">📥 Exportar Excel</button>
+            <button class="secondary-btn" onclick="exportarCSV('estoque')">📥 Exportar Excel/CSV</button>
         </div>
 
         <div class="report-card">
             <div class="report-icon">📈</div>
             <h3>Rentabilidade</h3>
             <p>Custos, receita, margem e resultado por lote.</p>
-            <button class="secondary-btn">📥 Exportar PDF</button>
+            <button class="secondary-btn" onclick="gerarRelatorio('rentabilidade')">📥 Exportar PDF</button>
         </div>
 
     </div>
 
+</section>
+
+
+<!-- =========================
+     CONFIGURAÇÕES
+========================= -->
+<section id="configuracoes" class="page">
+    <div class="page-title">
+        <div>
+            <h1>⚙️ Configurações</h1>
+            <p>Preferências da propriedade, sincronização e comportamento dos alertas.</p>
+        </div>
+        <button class="primary-btn" onclick="salvarConfiguracoes()">Salvar alterações</button>
+    </div>
+
+    <div class="settings-grid">
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Dados da propriedade</h2>
+                <span>Preferências locais</span>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label for="cfgFazenda">Nome da propriedade</label>
+                    <input class="form-control" id="cfgFazenda" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgUsuario">Nome do usuário</label>
+                    <input class="form-control" id="cfgUsuario" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgIniciais">Iniciais do avatar</label>
+                    <input class="form-control" id="cfgIniciais" maxlength="3" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgEstoqueCritico">Alerta estoque crítico (dias)</label>
+                    <input class="form-control" id="cfgEstoqueCritico" type="number" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgPesagemAtrasada">Pesagem atrasada (dias)</label>
+                    <input class="form-control" id="cfgPesagemAtrasada" type="number" min="1">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Sincronização</h2>
+                <span id="configCloudStatus" class="cloud-status">Verificando...</span>
+            </div>
+
+            <div class="settings-list">
+                <div class="settings-row">
+                    <div>
+                        <strong>Firebase / Firestore</strong>
+                        <small>Rebanho, financeiro e vendas usam a nuvem quando disponível.</small>
+                    </div>
+                    <button class="secondary-btn" onclick="testarConexaoFirebase()">Testar</button>
+                </div>
+
+                <div class="settings-row">
+                    <div>
+                        <strong>Dados locais</strong>
+                        <small>Pesagens, estoque, operações e preferências têm fallback local.</small>
+                    </div>
+                    <button class="secondary-btn" onclick="limparDadosLocais()">Limpar</button>
+                </div>
+            </div>
+
+            <div class="data-source-note">
+                Se a conexão com o Firestore falhar, o sistema continua utilizável com armazenamento local neste navegador.
+            </div>
+        </div>
+    </div>
 </section>
 
 </div>
@@ -1844,15 +2298,49 @@ td {
 
 </div>
 
+
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="fecharSidebar()"></div>
+
+<div class="modal" id="actionModal">
+    <div class="modal-box" style="width:720px;">
+        <div class="modal-header">
+            <div>
+                <h2 id="actionModalTitle" style="font-size:18px;">Ação</h2>
+                <p id="actionModalSub" style="font-size:11px;color:var(--texto-secundario);margin-top:4px;"></p>
+            </div>
+            <button class="close" onclick="fecharModalAcao()">×</button>
+        </div>
+        <form id="actionForm">
+            <div id="actionModalBody"></div>
+            <div class="modal-actions">
+                <button type="button" class="ghost-btn" onclick="fecharModalAcao()">Cancelar</button>
+                <button type="submit" class="primary-btn" id="actionSubmitBtn">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+
 <!-- FIREBASE SDKS -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-<script>
 
-/* =========================
-   CONFIGURAÇÃO FIREBASE & NUVEM
-========================= */
+<script>
+"use strict";
+
+/* ==========================================================
+   CONTROLAGRO - CAMADA FUNCIONAL
+   - Firebase com fallback local
+   - Formulários em modal
+   - Filtros
+   - Pesagens, estoque e operações
+   - Exportação CSV e relatórios imprimíveis/PDF
+   - Configurações
+========================================================== */
+
 const firebaseConfig = {
   apiKey: "AIzaSyD78bi-EKrmwRF0JBhvymuhlWGFaToAuY0",
   authDomain: "controlagro-949e8.firebaseapp.com",
@@ -1862,665 +2350,2266 @@ const firebaseConfig = {
   appId: "1:136436406720:web:ae7476e06505d91cc31025"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const STORAGE_KEYS = {
+    rebanho: "controlagro_rebanho",
+    financeiro: "controlagro_financeiro",
+    vendas: "controlagro_vendas",
+    pesagens: "controlagro_pesagens",
+    estoque: "controlagro_estoque",
+    operacoes: "controlagro_operacoes",
+    config: "controlagro_config"
+};
 
-let rebanhoGlobal = [];
-let financeiroGlobal = [];
-let vendasGlobal = [];
+const DEFAULTS = {
+    rebanho: [
+        { id:"local-102", brinco:"102", categoria:"Garrote", lote:"Lote 03", dataEntrada:"2026-03-12", peso:395, pesoInicial:280, gmd:0.78, status:"Bom", valorCompra:4200, custoAcumulado:2180, valorEstimado:7460 },
+        { id:"local-118", brinco:"118", categoria:"Novilha", lote:"Lote 02", dataEntrada:"2026-04-02", peso:362, pesoInicial:294, gmd:0.64, status:"Bom" },
+        { id:"local-145", brinco:"145", categoria:"Bezerro", lote:"Lote 05", dataEntrada:"2026-06-10", peso:210, pesoInicial:156, gmd:0.81, status:"Atenção" }
+    ],
+    financeiro: [
+        { id:"local-fin-1", data:"2026-08-05", descricao:"Venda Lote 03", categoria:"Venda de animais", tipo:"Receita", valor:86400 },
+        { id:"local-fin-2", data:"2026-08-10", descricao:"Compra de alimentação", categoria:"Alimentação", tipo:"Despesa", valor:43200 },
+        { id:"local-fin-3", data:"2026-08-14", descricao:"Manejo sanitário", categoria:"Sanidade", tipo:"Despesa", valor:18400 }
+    ],
+    vendas: [
+        { id:"local-v-1", data:"2026-08-05", lote:"Lote 03", animais:30, pesoTotal:12000, valor:86400, margem:28.7 }
+    ],
+    pesagens: [
+        { id:"local-p-1", data:"2026-08-18", brinco:"102", lote:"Lote 03", pesoAnterior:370, pesoAtual:395, ganho:25, gmd:0.78 },
+        { id:"local-p-2", data:"2026-08-18", brinco:"118", lote:"Lote 02", pesoAnterior:344, pesoAtual:362, ganho:18, gmd:0.64 },
+        { id:"local-p-3", data:"2026-08-15", brinco:"145", lote:"Lote 05", pesoAnterior:186, pesoAtual:210, ganho:24, gmd:0.81 }
+    ],
+    estoque: [
+        { id:"silagem", produto:"Silagem", quantidade:2340, unidade:"kg", consumoDia:420 },
+        { id:"milho", produto:"Milho", quantidade:4820, unidade:"kg", consumoDia:268 },
+        { id:"racao", produto:"Ração", quantidade:5240, unidade:"kg", consumoDia:164 }
+    ],
+    operacoes: [
+        { id:"local-o-1", tipo:"Alimentação", descricao:"Distribuição de alimentação", lote:"Lote 03", data:"2026-08-25", hora:"07:20", status:"Concluída" },
+        { id:"local-o-2", tipo:"Pesagem", descricao:"Pesagem realizada", lote:"46 animais", data:"2026-08-24", hora:"16:40", status:"Concluída" },
+        { id:"local-o-3", tipo:"Sanidade", descricao:"Manejo sanitário", lote:"Lote 05", data:"2026-08-26", hora:"07:30", status:"Programada" }
+    ],
+    config: {
+        fazenda: "Fazenda São Francisco do Rio Verde",
+        usuario: "Débora Olv",
+        iniciais: "DO",
+        estoqueCritico: 7,
+        pesagemAtrasada: 60
+    }
+};
+
+let db = null;
+let firebaseOnline = false;
+let firestoreSnapshotRecebido = false;
+let rebanhoGlobal = carregarLocal("rebanho");
+let financeiroGlobal = carregarLocal("financeiro");
+let vendasGlobal = carregarLocal("vendas");
+let pesagensGlobal = carregarLocal("pesagens");
+let estoqueGlobal = carregarLocal("estoque");
+let operacoesGlobal = carregarLocal("operacoes");
+let configGlobal = carregarConfig();
+
+let filtroRebanhoAtual = {};
+let filtroFinanceiroAtual = {};
+let mesGlobalSelecionado = localStorage.getItem("controlagro_mes_selecionado") || "all";
+let actionSubmitHandler = null;
 
 let rebanhoChartInstancia = null;
 let financeChartInstancia = null;
 let pesoChartInstancia = null;
 let composicaoChartInstancia = null;
+let animalChartInstance = null;
 
-// Sincronização em tempo real (OnSnapshot)
+/* -------------------------
+   UTILITÁRIOS
+------------------------- */
+
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
+function carregarLocal(tipo) {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEYS[tipo]);
+        if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return clone(DEFAULTS[tipo]);
+}
+
+function salvarLocal(tipo, dados) {
+    try {
+        localStorage.setItem(STORAGE_KEYS[tipo], JSON.stringify(dados));
+    } catch (e) {
+        console.warn("Não foi possível salvar localmente:", e);
+    }
+}
+
+function carregarConfig() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEYS.config);
+        return raw ? { ...DEFAULTS.config, ...JSON.parse(raw) } : clone(DEFAULTS.config);
+    } catch (e) {
+        return clone(DEFAULTS.config);
+    }
+}
+
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function gerarId(prefix="local") {
+    return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function hojeISO() {
+    const d = new Date();
+    const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+    return local.toISOString().slice(0,10);
+}
+
+function formatarData(value) {
+    if (!value) return "---";
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(value)) return value;
+    const s = String(value).slice(0,10);
+    const [y,m,d] = s.split("-");
+    return y && m && d ? `${d}/${m}/${y}` : value;
+}
+
+
+function normalizarDataISO(value) {
+    if (!value) return "";
+    const s = String(value).trim();
+    if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0,10);
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(s)) {
+        const [d,m,y] = s.split("/");
+        return `${y}-${m}-${d}`;
+    }
+    return "";
+}
+
+function chaveMes(value) {
+    const iso = normalizarDataISO(value);
+    return iso ? iso.slice(0,7) : "";
+}
+
+function mesAtualChave() {
+    return hojeISO().slice(0,7);
+}
+
+function nomeMes(chave) {
+    if (!/^\d{4}-\d{2}$/.test(chave)) return chave;
+    const [ano, mes] = chave.split("-").map(Number);
+    const nomes = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+    return `${nomes[mes-1]} de ${ano}`;
+}
+
+function registroNoMes(data) {
+    return mesGlobalSelecionado === "all" || chaveMes(data) === mesGlobalSelecionado;
+}
+
+function mesesEntre(inicio, fim) {
+    if (!inicio || !fim) return [];
+    const [yi, mi] = inicio.split("-").map(Number);
+    const [yf, mf] = fim.split("-").map(Number);
+    const out = [];
+    let y = yi, m = mi;
+    let guard = 0;
+    while ((y < yf || (y === yf && m <= mf)) && guard < 240) {
+        out.push(`${y}-${String(m).padStart(2,"0")}`);
+        m++;
+        if (m > 12) { m = 1; y++; }
+        guard++;
+    }
+    return out;
+}
+
+function obterMesesDisponiveis() {
+    const datas = [
+        ...financeiroGlobal.map(x => x.data),
+        ...vendasGlobal.map(x => x.data),
+        ...pesagensGlobal.map(x => x.data),
+        ...operacoesGlobal.map(x => x.data),
+        ...rebanhoGlobal.map(x => x.dataEntrada)
+    ].map(chaveMes).filter(Boolean);
+
+    datas.push(mesAtualChave());
+
+    const ordenadas = [...new Set(datas)].sort();
+    if (!ordenadas.length) return [mesAtualChave()];
+
+    // Cria a sequência contínua entre o primeiro mês registrado e o mês atual/mais recente.
+    // Assim, meses sem lançamento também continuam disponíveis no histórico.
+    const primeiro = ordenadas[0];
+    const ultimo = [ordenadas[ordenadas.length - 1], mesAtualChave()].sort().at(-1);
+    return mesesEntre(primeiro, ultimo).reverse();
+}
+
+function atualizarFiltroMesUI() {
+    const select = document.getElementById("globalMonthFilter");
+    if (!select) return;
+
+    const meses = obterMesesDisponiveis();
+    const valorAnterior = mesGlobalSelecionado;
+
+    select.innerHTML = '<option value="all">Todos os meses</option>' +
+        meses.map(m => `<option value="${m}">${nomeMes(m)}</option>`).join("");
+
+    if (valorAnterior !== "all" && meses.includes(valorAnterior)) {
+        select.value = valorAnterior;
+    } else if (valorAnterior === "all") {
+        select.value = "all";
+    } else {
+        mesGlobalSelecionado = "all";
+        select.value = "all";
+    }
+}
+
+function aplicarFiltroMes(valor) {
+    mesGlobalSelecionado = valor || "all";
+    localStorage.setItem("controlagro_mes_selecionado", mesGlobalSelecionado);
+    atualizarTudo();
+    toast(mesGlobalSelecionado === "all" ? "Exibindo todo o histórico." : `Exibindo ${nomeMes(mesGlobalSelecionado)}.`);
+}
+
+function irMesAtual() {
+    const atual = mesAtualChave();
+    atualizarFiltroMesUI();
+    const select = document.getElementById("globalMonthFilter");
+    if (select) select.value = atual;
+    aplicarFiltroMes(atual);
+}
+
+function limparFiltroMes() {
+    const select = document.getElementById("globalMonthFilter");
+    if (select) select.value = "all";
+    aplicarFiltroMes("all");
+}
+
+function numero(value) {
+    if (typeof value === "number") return value;
+    const normalized = String(value ?? "").trim().replace(/\./g,"").replace(",",".");
+    return Number(normalized) || 0;
+}
+
+function moeda(value) {
+    return numero(value).toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+}
+
+function normalizarTipo(value) {
+    const v = String(value || "").trim().toLowerCase();
+    return v === "receita" ? "Receita" : "Despesa";
+}
+
+function diasEntre(dataInicial, dataFinal = hojeISO()) {
+    if (!dataInicial) return 0;
+    const a = new Date(String(dataInicial).slice(0,10) + "T12:00:00");
+    const b = new Date(String(dataFinal).slice(0,10) + "T12:00:00");
+    if (Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) return 0;
+    return Math.max(0, Math.floor((b-a)/86400000));
+}
+
+function toast(mensagem, tipo="success") {
+    const container = document.getElementById("toastContainer");
+    if (!container) return;
+    const el = document.createElement("div");
+    el.className = `toast ${tipo}`;
+    el.textContent = mensagem;
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 4200);
+}
+
+function emptyRow(colspan, texto) {
+    return `<tr><td colspan="${colspan}"><div class="empty-state">${escapeHtml(texto)}</div></td></tr>`;
+}
+
+function obterFormulario(form) {
+    return Object.fromEntries(new FormData(form).entries());
+}
+
+function badgeStatus(status) {
+    const s = String(status || "Bom");
+    const yellow = /aten|program|pend/i.test(s);
+    return `<span class="badge ${yellow ? "badge-yellow" : "badge-green"}">${escapeHtml(s)}</span>`;
+}
+
+/* -------------------------
+   FIREBASE / SINCRONIZAÇÃO
+------------------------- */
+
+function definirStatusNuvem(status, detalhe="") {
+    firebaseOnline = status === "online";
+    const el = document.getElementById("configCloudStatus");
+    if (el) {
+        el.className = `cloud-status ${firebaseOnline ? "online" : "offline"}`;
+        el.textContent = firebaseOnline ? "● Conectado" : "● Modo local";
+        el.title = detalhe || "";
+    }
+}
+
+function inicializarFirebaseSeguro() {
+    if (!window.firebase || !firebase.initializeApp || !firebase.firestore) {
+        definirStatusNuvem("offline", "SDK do Firebase indisponível.");
+        toast("Firebase indisponível. O sistema continuará em modo local.", "warning");
+        return;
+    }
+
+    try {
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        iniciarSincronizacaoFirebase();
+    } catch (e) {
+        console.error(e);
+        definirStatusNuvem("offline", e.message);
+        toast("Não foi possível iniciar a nuvem. Dados locais permanecem ativos.", "warning");
+    }
+}
+
 function iniciarSincronizacaoFirebase() {
-    db.collection("fazenda_sao_francisco").doc("rebanho").collection("animais")
-      .onSnapshot(snapshot => {
-          rebanhoGlobal = [];
-          snapshot.forEach(doc => rebanhoGlobal.push({ id: doc.id, ...doc.data() }));
-          atualizarTabelaRebanhoNuvem();
-          atualizarDashboardDinamico();
-      });
+    const fontes = [
+        {
+            ref: () => db.collection("fazenda_sao_francisco").doc("rebanho").collection("animais"),
+            aplicar: dados => {
+                if (dados.length) {
+                    rebanhoGlobal = dados;
+                    salvarLocal("rebanho", dados);
+                }
+                atualizarTudo();
+            }
+        },
+        {
+            ref: () => db.collection("fazenda_sao_francisco").doc("financeiro").collection("lancamentos"),
+            aplicar: dados => {
+                if (dados.length) {
+                    financeiroGlobal = dados;
+                    salvarLocal("financeiro", dados);
+                }
+                atualizarTudo();
+            }
+        },
+        {
+            ref: () => db.collection("fazenda_sao_francisco").doc("comercial").collection("vendas"),
+            aplicar: dados => {
+                if (dados.length) {
+                    vendasGlobal = dados;
+                    salvarLocal("vendas", dados);
+                }
+                atualizarTudo();
+            }
+        }
+    ];
 
-    db.collection("fazenda_sao_francisco").doc("financeiro").collection("lancamentos")
-      .onSnapshot(snapshot => {
-          financeiroGlobal = [];
-          snapshot.forEach(doc => financeiroGlobal.push({ id: doc.id, ...doc.data() }));
-          atualizarTabelaFinanceiroNuvem();
-          atualizarDashboardDinamico();
-      });
+    let okCount = 0;
 
-    db.collection("fazenda_sao_francisco").doc("comercial").collection("vendas")
-      .onSnapshot(snapshot => {
-          vendasGlobal = [];
-          snapshot.forEach(doc => vendasGlobal.push({ id: doc.id, ...doc.data() }));
-          atualizarTabelaVendasNuvem();
-          atualizarDashboardDinamico();
-      });
+    fontes.forEach(fonte => {
+        try {
+            fonte.ref().onSnapshot(snapshot => {
+                firestoreSnapshotRecebido = true;
+                okCount++;
+                const dados = snapshot.docs.map(doc => ({ id:doc.id, ...doc.data() }));
+                fonte.aplicar(dados);
+                if (okCount >= 1) definirStatusNuvem("online");
+            }, err => {
+                console.warn("Falha onSnapshot:", err);
+                definirStatusNuvem("offline", err.message);
+            });
+        } catch (e) {
+            definirStatusNuvem("offline", e.message);
+        }
+    });
+}
+
+async function adicionarNaNuvem(caminho, payload) {
+    if (!db) throw new Error("Firestore não inicializado.");
+    if (caminho === "rebanho") {
+        return db.collection("fazenda_sao_francisco").doc("rebanho").collection("animais").add(payload);
+    }
+    if (caminho === "financeiro") {
+        return db.collection("fazenda_sao_francisco").doc("financeiro").collection("lancamentos").add(payload);
+    }
+    if (caminho === "vendas") {
+        return db.collection("fazenda_sao_francisco").doc("comercial").collection("vendas").add(payload);
+    }
+    throw new Error("Coleção não mapeada.");
+}
+
+async function salvarComFallback(tipo, payload) {
+    const registro = { id: gerarId(tipo), ...payload };
+
+    if (["rebanho","financeiro","vendas"].includes(tipo) && db) {
+        try {
+            const doc = await adicionarNaNuvem(tipo, payload);
+            definirStatusNuvem("online");
+            return { ...registro, id:doc.id, cloud:true };
+        } catch (e) {
+            console.warn("Falha na gravação em nuvem:", e);
+            definirStatusNuvem("offline", e.message);
+            toast("Falha ao gravar na nuvem. Registro salvo localmente.", "warning");
+        }
+    }
+
+    if (tipo === "rebanho") {
+        rebanhoGlobal.push(registro); salvarLocal("rebanho", rebanhoGlobal);
+    } else if (tipo === "financeiro") {
+        financeiroGlobal.push(registro); salvarLocal("financeiro", financeiroGlobal);
+    } else if (tipo === "vendas") {
+        vendasGlobal.push(registro); salvarLocal("vendas", vendasGlobal);
+    }
+    atualizarTudo();
+    return registro;
+}
+
+async function testarConexaoFirebase() {
+    if (!db) {
+        inicializarFirebaseSeguro();
+        return;
+    }
+    try {
+        await db.collection("fazenda_sao_francisco").limit(1).get();
+        definirStatusNuvem("online");
+        toast("Conexão com o Firestore validada.");
+    } catch (e) {
+        definirStatusNuvem("offline", e.message);
+        toast("A conexão com o Firestore não está disponível.", "error");
+    }
+}
+
+/* -------------------------
+   NAVEGAÇÃO
+------------------------- */
+
+function showPage(pageId, button) {
+    const alvo = document.getElementById(pageId);
+    if (!alvo) {
+        toast(`Tela "${pageId}" não encontrada.`, "error");
+        return;
+    }
+
+    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+    alvo.classList.add("active");
+
+    document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+    if (button) button.classList.add("active");
+
+    window.scrollTo({ top:0, behavior:"smooth" });
+    fecharSidebar();
+
+    if (pageId === "configuracoes") preencherConfiguracoes();
+}
+
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("sidebarBackdrop");
+    const opened = sidebar.classList.toggle("open");
+    backdrop?.classList.toggle("show", opened);
+}
+
+function fecharSidebar() {
+    document.getElementById("sidebar")?.classList.remove("open");
+    document.getElementById("sidebarBackdrop")?.classList.remove("show");
+}
+
+/* -------------------------
+   MODAL GENÉRICO
+------------------------- */
+
+function abrirModalAcao(titulo, subtitulo, corpoHtml, submitText, handler) {
+    document.getElementById("actionModalTitle").textContent = titulo;
+    document.getElementById("actionModalSub").textContent = subtitulo || "";
+    document.getElementById("actionModalBody").innerHTML = corpoHtml;
+    document.getElementById("actionSubmitBtn").textContent = submitText || "Salvar";
+    actionSubmitHandler = handler;
+    document.getElementById("actionModal").classList.add("show");
+}
+
+function fecharModalAcao() {
+    document.getElementById("actionModal")?.classList.remove("show");
+    actionSubmitHandler = null;
+}
+
+document.getElementById("actionForm")?.addEventListener("submit", async e => {
+    e.preventDefault();
+    if (!actionSubmitHandler) return;
+    const btn = document.getElementById("actionSubmitBtn");
+    btn.disabled = true;
+    try {
+        await actionSubmitHandler(e.currentTarget);
+    } catch (err) {
+        console.error(err);
+        toast(err.message || "Não foi possível concluir a ação.", "error");
+    } finally {
+        btn.disabled = false;
+    }
+});
+
+document.getElementById("actionModal")?.addEventListener("click", e => {
+    if (e.target === e.currentTarget) fecharModalAcao();
+});
+
+/* -------------------------
+   REBANHO
+------------------------- */
+
+function rebanhoFiltrado() {
+    const busca = String(filtroRebanhoAtual.busca || "").trim().toLowerCase();
+    const categoria = String(filtroRebanhoAtual.categoria || "").trim().toLowerCase();
+    const lote = String(filtroRebanhoAtual.lote || "").trim().toLowerCase();
+
+    return rebanhoGlobal.filter(item => {
+        const texto = `${item.brinco || ""} ${item.categoria || ""} ${item.lote || ""}`.toLowerCase();
+        return (!busca || texto.includes(busca))
+            && (!categoria || String(item.categoria || "").toLowerCase().includes(categoria))
+            && (!lote || String(item.lote || "").toLowerCase().includes(lote));
+    });
 }
 
 function atualizarTabelaRebanhoNuvem() {
     const tbody = document.getElementById("tabelaRebanhoCorpo");
     if (!tbody) return;
-    if (rebanhoGlobal.length === 0) return; // Se vazio, mantém o estático de exemplo
-    
-    tbody.innerHTML = "";
-    rebanhoGlobal.forEach(item => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td class="animal-id">#${item.brinco || '---'}</td>
-            <td>${item.categoria || 'Geral'}</td>
-            <td>${item.lote || 'Lote 01'}</td>
-            <td>${item.dataEntrada || '---'}</td>
-            <td>${item.peso || 0} kg</td>
-            <td>0,75 kg</td>
-            <td><span class="badge badge-green">Bom</span></td>
-            <td><button class="view-btn" onclick="openAnimal()">Ver ficha</button></td>
-        `;
-        tbody.appendChild(tr);
+
+    const dados = rebanhoFiltrado();
+    if (!dados.length) {
+        tbody.innerHTML = emptyRow(8, "Nenhum animal encontrado para os filtros atuais.");
+        return;
+    }
+
+    tbody.innerHTML = dados.map(item => `
+        <tr>
+            <td class="animal-id">#${escapeHtml(item.brinco || "---")}</td>
+            <td>${escapeHtml(item.categoria || "Geral")}</td>
+            <td>${escapeHtml(item.lote || "Sem lote")}</td>
+            <td>${formatarData(item.dataEntrada)}</td>
+            <td>${numero(item.peso).toLocaleString("pt-BR")} kg</td>
+            <td>${numero(item.gmd || 0).toLocaleString("pt-BR", {minimumFractionDigits:2, maximumFractionDigits:2})} kg</td>
+            <td>${badgeStatus(item.status || "Bom")}</td>
+            <td>
+                <div class="table-actions">
+                    <button class="view-btn" onclick="openAnimal('${escapeHtml(item.id)}')">Ficha</button>
+                    <button class="action-btn edit" type="button" onclick="editarAnimal('${escapeHtml(item.id)}')">Editar</button>
+                    <button class="action-btn delete" type="button" onclick="excluirAnimal('${escapeHtml(item.id)}')">Excluir</button>
+                </div>
+            </td>
+        </tr>
+    `).join("");
+}
+
+function cadastrarAnimalNuvem() {
+    abrirModalAcao(
+        "Novo animal",
+        "Cadastre os principais dados do animal.",
+        `
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Brinco *</label>
+                <input class="form-control" name="brinco" required>
+            </div>
+            <div class="form-group">
+                <label>Categoria *</label>
+                <select class="form-control" name="categoria" required>
+                    <option value="Garrote">Garrote</option>
+                    <option value="Novilha">Novilha</option>
+                    <option value="Bezerro">Bezerro</option>
+                    <option value="Vaca">Vaca</option>
+                    <option value="Touro">Touro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Lote *</label>
+                <input class="form-control" name="lote" value="Lote 01" required>
+            </div>
+            <div class="form-group">
+                <label>Data de entrada *</label>
+                <input class="form-control" type="date" name="dataEntrada" value="${hojeISO()}" required>
+            </div>
+            <div class="form-group">
+                <label>Peso inicial (kg) *</label>
+                <input class="form-control" type="number" step="0.1" min="0" name="pesoInicial" required>
+            </div>
+            <div class="form-group">
+                <label>Peso atual (kg) *</label>
+                <input class="form-control" type="number" step="0.1" min="0" name="peso" required>
+            </div>
+        </div>`,
+        "Cadastrar animal",
+        async form => {
+            const d = obterFormulario(form);
+            const duplicado = rebanhoGlobal.some(a => String(a.brinco) === String(d.brinco));
+            if (duplicado) throw new Error("Já existe um animal com este brinco.");
+
+            await salvarComFallback("rebanho", {
+                brinco:d.brinco.trim(),
+                categoria:d.categoria,
+                lote:d.lote.trim(),
+                dataEntrada:d.dataEntrada,
+                pesoInicial:numero(d.pesoInicial),
+                peso:numero(d.peso),
+                gmd:0,
+                status:"Bom"
+            });
+
+            fecharModalAcao();
+            toast("Animal cadastrado com sucesso.");
+            atualizarTudo();
+        }
+    );
+}
+
+
+function editarAnimal(id) {
+    const animal = rebanhoGlobal.find(a => String(a.id) === String(id));
+    if (!animal) return toast("Animal não encontrado.", "error");
+
+    abrirModalAcao(
+        `Editar animal #${animal.brinco || ""}`,
+        "Atualize os dados e salve.",
+        `
+        <div class="form-grid">
+            <div class="form-group"><label>Brinco *</label><input class="form-control" name="brinco" value="${escapeHtml(animal.brinco || "")}" required></div>
+            <div class="form-group"><label>Categoria *</label><input class="form-control" name="categoria" value="${escapeHtml(animal.categoria || "")}" required></div>
+            <div class="form-group"><label>Lote *</label><input class="form-control" name="lote" value="${escapeHtml(animal.lote || "")}" required></div>
+            <div class="form-group"><label>Data de entrada *</label><input class="form-control" type="date" name="dataEntrada" value="${normalizarDataISO(animal.dataEntrada)}" required></div>
+            <div class="form-group"><label>Peso inicial (kg)</label><input class="form-control" type="number" step="0.1" min="0" name="pesoInicial" value="${numero(animal.pesoInicial)}"></div>
+            <div class="form-group"><label>Peso atual (kg) *</label><input class="form-control" type="number" step="0.1" min="0" name="peso" value="${numero(animal.peso)}" required></div>
+            <div class="form-group"><label>GMD (kg/dia)</label><input class="form-control" type="number" step="0.01" name="gmd" value="${numero(animal.gmd)}"></div>
+            <div class="form-group"><label>Status</label><select class="form-control" name="status"><option ${animal.status==="Bom"?"selected":""}>Bom</option><option ${animal.status==="Atenção"?"selected":""}>Atenção</option></select></div>
+        </div>`,
+        "Salvar alterações",
+        async form => {
+            const d = obterFormulario(form);
+            const duplicado = rebanhoGlobal.some(a => String(a.id)!==String(id) && String(a.brinco)===String(d.brinco));
+            if (duplicado) throw new Error("Já existe outro animal com este brinco.");
+
+            const atualizado = {
+                ...animal,
+                brinco:d.brinco.trim(),
+                categoria:d.categoria.trim(),
+                lote:d.lote.trim(),
+                dataEntrada:d.dataEntrada,
+                pesoInicial:numero(d.pesoInicial),
+                peso:numero(d.peso),
+                gmd:numero(d.gmd),
+                status:d.status
+            };
+
+            Object.assign(animal, atualizado);
+            salvarLocal("rebanho", rebanhoGlobal);
+
+            if (db && !String(id).startsWith("local-")) {
+                try {
+                    await db.collection("fazenda_sao_francisco").doc("rebanho").collection("animais").doc(id).update({
+                        brinco:atualizado.brinco, categoria:atualizado.categoria, lote:atualizado.lote,
+                        dataEntrada:atualizado.dataEntrada, pesoInicial:atualizado.pesoInicial,
+                        peso:atualizado.peso, gmd:atualizado.gmd, status:atualizado.status
+                    });
+                } catch (e) {
+                    toast("Alteração salva localmente; a nuvem não pôde ser atualizada.", "warning");
+                }
+            }
+
+            fecharModalAcao();
+            atualizarTudo();
+            toast("Animal atualizado.");
+        }
+    );
+}
+
+async function excluirAnimal(id) {
+    const animal = rebanhoGlobal.find(a => String(a.id) === String(id));
+    if (!animal) return;
+    if (!confirm(`Excluir o animal #${animal.brinco}? Esta ação não pode ser desfeita.`)) return;
+
+    rebanhoGlobal = rebanhoGlobal.filter(a => String(a.id) !== String(id));
+    salvarLocal("rebanho", rebanhoGlobal);
+
+    if (db && !String(id).startsWith("local-")) {
+        try {
+            await db.collection("fazenda_sao_francisco").doc("rebanho").collection("animais").doc(id).delete();
+        } catch (e) {
+            toast("Exclusão feita localmente, mas a nuvem não respondeu.", "warning");
+        }
+    }
+
+    atualizarTudo();
+    toast("Animal excluído.");
+}
+
+function filtrarRebanho() {
+    abrirModalAcao(
+        "Filtrar rebanho",
+        "Use um ou mais critérios.",
+        `
+        <div class="form-grid">
+            <div class="form-group full">
+                <label>Busca livre</label>
+                <input class="form-control" name="busca" value="${escapeHtml(filtroRebanhoAtual.busca || "")}" placeholder="Brinco, categoria ou lote">
+            </div>
+            <div class="form-group">
+                <label>Categoria</label>
+                <input class="form-control" name="categoria" value="${escapeHtml(filtroRebanhoAtual.categoria || "")}" placeholder="Ex.: Garrote">
+            </div>
+            <div class="form-group">
+                <label>Lote</label>
+                <input class="form-control" name="lote" value="${escapeHtml(filtroRebanhoAtual.lote || "")}" placeholder="Ex.: Lote 03">
+            </div>
+        </div>
+        <div class="modal-actions" style="justify-content:flex-start;margin-top:14px;">
+            <button class="ghost-btn" type="button" onclick="limparFiltroRebanho()">Limpar filtros</button>
+        </div>`,
+        "Aplicar filtros",
+        form => {
+            filtroRebanhoAtual = obterFormulario(form);
+            fecharModalAcao();
+            atualizarTabelaRebanhoNuvem();
+            toast("Filtro aplicado.");
+        }
+    );
+}
+
+function limparFiltroRebanho() {
+    filtroRebanhoAtual = {};
+    fecharModalAcao();
+    atualizarTabelaRebanhoNuvem();
+    toast("Filtros do rebanho removidos.");
+}
+
+/* -------------------------
+   FICHA DO ANIMAL
+------------------------- */
+
+function openAnimal(id) {
+    const animal = rebanhoGlobal.find(a => String(a.id) === String(id)) || rebanhoGlobal[0];
+    if (!animal) {
+        toast("Animal não encontrado.", "error");
+        return;
+    }
+
+    const historico = pesagensGlobal
+        .filter(p => String(p.brinco) === String(animal.brinco))
+        .sort((a,b) => String(a.data).localeCompare(String(b.data)));
+
+    const pesoInicial = numero(animal.pesoInicial || historico[0]?.pesoAnterior || animal.peso);
+    const pesoAtual = numero(animal.peso);
+    const ganho = pesoAtual - pesoInicial;
+    const dias = diasEntre(animal.dataEntrada);
+    const gmd = numero(animal.gmd || (dias ? ganho/dias : 0));
+    const valorCompra = numero(animal.valorCompra || 0);
+    const custo = numero(animal.custoAcumulado || 0);
+    const estimado = numero(animal.valorEstimado || 0);
+    const margem = estimado ? estimado - valorCompra - custo : 0;
+
+    document.getElementById("modalAnimalTitulo").textContent = `Animal #${animal.brinco || "---"}`;
+    document.getElementById("modalAnimalSub").textContent = `${animal.categoria || "Geral"} • ${animal.lote || "Sem lote"} • ${configGlobal.fazenda}`;
+
+    document.getElementById("modalAnimalGridContent").innerHTML = `
+        <div class="info-box"><small>CATEGORIA</small><strong>${escapeHtml(animal.categoria || "---")}</strong></div>
+        <div class="info-box"><small>LOTE</small><strong>${escapeHtml(animal.lote || "---")}</strong></div>
+        <div class="info-box"><small>ENTRADA</small><strong>${formatarData(animal.dataEntrada)}</strong></div>
+        <div class="info-box"><small>DIAS NA FAZENDA</small><strong>${dias} dias</strong></div>
+        <div class="info-box"><small>PESO INICIAL</small><strong>${pesoInicial.toLocaleString("pt-BR")} kg</strong></div>
+        <div class="info-box"><small>PESO ATUAL</small><strong>${pesoAtual.toLocaleString("pt-BR")} kg</strong></div>
+        <div class="info-box"><small>GANHO TOTAL</small><strong class="${ganho >= 0 ? "finance-positive" : "finance-negative"}">${ganho >= 0 ? "+" : ""}${ganho.toLocaleString("pt-BR")} kg</strong></div>
+        <div class="info-box"><small>GMD</small><strong class="${gmd >= 0 ? "finance-positive" : "finance-negative"}">${gmd.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})} kg/dia</strong></div>
+        <div class="info-box"><small>VALOR DE COMPRA</small><strong>${moeda(valorCompra)}</strong></div>
+        <div class="info-box"><small>CUSTO ACUMULADO</small><strong>${moeda(custo)}</strong></div>
+        <div class="info-box"><small>VALOR ESTIMADO</small><strong>${moeda(estimado)}</strong></div>
+        <div class="info-box"><small>MARGEM ESTIMADA</small><strong class="${margem >= 0 ? "finance-positive" : "finance-negative"}">${moeda(margem)}</strong></div>
+    `;
+
+    document.getElementById("animalModal").classList.add("show");
+
+    setTimeout(() => {
+        if (!window.Chart) return;
+        if (animalChartInstance) animalChartInstance.destroy();
+
+        const labels = historico.length
+            ? historico.map(p => formatarData(p.data))
+            : ["Entrada", "Atual"];
+        const valores = historico.length
+            ? historico.map(p => numero(p.pesoAtual))
+            : [pesoInicial, pesoAtual];
+
+        animalChartInstance = new Chart(document.getElementById("animalChart"), {
+            type:"line",
+            data:{
+                labels,
+                datasets:[{
+                    label:"Peso (kg)",
+                    data:valores,
+                    borderColor:"#1f6b45",
+                    backgroundColor:"rgba(31,107,69,.10)",
+                    fill:true,
+                    tension:.35,
+                    pointRadius:4,
+                    pointBackgroundColor:"#1f6b45"
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false,
+                plugins:{ legend:{ display:false } },
+                scales:{ y:{ beginAtZero:false } }
+            }
+        });
+    }, 80);
+}
+
+function closeAnimal() {
+    document.getElementById("animalModal")?.classList.remove("show");
+}
+
+/* -------------------------
+   PESAGENS
+------------------------- */
+
+function atualizarTabelaPesagens() {
+    const tbody = document.querySelector("#pesagens tbody");
+    if (!tbody) return;
+
+    const dados = [...pesagensGlobal]
+        .filter(p => registroNoMes(p.data))
+        .sort((a,b) => String(b.data).localeCompare(String(a.data)));
+    if (!dados.length) {
+        tbody.innerHTML = emptyRow(8, "Nenhuma pesagem cadastrada.");
+        return;
+    }
+
+    tbody.innerHTML = dados.map(p => {
+        const ganho = numero(p.ganho ?? (numero(p.pesoAtual)-numero(p.pesoAnterior)));
+        return `
+        <tr>
+            <td>${formatarData(p.data)}</td>
+            <td class="animal-id">#${escapeHtml(p.brinco || "---")}</td>
+            <td>${escapeHtml(p.lote || "---")}</td>
+            <td>${numero(p.pesoAnterior).toLocaleString("pt-BR")} kg</td>
+            <td>${numero(p.pesoAtual).toLocaleString("pt-BR")} kg</td>
+            <td class="${ganho >= 0 ? "finance-positive" : "finance-negative"}">${ganho >= 0 ? "+" : ""}${ganho.toLocaleString("pt-BR")} kg</td>
+            <td class="${numero(p.gmd) >= 0 ? "finance-positive" : "finance-negative"}">${numero(p.gmd).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})} kg</td>
+            <td><div class="table-actions">
+                <button class="action-btn edit" type="button" onclick="editarPesagem('${escapeHtml(p.id)}')">Editar</button>
+                <button class="action-btn delete" type="button" onclick="excluirPesagem('${escapeHtml(p.id)}')">Excluir</button>
+            </div></td>
+        </tr>`;
+    }).join("");
+}
+
+function abrirModalPesagem() {
+    const options = rebanhoGlobal.map(a =>
+        `<option value="${escapeHtml(a.id)}">#${escapeHtml(a.brinco)} — ${escapeHtml(a.lote || "Sem lote")} (${numero(a.peso)} kg)</option>`
+    ).join("");
+
+    if (!rebanhoGlobal.length) {
+        toast("Cadastre um animal antes de registrar uma pesagem.", "warning");
+        return;
+    }
+
+    abrirModalAcao(
+        "Registrar pesagem",
+        "O peso atual do animal será atualizado.",
+        `
+        <div class="form-grid">
+            <div class="form-group full">
+                <label>Animal *</label>
+                <select class="form-control" name="animalId" required>${options}</select>
+            </div>
+            <div class="form-group">
+                <label>Data *</label>
+                <input class="form-control" type="date" name="data" value="${hojeISO()}" required>
+            </div>
+            <div class="form-group">
+                <label>Novo peso (kg) *</label>
+                <input class="form-control" type="number" step="0.1" min="0" name="pesoAtual" required>
+            </div>
+        </div>`,
+        "Registrar pesagem",
+        async form => {
+            const d = obterFormulario(form);
+            const animal = rebanhoGlobal.find(a => String(a.id) === String(d.animalId));
+            if (!animal) throw new Error("Animal selecionado não encontrado.");
+
+            const pesoAnterior = numero(animal.peso);
+            const pesoAtual = numero(d.pesoAtual);
+            const ganho = pesoAtual - pesoAnterior;
+
+            const anteriores = pesagensGlobal
+                .filter(p => String(p.brinco) === String(animal.brinco))
+                .sort((a,b) => String(b.data).localeCompare(String(a.data)));
+            const referenciaData = anteriores[0]?.data || animal.dataEntrada;
+            const dias = Math.max(1, diasEntre(referenciaData, d.data));
+            const gmd = ganho / dias;
+
+            pesagensGlobal.push({
+                id:gerarId("pesagem"),
+                data:d.data,
+                brinco:animal.brinco,
+                lote:animal.lote,
+                pesoAnterior,
+                pesoAtual,
+                ganho,
+                gmd
+            });
+            salvarLocal("pesagens", pesagensGlobal);
+
+            animal.peso = pesoAtual;
+            animal.gmd = gmd;
+            salvarLocal("rebanho", rebanhoGlobal);
+
+            if (db && animal.id && !String(animal.id).startsWith("local-")) {
+                try {
+                    await db.collection("fazenda_sao_francisco").doc("rebanho").collection("animais").doc(animal.id).update({
+                        peso:pesoAtual,
+                        gmd:gmd
+                    });
+                } catch (e) {
+                    toast("Pesagem salva localmente; atualização do animal na nuvem falhou.", "warning");
+                }
+            }
+
+            fecharModalAcao();
+            toast("Pesagem registrada.");
+            atualizarTudo();
+        }
+    );
+}
+
+
+function editarPesagem(id) {
+    const p = pesagensGlobal.find(x => String(x.id) === String(id));
+    if (!p) return toast("Pesagem não encontrada.", "error");
+
+    abrirModalAcao(
+        `Editar pesagem #${p.brinco || ""}`,
+        "A alteração atualiza o histórico da pesagem.",
+        `
+        <div class="form-grid">
+            <div class="form-group"><label>Data *</label><input class="form-control" type="date" name="data" value="${normalizarDataISO(p.data)}" required></div>
+            <div class="form-group"><label>Animal</label><input class="form-control" value="#${escapeHtml(p.brinco || "")}" disabled></div>
+            <div class="form-group"><label>Peso anterior (kg) *</label><input class="form-control" type="number" step="0.1" name="pesoAnterior" value="${numero(p.pesoAnterior)}" required></div>
+            <div class="form-group"><label>Peso atual (kg) *</label><input class="form-control" type="number" step="0.1" name="pesoAtual" value="${numero(p.pesoAtual)}" required></div>
+            <div class="form-group full"><label>GMD (kg/dia)</label><input class="form-control" type="number" step="0.01" name="gmd" value="${numero(p.gmd)}"></div>
+        </div>`,
+        "Salvar alterações",
+        form => {
+            const d = obterFormulario(form);
+            p.data = d.data;
+            p.pesoAnterior = numero(d.pesoAnterior);
+            p.pesoAtual = numero(d.pesoAtual);
+            p.ganho = p.pesoAtual - p.pesoAnterior;
+            p.gmd = numero(d.gmd);
+            salvarLocal("pesagens", pesagensGlobal);
+
+            const animal = rebanhoGlobal.find(a => String(a.brinco) === String(p.brinco));
+            if (animal) {
+                const ultimas = pesagensGlobal.filter(x => String(x.brinco)===String(p.brinco)).sort((a,b)=>String(b.data).localeCompare(String(a.data)));
+                if (ultimas[0] && String(ultimas[0].id)===String(id)) {
+                    animal.peso = p.pesoAtual;
+                    animal.gmd = p.gmd;
+                    salvarLocal("rebanho", rebanhoGlobal);
+                }
+            }
+
+            fecharModalAcao();
+            atualizarTudo();
+            toast("Pesagem atualizada.");
+        }
+    );
+}
+
+function excluirPesagem(id) {
+    const p = pesagensGlobal.find(x => String(x.id) === String(id));
+    if (!p) return;
+    if (!confirm(`Excluir a pesagem do animal #${p.brinco} em ${formatarData(p.data)}?`)) return;
+
+    pesagensGlobal = pesagensGlobal.filter(x => String(x.id) !== String(id));
+    salvarLocal("pesagens", pesagensGlobal);
+
+    const animal = rebanhoGlobal.find(a => String(a.brinco) === String(p.brinco));
+    if (animal) {
+        const ultima = pesagensGlobal.filter(x => String(x.brinco)===String(p.brinco)).sort((a,b)=>String(b.data).localeCompare(String(a.data)))[0];
+        if (ultima) {
+            animal.peso = numero(ultima.pesoAtual);
+            animal.gmd = numero(ultima.gmd);
+            salvarLocal("rebanho", rebanhoGlobal);
+        }
+    }
+
+    atualizarTudo();
+    toast("Pesagem excluída.");
+}
+
+/* -------------------------
+   ESTOQUE
+------------------------- */
+
+function diasEstoque(item) {
+    const consumo = numero(item.consumoDia);
+    return consumo > 0 ? Math.floor(numero(item.quantidade)/consumo) : null;
+}
+
+function classeEstoque(item) {
+    const dias = diasEstoque(item);
+    if (dias === null) return "";
+    if (dias <= configGlobal.estoqueCritico) return "danger";
+    if (dias <= configGlobal.estoqueCritico * 3) return "warning";
+    return "";
+}
+
+function renderizarEstoque() {
+    const panel = document.querySelector("#estoque .grid-2 .panel:first-child");
+    if (!panel) return;
+
+    const totalKg = estoqueGlobal
+        .filter(i => String(i.unidade || "kg").toLowerCase() === "kg")
+        .reduce((s,i) => s + numero(i.quantidade), 0);
+
+    const headerSpan = panel.querySelector(".panel-header span");
+    if (headerSpan) headerSpan.textContent = `${(totalKg/1000).toLocaleString("pt-BR",{maximumFractionDigits:1})} toneladas`;
+
+    const itensHtml = estoqueGlobal.map(item => {
+        const dias = diasEstoque(item);
+        const classe = classeEstoque(item);
+        const pct = Math.max(6, Math.min(100, dias === null ? 70 : dias * 2.5));
+        return `
+            <div class="stock-item">
+                <div class="stock-info">
+                    <strong>${escapeHtml(item.produto)}</strong>
+                    <strong>${numero(item.quantidade).toLocaleString("pt-BR")} ${escapeHtml(item.unidade || "kg")}</strong>
+                </div>
+                <div class="stock-bar">
+                    <div class="stock-progress ${classe}" style="width:${pct}%"></div>
+                </div>
+                <div class="stock-footer">
+                    ${numero(item.consumoDia) ? `Consumo: ${numero(item.consumoDia).toLocaleString("pt-BR")} ${escapeHtml(item.unidade || "kg")}/dia • ` : ""}
+                    ${dias === null ? "Sem previsão de autonomia" : `${dias} dias restantes`}
+                </div>
+                <div class="stock-actions">
+                    <button class="action-btn edit" type="button" onclick="editarItemEstoque('${escapeHtml(item.id)}')">Editar</button>
+                    <button class="action-btn delete" type="button" onclick="excluirItemEstoque('${escapeHtml(item.id)}')">Excluir</button>
+                </div>
+            </div>`;
+    }).join("");
+
+    panel.querySelectorAll(".stock-item").forEach(x => x.remove());
+    panel.insertAdjacentHTML("beforeend", itensHtml || '<div class="empty-state">Nenhum item em estoque.</div>');
+
+    renderizarAlertasEstoque();
+}
+
+function renderizarAlertasEstoque() {
+    const list = document.querySelector("#estoque .grid-2 .panel:nth-child(2) .alert-list");
+    if (!list) return;
+
+    if (!estoqueGlobal.length) {
+        list.innerHTML = '<div class="empty-state">Nenhum alerta de estoque.</div>';
+        return;
+    }
+
+    const ordenados = [...estoqueGlobal].sort((a,b) => (diasEstoque(a) ?? 9999) - (diasEstoque(b) ?? 9999));
+    list.innerHTML = ordenados.map(item => {
+        const dias = diasEstoque(item);
+        const classe = classeEstoque(item);
+        const icon = classe === "danger" ? "🔴" : classe === "warning" ? "🟠" : "🟢";
+        const titulo = classe === "danger" ? "estoque crítico" : classe === "warning" ? "estoque em atenção" : "estoque adequado";
+        return `
+        <div class="alert ${classe === "danger" ? "danger" : classe === "warning" ? "warning" : "success"}">
+            <div>${icon}</div>
+            <div>
+                <strong>${escapeHtml(item.produto)} — ${titulo}</strong>
+                <p>${numero(item.quantidade).toLocaleString("pt-BR")} ${escapeHtml(item.unidade || "kg")} disponíveis${dias !== null ? ` • ${dias} dias estimados` : ""}.</p>
+            </div>
+        </div>`;
+    }).join("");
+}
+
+function abrirModalEstoque() {
+    abrirModalAcao(
+        "Movimentar estoque",
+        "Registre entrada ou saída de um produto.",
+        `
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Produto *</label>
+                <input class="form-control" name="produto" list="listaProdutos" required>
+                <datalist id="listaProdutos">
+                    ${estoqueGlobal.map(i => `<option value="${escapeHtml(i.produto)}">`).join("")}
+                </datalist>
+            </div>
+            <div class="form-group">
+                <label>Movimento *</label>
+                <select class="form-control" name="movimento">
+                    <option value="entrada">Entrada</option>
+                    <option value="saida">Saída</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Quantidade *</label>
+                <input class="form-control" type="number" min="0.01" step="0.01" name="quantidade" required>
+            </div>
+            <div class="form-group">
+                <label>Unidade</label>
+                <select class="form-control" name="unidade">
+                    <option value="kg">kg</option>
+                    <option value="t">t</option>
+                    <option value="un">un</option>
+                    <option value="L">L</option>
+                </select>
+            </div>
+            <div class="form-group full">
+                <label>Consumo médio por dia</label>
+                <input class="form-control" type="number" min="0" step="0.01" name="consumoDia" placeholder="Opcional">
+            </div>
+        </div>`,
+        "Salvar movimentação",
+        form => {
+            const d = obterFormulario(form);
+            const qtd = numero(d.quantidade);
+            let item = estoqueGlobal.find(i => String(i.produto).toLowerCase() === d.produto.trim().toLowerCase());
+
+            if (!item) {
+                item = {
+                    id:gerarId("estoque"),
+                    produto:d.produto.trim(),
+                    quantidade:0,
+                    unidade:d.unidade || "kg",
+                    consumoDia:numero(d.consumoDia)
+                };
+                estoqueGlobal.push(item);
+            }
+
+            const delta = d.movimento === "saida" ? -qtd : qtd;
+            if (numero(item.quantidade) + delta < 0) {
+                throw new Error("A saída informada é maior que o saldo disponível.");
+            }
+
+            item.quantidade = numero(item.quantidade) + delta;
+            item.unidade = d.unidade || item.unidade || "kg";
+            if (d.consumoDia !== "") item.consumoDia = numero(d.consumoDia);
+
+            salvarLocal("estoque", estoqueGlobal);
+            fecharModalAcao();
+            toast("Estoque atualizado.");
+            atualizarTudo();
+        }
+    );
+}
+
+
+function editarItemEstoque(id) {
+    const item = estoqueGlobal.find(i => String(i.id) === String(id));
+    if (!item) return toast("Item de estoque não encontrado.", "error");
+
+    abrirModalAcao(
+        `Editar ${item.produto}`,
+        "Ajuste o saldo e o consumo médio.",
+        `
+        <div class="form-grid">
+            <div class="form-group full"><label>Produto *</label><input class="form-control" name="produto" value="${escapeHtml(item.produto)}" required></div>
+            <div class="form-group"><label>Quantidade atual *</label><input class="form-control" type="number" step="0.01" min="0" name="quantidade" value="${numero(item.quantidade)}" required></div>
+            <div class="form-group"><label>Unidade</label><input class="form-control" name="unidade" value="${escapeHtml(item.unidade || "kg")}"></div>
+            <div class="form-group full"><label>Consumo médio/dia</label><input class="form-control" type="number" step="0.01" min="0" name="consumoDia" value="${numero(item.consumoDia)}"></div>
+        </div>`,
+        "Salvar alterações",
+        form => {
+            const d = obterFormulario(form);
+            item.produto = d.produto.trim();
+            item.quantidade = numero(d.quantidade);
+            item.unidade = d.unidade.trim() || "kg";
+            item.consumoDia = numero(d.consumoDia);
+            salvarLocal("estoque", estoqueGlobal);
+            fecharModalAcao();
+            atualizarTudo();
+            toast("Item de estoque atualizado.");
+        }
+    );
+}
+
+function excluirItemEstoque(id) {
+    const item = estoqueGlobal.find(i => String(i.id) === String(id));
+    if (!item) return;
+    if (!confirm(`Excluir "${item.produto}" do estoque?`)) return;
+    estoqueGlobal = estoqueGlobal.filter(i => String(i.id) !== String(id));
+    salvarLocal("estoque", estoqueGlobal);
+    atualizarTudo();
+    toast("Item de estoque excluído.");
+}
+
+/* -------------------------
+   FINANCEIRO
+------------------------- */
+
+function financeiroFiltrado() {
+    return financeiroGlobal.filter(item => {
+        const data = String(item.data || "").slice(0,10);
+        const ini = filtroFinanceiroAtual.inicio || "";
+        const fim = filtroFinanceiroAtual.fim || "";
+        const tipo = filtroFinanceiroAtual.tipo || "";
+        return registroNoMes(data)
+            && (!ini || data >= ini)
+            && (!fim || data <= fim)
+            && (!tipo || normalizarTipo(item.tipo) === tipo);
     });
 }
 
 function atualizarTabelaFinanceiroNuvem() {
     const tbody = document.getElementById("tabelaFinanceiroCorpo");
     if (!tbody) return;
-    if (financeiroGlobal.length === 0) return;
 
-    tbody.innerHTML = "";
-    financeiroGlobal.forEach(item => {
-        const isRec = item.tipo === "Receita";
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${item.data || '---'}</td>
-            <td>${item.descricao || ''}</td>
-            <td>${item.categoria || ''}</td>
-            <td>${item.tipo || 'Despesa'}</td>
-            <td class="${isRec ? 'finance-positive' : 'finance-negative'}">${isRec ? '+' : '-'} R$ ${Number(item.valor || 0).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+    const dados = [...financeiroFiltrado()].sort((a,b) => String(b.data).localeCompare(String(a.data)));
+    if (!dados.length) {
+        tbody.innerHTML = emptyRow(7, "Nenhum lançamento encontrado.");
+        return;
+    }
+
+    tbody.innerHTML = dados.map(item => {
+        const tipo = normalizarTipo(item.tipo);
+        const isRec = tipo === "Receita";
+        return `
+        <tr>
+            <td>${formatarData(item.data)}</td>
+            <td>${escapeHtml(item.descricao || "")}</td>
+            <td>${escapeHtml(item.categoria || "")}</td>
+            <td>${tipo}</td>
+            <td class="${isRec ? "finance-positive" : "finance-negative"}">${isRec ? "+" : "-"} ${moeda(item.valor)}</td>
             <td><span class="badge badge-green">OK</span></td>
-        `;
-        tbody.appendChild(tr);
-    });
+            <td><div class="table-actions">
+                <button class="action-btn edit" type="button" onclick="editarFinanceiro('${escapeHtml(item.id)}')">Editar</button>
+                <button class="action-btn delete" type="button" onclick="excluirFinanceiro('${escapeHtml(item.id)}')">Excluir</button>
+            </div></td>
+        </tr>`;
+    }).join("");
 }
+
+function cadastrarFinanceiroNuvem() {
+    abrirModalAcao(
+        "Novo lançamento",
+        "Registre uma receita ou despesa.",
+        `
+        <div class="form-grid">
+            <div class="form-group full">
+                <label>Descrição *</label>
+                <input class="form-control" name="descricao" required>
+            </div>
+            <div class="form-group">
+                <label>Categoria *</label>
+                <input class="form-control" name="categoria" value="Alimentação" required>
+            </div>
+            <div class="form-group">
+                <label>Tipo *</label>
+                <select class="form-control" name="tipo">
+                    <option value="Despesa">Despesa</option>
+                    <option value="Receita">Receita</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Data *</label>
+                <input class="form-control" type="date" name="data" value="${hojeISO()}" required>
+            </div>
+            <div class="form-group">
+                <label>Valor (R$) *</label>
+                <input class="form-control" type="number" min="0" step="0.01" name="valor" required>
+            </div>
+        </div>`,
+        "Salvar lançamento",
+        async form => {
+            const d = obterFormulario(form);
+            await salvarComFallback("financeiro", {
+                descricao:d.descricao.trim(),
+                categoria:d.categoria.trim(),
+                tipo:normalizarTipo(d.tipo),
+                valor:numero(d.valor),
+                data:d.data
+            });
+            fecharModalAcao();
+            toast("Lançamento salvo.");
+            atualizarTudo();
+        }
+    );
+}
+
+
+function editarFinanceiro(id) {
+    const item = financeiroGlobal.find(x => String(x.id) === String(id));
+    if (!item) return toast("Lançamento não encontrado.", "error");
+
+    abrirModalAcao(
+        "Editar lançamento",
+        "Atualize os dados financeiros.",
+        `
+        <div class="form-grid">
+            <div class="form-group full"><label>Descrição *</label><input class="form-control" name="descricao" value="${escapeHtml(item.descricao || "")}" required></div>
+            <div class="form-group"><label>Categoria *</label><input class="form-control" name="categoria" value="${escapeHtml(item.categoria || "")}" required></div>
+            <div class="form-group"><label>Tipo *</label><select class="form-control" name="tipo"><option value="Despesa" ${normalizarTipo(item.tipo)==="Despesa"?"selected":""}>Despesa</option><option value="Receita" ${normalizarTipo(item.tipo)==="Receita"?"selected":""}>Receita</option></select></div>
+            <div class="form-group"><label>Data *</label><input class="form-control" type="date" name="data" value="${normalizarDataISO(item.data)}" required></div>
+            <div class="form-group"><label>Valor (R$) *</label><input class="form-control" type="number" min="0" step="0.01" name="valor" value="${numero(item.valor)}" required></div>
+        </div>`,
+        "Salvar alterações",
+        async form => {
+            const d = obterFormulario(form);
+            Object.assign(item, {
+                descricao:d.descricao.trim(), categoria:d.categoria.trim(),
+                tipo:normalizarTipo(d.tipo), data:d.data, valor:numero(d.valor)
+            });
+            salvarLocal("financeiro", financeiroGlobal);
+
+            if (db && !String(id).startsWith("local-")) {
+                try {
+                    await db.collection("fazenda_sao_francisco").doc("financeiro").collection("lancamentos").doc(id).update({
+                        descricao:item.descricao, categoria:item.categoria, tipo:item.tipo, data:item.data, valor:item.valor
+                    });
+                } catch (e) {
+                    toast("Alteração salva localmente; a nuvem não pôde ser atualizada.", "warning");
+                }
+            }
+
+            fecharModalAcao();
+            atualizarTudo();
+            toast("Lançamento atualizado.");
+        }
+    );
+}
+
+async function excluirFinanceiro(id) {
+    const item = financeiroGlobal.find(x => String(x.id) === String(id));
+    if (!item) return;
+    if (!confirm(`Excluir o lançamento "${item.descricao}"?`)) return;
+
+    financeiroGlobal = financeiroGlobal.filter(x => String(x.id)!==String(id));
+    salvarLocal("financeiro", financeiroGlobal);
+
+    if (db && !String(id).startsWith("local-")) {
+        try {
+            await db.collection("fazenda_sao_francisco").doc("financeiro").collection("lancamentos").doc(id).delete();
+        } catch (e) {
+            toast("Exclusão feita localmente; a nuvem não respondeu.", "warning");
+        }
+    }
+
+    atualizarTudo();
+    toast("Lançamento excluído.");
+}
+
+function filtrarFinanceiro() {
+    abrirModalAcao(
+        "Filtrar financeiro",
+        "Defina o período e, se desejar, o tipo.",
+        `
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Data inicial</label>
+                <input class="form-control" type="date" name="inicio" value="${escapeHtml(filtroFinanceiroAtual.inicio || "")}">
+            </div>
+            <div class="form-group">
+                <label>Data final</label>
+                <input class="form-control" type="date" name="fim" value="${escapeHtml(filtroFinanceiroAtual.fim || "")}">
+            </div>
+            <div class="form-group full">
+                <label>Tipo</label>
+                <select class="form-control" name="tipo">
+                    <option value="">Todos</option>
+                    <option value="Receita" ${filtroFinanceiroAtual.tipo === "Receita" ? "selected" : ""}>Receita</option>
+                    <option value="Despesa" ${filtroFinanceiroAtual.tipo === "Despesa" ? "selected" : ""}>Despesa</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-actions" style="justify-content:flex-start;margin-top:14px;">
+            <button class="ghost-btn" type="button" onclick="limparFiltroFinanceiro()">Limpar filtros</button>
+        </div>`,
+        "Aplicar filtros",
+        form => {
+            const d = obterFormulario(form);
+            if (d.inicio && d.fim && d.inicio > d.fim) throw new Error("A data inicial não pode ser maior que a data final.");
+            filtroFinanceiroAtual = d;
+            fecharModalAcao();
+            atualizarTabelaFinanceiroNuvem();
+            toast("Filtro financeiro aplicado.");
+        }
+    );
+}
+
+function limparFiltroFinanceiro() {
+    filtroFinanceiroAtual = {};
+    fecharModalAcao();
+    atualizarTabelaFinanceiroNuvem();
+    toast("Filtros financeiros removidos.");
+}
+
+/* -------------------------
+   VENDAS
+------------------------- */
 
 function atualizarTabelaVendasNuvem() {
     const tbody = document.getElementById("tabelaVendasCorpo");
     if (!tbody) return;
-    if (vendasGlobal.length === 0) return;
 
-    tbody.innerHTML = "";
-    vendasGlobal.forEach(v => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${v.data || '---'}</td>
-            <td>${v.lote || 'Lote'}</td>
-            <td>${v.animais || 0}</td>
-            <td>${v.pesoTotal || 0} kg</td>
-            <td>R$ ${Number(v.valor || 0).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
-            <td class="finance-positive">28%</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
-
-function atualizarDashboardDinamico() {
-    if (rebanhoGlobal.length > 0) {
-        const total = rebanhoGlobal.length;
-        document.getElementById("kpiRebanhoTotal").innerText = total;
-        
-        let somaPeso = 0;
-        rebanhoGlobal.forEach(a => somaPeso += Number(a.peso || 0));
-        const media = Math.round(somaPeso / total);
-        document.getElementById("kpiRebanhoPesoMedio").innerText = `${media} kg`;
-    }
-}
-
-// Funções de inserção rápida via prompt vinculadas aos botões originais
-async function cadastrarAnimalNuvem() {
-    const brinco = prompt("Número do Brinco (ex: 150):");
-    if (!brinco) return;
-    const categoria = prompt("Categoria (Garrote, Novilha, Bezerro, Vaca):", "Garrote");
-    const lote = prompt("Lote (ex: Lote 03):", "Lote 03");
-    const peso = prompt("Peso atual (kg):", "380");
-
-    await db.collection("fazenda_sao_francisco").doc("rebanho").collection("animais").add({
-        brinco, categoria, lote, peso: Number(peso) || 350,
-        dataEntrada: new Date().toLocaleDateString('pt-BR')
-    });
-    alert("Animal salvo e sincronizado na nuvem!");
-}
-
-async function cadastrarVendaNuvem() {
-    const lote = prompt("Lote vendido:", "Lote 03");
-    if (!lote) return;
-    const animais = prompt("Qtd animais:", "30");
-    const pesoTotal = prompt("Peso total (kg):", "12000");
-    const valor = prompt("Valor total (R$):", "45000");
-
-    await db.collection("fazenda_sao_francisco").doc("comercial").collection("vendas").add({
-        lote, animais: Number(animais), pesoTotal: Number(pesoTotal), valor: Number(valor),
-        data: new Date().toLocaleDateString('pt-BR')
-    });
-    alert("Venda registrada na nuvem!");
-}
-
-async function cadastrarFinanceiroNuvem() {
-    const descricao = prompt("Descrição:");
-    if (!descricao) return;
-    const categoria = prompt("Categoria:", "Alimentação");
-    const tipo = prompt("Tipo (Receita ou Despesa):", "Despesa");
-    const valor = prompt("Valor (R$):", "1500");
-
-    await db.collection("fazenda_sao_francisco").doc("financeiro").collection("lancamentos").add({
-        descricao, categoria, tipo, valor: Number(valor),
-        data: new Date().toLocaleDateString('pt-BR')
-    });
-    alert("Lançamento salvo na nuvem!");
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    iniciarSincronizacaoFirebase();
-});
-
-
-/* =========================
-   NAVEGAÇÃO
-========================= */
-
-function showPage(pageId, button) {
-
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-    });
-
-    document.getElementById(pageId).classList.add("active");
-
-    document.querySelectorAll(".menu-item").forEach(item => {
-        item.classList.remove("active");
-    });
-
-    if (button) {
-        button.classList.add("active");
+    const dados = [...vendasGlobal]
+        .filter(v => registroNoMes(v.data))
+        .sort((a,b) => String(b.data).localeCompare(String(a.data)));
+    if (!dados.length) {
+        tbody.innerHTML = emptyRow(7, "Nenhuma venda registrada.");
+        return;
     }
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    tbody.innerHTML = dados.map(v => `
+        <tr>
+            <td>${formatarData(v.data)}</td>
+            <td>${escapeHtml(v.lote || "Lote")}</td>
+            <td>${numero(v.animais).toLocaleString("pt-BR")}</td>
+            <td>${numero(v.pesoTotal).toLocaleString("pt-BR")} kg</td>
+            <td>${moeda(v.valor)}</td>
+            <td class="finance-positive">${numero(v.margem || 28).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})}%</td>
+            <td><div class="table-actions">
+                <button class="action-btn edit" type="button" onclick="editarVenda('${escapeHtml(v.id)}')">Editar</button>
+                <button class="action-btn delete" type="button" onclick="excluirVenda('${escapeHtml(v.id)}')">Excluir</button>
+            </div></td>
+        </tr>
+    `).join("");
+}
 
-    if (window.innerWidth <= 800) {
-        document.getElementById("sidebar").classList.remove("open");
+function cadastrarVendaNuvem() {
+    abrirModalAcao(
+        "Registrar venda",
+        "Informe os dados comerciais do lote.",
+        `
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Lote *</label>
+                <input class="form-control" name="lote" value="Lote 03" required>
+            </div>
+            <div class="form-group">
+                <label>Data *</label>
+                <input class="form-control" type="date" name="data" value="${hojeISO()}" required>
+            </div>
+            <div class="form-group">
+                <label>Quantidade de animais *</label>
+                <input class="form-control" type="number" min="1" name="animais" required>
+            </div>
+            <div class="form-group">
+                <label>Peso total (kg) *</label>
+                <input class="form-control" type="number" min="0" step="0.1" name="pesoTotal" required>
+            </div>
+            <div class="form-group">
+                <label>Valor total (R$) *</label>
+                <input class="form-control" type="number" min="0" step="0.01" name="valor" required>
+            </div>
+            <div class="form-group">
+                <label>Margem estimada (%)</label>
+                <input class="form-control" type="number" step="0.1" name="margem" value="28">
+            </div>
+        </div>`,
+        "Registrar venda",
+        async form => {
+            const d = obterFormulario(form);
+            await salvarComFallback("vendas", {
+                lote:d.lote.trim(),
+                animais:numero(d.animais),
+                pesoTotal:numero(d.pesoTotal),
+                valor:numero(d.valor),
+                margem:numero(d.margem),
+                data:d.data
+            });
+            fecharModalAcao();
+            toast("Venda registrada.");
+            atualizarTudo();
+        }
+    );
+}
+
+
+function editarVenda(id) {
+    const v = vendasGlobal.find(x => String(x.id) === String(id));
+    if (!v) return toast("Venda não encontrada.", "error");
+
+    abrirModalAcao(
+        "Editar venda",
+        "Atualize os dados da comercialização.",
+        `
+        <div class="form-grid">
+            <div class="form-group"><label>Lote *</label><input class="form-control" name="lote" value="${escapeHtml(v.lote || "")}" required></div>
+            <div class="form-group"><label>Data *</label><input class="form-control" type="date" name="data" value="${normalizarDataISO(v.data)}" required></div>
+            <div class="form-group"><label>Animais *</label><input class="form-control" type="number" min="1" name="animais" value="${numero(v.animais)}" required></div>
+            <div class="form-group"><label>Peso total (kg) *</label><input class="form-control" type="number" min="0" step="0.1" name="pesoTotal" value="${numero(v.pesoTotal)}" required></div>
+            <div class="form-group"><label>Valor (R$) *</label><input class="form-control" type="number" min="0" step="0.01" name="valor" value="${numero(v.valor)}" required></div>
+            <div class="form-group"><label>Margem (%)</label><input class="form-control" type="number" step="0.1" name="margem" value="${numero(v.margem)}"></div>
+        </div>`,
+        "Salvar alterações",
+        async form => {
+            const d = obterFormulario(form);
+            Object.assign(v, {lote:d.lote.trim(), data:d.data, animais:numero(d.animais), pesoTotal:numero(d.pesoTotal), valor:numero(d.valor), margem:numero(d.margem)});
+            salvarLocal("vendas", vendasGlobal);
+
+            if (db && !String(id).startsWith("local-")) {
+                try {
+                    await db.collection("fazenda_sao_francisco").doc("comercial").collection("vendas").doc(id).update({
+                        lote:v.lote,data:v.data,animais:v.animais,pesoTotal:v.pesoTotal,valor:v.valor,margem:v.margem
+                    });
+                } catch (e) {
+                    toast("Alteração salva localmente; a nuvem não pôde ser atualizada.", "warning");
+                }
+            }
+
+            fecharModalAcao();
+            atualizarTudo();
+            toast("Venda atualizada.");
+        }
+    );
+}
+
+async function excluirVenda(id) {
+    const v = vendasGlobal.find(x => String(x.id) === String(id));
+    if (!v) return;
+    if (!confirm(`Excluir a venda do ${v.lote} em ${formatarData(v.data)}?`)) return;
+
+    vendasGlobal = vendasGlobal.filter(x => String(x.id)!==String(id));
+    salvarLocal("vendas", vendasGlobal);
+
+    if (db && !String(id).startsWith("local-")) {
+        try {
+            await db.collection("fazenda_sao_francisco").doc("comercial").collection("vendas").doc(id).delete();
+        } catch (e) {
+            toast("Exclusão feita localmente; a nuvem não respondeu.", "warning");
+        }
     }
+
+    atualizarTudo();
+    toast("Venda excluída.");
+}
+
+/* -------------------------
+   OPERAÇÕES
+------------------------- */
+
+function iconeOperacao(tipo) {
+    const t = String(tipo || "").toLowerCase();
+    if (t.includes("pes")) return "⚖️";
+    if (t.includes("san") || t.includes("vac")) return "💉";
+    if (t.includes("aliment")) return "🌾";
+    if (t.includes("compra")) return "🛒";
+    return "🚜";
+}
+
+function renderizarOperacoes() {
+    const recentes = document.querySelector("#operacoes .panel:first-child .alert-list");
+    const proximasPanel = document.querySelector("#operacoes .panel:nth-child(2)");
+    if (!recentes || !proximasPanel) return;
+
+    const concluidas = [...operacoesGlobal]
+        .filter(o => registroNoMes(o.data))
+        .filter(o => !/program|pend/i.test(String(o.status)))
+        .sort((a,b) => `${b.data} ${b.hora || ""}`.localeCompare(`${a.data} ${a.hora || ""}`))
+        .slice(0,6);
+
+    recentes.innerHTML = concluidas.length ? concluidas.map(o => `
+        <div class="alert success">
+            <div>${iconeOperacao(o.tipo)}</div>
+            <div>
+                <strong>${escapeHtml(o.descricao || o.tipo || "Operação")}</strong>
+                <p>${escapeHtml(o.lote || "")}${o.lote ? " • " : ""}${formatarData(o.data)}${o.hora ? ` às ${escapeHtml(o.hora)}` : ""}</p>
+                <div class="stock-actions" style="justify-content:flex-start;">
+                    <button class="action-btn edit" type="button" onclick="editarOperacao('${escapeHtml(o.id)}')">Editar</button>
+                    <button class="action-btn delete" type="button" onclick="excluirOperacao('${escapeHtml(o.id)}')">Excluir</button>
+                </div>
+            </div>
+        </div>`).join("") : '<div class="empty-state">Nenhuma atividade concluída.</div>';
+
+    proximasPanel.querySelectorAll(".stock-item").forEach(el => el.remove());
+    const futuras = [...operacoesGlobal]
+        .filter(o => registroNoMes(o.data))
+        .filter(o => /program|pend/i.test(String(o.status)))
+        .sort((a,b) => `${a.data} ${a.hora || ""}`.localeCompare(`${b.data} ${b.hora || ""}`))
+        .slice(0,8);
+
+    proximasPanel.insertAdjacentHTML("beforeend", futuras.length ? futuras.map(o => `
+        <div class="stock-item">
+            <strong>${escapeHtml(o.descricao || o.tipo || "Operação")}${o.lote ? ` — ${escapeHtml(o.lote)}` : ""}</strong>
+            <div class="stock-footer">${formatarData(o.data)}${o.hora ? ` • ${escapeHtml(o.hora)}` : ""}</div>
+            <div class="stock-actions">
+                <button class="action-btn edit" type="button" onclick="editarOperacao('${escapeHtml(o.id)}')">Editar</button>
+                <button class="action-btn delete" type="button" onclick="excluirOperacao('${escapeHtml(o.id)}')">Excluir</button>
+            </div>
+        </div>`).join("") : '<div class="empty-state">Nenhuma atividade programada.</div>');
+}
+
+function abrirModalOperacao() {
+    abrirModalAcao(
+        "Nova operação",
+        "Registre uma atividade realizada ou programada.",
+        `
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Tipo *</label>
+                <select class="form-control" name="tipo">
+                    <option>Alimentação</option>
+                    <option>Pesagem</option>
+                    <option>Sanidade</option>
+                    <option>Compra</option>
+                    <option>Manutenção</option>
+                    <option>Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Status *</label>
+                <select class="form-control" name="status">
+                    <option value="Concluída">Concluída</option>
+                    <option value="Programada">Programada</option>
+                </select>
+            </div>
+            <div class="form-group full">
+                <label>Descrição *</label>
+                <input class="form-control" name="descricao" required>
+            </div>
+            <div class="form-group">
+                <label>Lote / referência</label>
+                <input class="form-control" name="lote">
+            </div>
+            <div class="form-group">
+                <label>Data *</label>
+                <input class="form-control" type="date" name="data" value="${hojeISO()}" required>
+            </div>
+            <div class="form-group">
+                <label>Hora</label>
+                <input class="form-control" type="time" name="hora">
+            </div>
+        </div>`,
+        "Salvar operação",
+        form => {
+            const d = obterFormulario(form);
+            operacoesGlobal.push({ id:gerarId("operacao"), ...d });
+            salvarLocal("operacoes", operacoesGlobal);
+            fecharModalAcao();
+            toast("Operação registrada.");
+            atualizarTudo();
+        }
+    );
 }
 
 
-/* =========================
-   SIDEBAR MOBILE
-========================= */
+function editarOperacao(id) {
+    const o = operacoesGlobal.find(x => String(x.id) === String(id));
+    if (!o) return toast("Operação não encontrada.", "error");
 
-function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("open");
+    abrirModalAcao(
+        "Editar operação",
+        "Atualize os dados da atividade.",
+        `
+        <div class="form-grid">
+            <div class="form-group"><label>Tipo *</label><input class="form-control" name="tipo" value="${escapeHtml(o.tipo || "")}" required></div>
+            <div class="form-group"><label>Status *</label><select class="form-control" name="status"><option value="Concluída" ${o.status==="Concluída"?"selected":""}>Concluída</option><option value="Programada" ${o.status==="Programada"?"selected":""}>Programada</option></select></div>
+            <div class="form-group full"><label>Descrição *</label><input class="form-control" name="descricao" value="${escapeHtml(o.descricao || "")}" required></div>
+            <div class="form-group"><label>Lote / referência</label><input class="form-control" name="lote" value="${escapeHtml(o.lote || "")}"></div>
+            <div class="form-group"><label>Data *</label><input class="form-control" type="date" name="data" value="${normalizarDataISO(o.data)}" required></div>
+            <div class="form-group"><label>Hora</label><input class="form-control" type="time" name="hora" value="${escapeHtml(o.hora || "")}"></div>
+        </div>`,
+        "Salvar alterações",
+        form => {
+            Object.assign(o, obterFormulario(form));
+            salvarLocal("operacoes", operacoesGlobal);
+            fecharModalAcao();
+            atualizarTudo();
+            toast("Operação atualizada.");
+        }
+    );
 }
 
+function excluirOperacao(id) {
+    const o = operacoesGlobal.find(x => String(x.id) === String(id));
+    if (!o) return;
+    if (!confirm(`Excluir a operação "${o.descricao || o.tipo}"?`)) return;
+    operacoesGlobal = operacoesGlobal.filter(x => String(x.id)!==String(id));
+    salvarLocal("operacoes", operacoesGlobal);
+    atualizarTudo();
+    toast("Operação excluída.");
+}
 
-/* =========================
+/* -------------------------
    ALERTAS
-========================= */
+------------------------- */
+
+function obterAlertas() {
+    const alertas = [];
+
+    estoqueGlobal.forEach(item => {
+        const dias = diasEstoque(item);
+        if (dias !== null && dias <= configGlobal.estoqueCritico) {
+            alertas.push({ nivel:"danger", icon:"🔴", titulo:`${item.produto} em nível crítico`, texto:`Autonomia estimada em ${dias} dias.` });
+        } else if (dias !== null && dias <= configGlobal.estoqueCritico * 3) {
+            alertas.push({ nivel:"warning", icon:"🟠", titulo:`${item.produto} em atenção`, texto:`Autonomia estimada em ${dias} dias.` });
+        }
+    });
+
+    const semPesagem = rebanhoGlobal.filter(a => {
+        const ultima = [...pesagensGlobal]
+            .filter(p => String(p.brinco) === String(a.brinco))
+            .sort((x,y) => String(y.data).localeCompare(String(x.data)))[0];
+        return diasEntre(ultima?.data || a.dataEntrada) > configGlobal.pesagemAtrasada;
+    }).length;
+
+    if (semPesagem) {
+        alertas.push({ nivel:"warning", icon:"🟠", titulo:"Animais sem pesagem recente", texto:`${semPesagem} animal(is) acima de ${configGlobal.pesagemAtrasada} dias sem pesagem.` });
+    }
+
+    if (!alertas.length) {
+        alertas.push({ nivel:"success", icon:"🟢", titulo:"Sem pendências críticas", texto:"Os indicadores monitorados estão dentro dos parâmetros configurados." });
+    }
+
+    return alertas;
+}
+
+function renderizarAlertasDashboard() {
+    const list = document.querySelector("#dashboard .grid-2:last-child .panel:first-child .alert-list");
+    if (!list) return;
+    const alertas = obterAlertas();
+    list.innerHTML = alertas.slice(0,5).map(a => `
+        <div class="alert ${a.nivel}">
+            <div class="alert-icon">${a.icon}</div>
+            <div><strong>${escapeHtml(a.titulo)}</strong><p>${escapeHtml(a.texto)}</p></div>
+        </div>
+    `).join("");
+
+    const span = list.closest(".panel")?.querySelector(".panel-header span");
+    if (span) span.textContent = `${alertas.filter(a => a.nivel !== "success").length} pendência(s)`;
+}
 
 function showAlerts() {
-
-    alert(
-        "🔔 NOTIFICAÇÕES\n\n" +
-        "🔴 Silagem em nível crítico\n" +
-        "🟠 18 animais sem pesagem\n" +
-        "🟠 Milho com 18 dias de estoque"
+    const alertas = obterAlertas();
+    abrirModalAcao(
+        "Notificações",
+        "Alertas gerados a partir dos dados atuais.",
+        `<div class="alert-list">${alertas.map(a => `
+            <div class="alert ${a.nivel}">
+                <div class="alert-icon">${a.icon}</div>
+                <div><strong>${escapeHtml(a.titulo)}</strong><p>${escapeHtml(a.texto)}</p></div>
+            </div>`).join("")}</div>`,
+        "Fechar",
+        () => fecharModalAcao()
     );
-
+    document.getElementById("actionSubmitBtn").textContent = "Fechar";
 }
 
+/* -------------------------
+   DASHBOARD / KPIs
+------------------------- */
 
+function atualizarDashboardDinamico() {
+    const total = rebanhoGlobal.length;
+    const media = total ? rebanhoGlobal.reduce((s,a) => s + numero(a.peso), 0) / total : 0;
+
+    const financeiroPeriodo = financeiroGlobal.filter(i => registroNoMes(i.data));
+    const receitas = financeiroPeriodo
+        .filter(i => normalizarTipo(i.tipo) === "Receita")
+        .reduce((s,i) => s + numero(i.valor), 0);
+    const despesas = financeiroPeriodo
+        .filter(i => normalizarTipo(i.tipo) === "Despesa")
+        .reduce((s,i) => s + numero(i.valor), 0);
+    const lucro = receitas - despesas;
+    const margem = receitas ? lucro/receitas*100 : 0;
+    const estoqueKg = estoqueGlobal
+        .filter(i => String(i.unidade || "kg").toLowerCase() === "kg")
+        .reduce((s,i) => s + numero(i.quantidade), 0);
+
+    const setText = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    };
+
+    setText("kpiTotalRebanho", total.toLocaleString("pt-BR"));
+    setText("kpiRebanhoTotal", total.toLocaleString("pt-BR"));
+    setText("kpiRebanhoPesoMedio", `${Math.round(media).toLocaleString("pt-BR")} kg`);
+    setText("finReceitas", moeda(receitas));
+    setText("finDespesas", moeda(despesas));
+    setText("finLucro", moeda(lucro));
+
+    const dashboardKpis = document.querySelectorAll("#dashboard .kpi-card .kpi-value");
+    if (dashboardKpis[1]) dashboardKpis[1].textContent = `${Math.round(media).toLocaleString("pt-BR")} kg`;
+    if (dashboardKpis[3]) dashboardKpis[3].textContent = moeda(receitas);
+    if (dashboardKpis[4]) dashboardKpis[4].textContent = moeda(lucro);
+    if (dashboardKpis[5]) dashboardKpis[5].textContent = `${(estoqueKg/1000).toLocaleString("pt-BR",{maximumFractionDigits:1})} t`;
+
+    const margemEl = document.querySelector("#financeiro .finance-card:nth-child(4) strong");
+    if (margemEl) margemEl.textContent = `${margem.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})}%`;
+
+    const compSpan = document.querySelector("#dashboard .grid-main .panel:nth-child(2) .panel-header span");
+    if (compSpan) compSpan.textContent = `${total} animais`;
+
+    atualizarGraficosDinamicos();
+}
+
+function atualizarGraficosDinamicos() {
+    if (composicaoChartInstancia) {
+        const cats = ["Vacas","Novilhas","Garrotes","Bezerros","Touros"];
+        const counts = [
+            rebanhoGlobal.filter(a => /^vaca/i.test(a.categoria || "")).length,
+            rebanhoGlobal.filter(a => /^novilh/i.test(a.categoria || "")).length,
+            rebanhoGlobal.filter(a => /^garrot/i.test(a.categoria || "")).length,
+            rebanhoGlobal.filter(a => /^bezerr/i.test(a.categoria || "")).length,
+            rebanhoGlobal.filter(a => /^touro/i.test(a.categoria || "")).length
+        ];
+        composicaoChartInstancia.data.labels = cats;
+        composicaoChartInstancia.data.datasets[0].data = counts;
+        composicaoChartInstancia.update();
+    }
+}
+
+function atualizarDados(btn) {
+    if (btn) {
+        btn.disabled = true;
+        const old = btn.textContent;
+        btn.textContent = "↻ Atualizando...";
+        setTimeout(() => {
+            atualizarTudo();
+            btn.disabled = false;
+            btn.textContent = old;
+            toast(firebaseOnline ? "Dados atualizados e sincronização ativa." : "Dados locais atualizados.");
+        }, 350);
+    } else {
+        atualizarTudo();
+    }
+}
+
+/* -------------------------
+   RELATÓRIOS / EXPORTAÇÃO
+------------------------- */
+
+function csvCell(value) {
+    return `"${String(value ?? "").replaceAll('"','""')}"`;
+}
+
+function baixarArquivo(nome, conteudo, mime="text/csv;charset=utf-8;") {
+    const blob = new Blob(["\ufeff", conteudo], { type:mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = nome;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 500);
+}
+
+function exportarCSV(tipo) {
+    let linhas = [];
+
+    if (tipo === "rebanho") {
+        linhas = [
+            ["Brinco","Categoria","Lote","Entrada","Peso atual (kg)","GMD","Status"],
+            ...rebanhoGlobal.map(a => [a.brinco,a.categoria,a.lote,formatarData(a.dataEntrada),numero(a.peso),numero(a.gmd),a.status || "Bom"])
+        ];
+    } else if (tipo === "estoque") {
+        linhas = [
+            ["Produto","Quantidade","Unidade","Consumo/dia","Dias restantes"],
+            ...estoqueGlobal.map(i => [i.produto,numero(i.quantidade),i.unidade || "kg",numero(i.consumoDia),diasEstoque(i) ?? ""])
+        ];
+    } else {
+        toast("Exportação não configurada para este relatório.", "warning");
+        return;
+    }
+
+    const csv = linhas.map(l => l.map(csvCell).join(";")).join("\n");
+    baixarArquivo(`controlagro_${tipo}_${hojeISO()}.csv`, csv);
+    toast("Arquivo CSV gerado. Ele pode ser aberto no Excel.");
+}
+
+function montarRelatorio(tipo) {
+    const estilo = `
+        <style>
+            body{font-family:Arial,sans-serif;color:#17221c;padding:28px}
+            h1{color:#154d32;margin:0 0 6px}.sub{color:#6b756f;margin-bottom:24px}
+            table{width:100%;border-collapse:collapse;margin-top:16px}
+            th,td{border-bottom:1px solid #ddd;padding:8px;text-align:left;font-size:12px}
+            th{font-size:10px;text-transform:uppercase;color:#6b756f}
+            .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+            .kpi{border:1px solid #ddd;border-radius:9px;padding:12px}
+            .kpi small{color:#6b756f}.kpi strong{display:block;margin-top:6px;font-size:18px}
+            @media print{body{padding:0}.no-print{display:none}}
+        
 /* =========================
-   MODAL ANIMAL
+   FILTRO MENSAL + AÇÕES CRUD
 ========================= */
-
-let animalChartInstance = null;
-
-function openAnimal() {
-
-    document.getElementById("animalModal").classList.add("show");
-
-    setTimeout(() => {
-
-        if (animalChartInstance) {
-            animalChartInstance.destroy();
-        }
-
-        const ctx = document.getElementById("animalChart");
-
-        animalChartInstance = new Chart(ctx, {
-
-            type: "line",
-
-            data: {
-
-                labels: [
-                    "Mar",
-                    "Abr",
-                    "Mai",
-                    "Jun",
-                    "Jul",
-                    "Ago"
-                ],
-
-                datasets: [{
-                    label: "Peso (kg)",
-                    data: [
-                        280,
-                        315,
-                        342,
-                        370,
-                        382,
-                        395
-                    ],
-
-                    borderColor: "#1f6b45",
-                    backgroundColor: "rgba(31,107,69,.10)",
-                    fill: true,
-                    tension: .35,
-                    pointRadius: 4,
-                    pointBackgroundColor: "#1f6b45"
-                }]
-
-            },
-
-            options: {
-
-                responsive: true,
-                maintainAspectRatio: false,
-
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-
-                scales: {
-                    y: {
-                        beginAtZero: false
-                    }
-                }
-
-            }
-
-        });
-
-    }, 100);
-
+.period-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding: 13px 15px;
+    background: #fff;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
 }
 
-
-function closeAnimal() {
-    document.getElementById("animalModal").classList.remove("show");
+.period-filter-info {
+    min-width: 0;
 }
 
+.period-filter-info strong {
+    display: block;
+    font-size: 12px;
+}
 
-/* =========================
-   RELATÓRIO
-========================= */
+.period-filter-info small {
+    display: block;
+    margin-top: 3px;
+    color: var(--texto-secundario);
+    font-size: 10px;
+}
 
+.period-filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.period-filter-controls select {
+    min-width: 190px;
+}
+
+.table-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.action-btn {
+    border: 1px solid var(--borda);
+    background: #fff;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 9px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.action-btn:hover {
+    background: #f4f7f5;
+}
+
+.action-btn.edit {
+    color: var(--verde);
+}
+
+.action-btn.delete {
+    color: var(--vermelho);
+}
+
+.action-btn.delete:hover {
+    background: var(--vermelho-bg);
+    border-color: #f2cccc;
+}
+
+.stock-actions {
+    margin-top: 9px;
+    display: flex;
+    gap: 7px;
+    justify-content: flex-end;
+}
+
+.record-meta {
+    color: var(--texto-secundario);
+    font-size: 10px;
+}
+
+@media (max-width: 700px) {
+    .period-filter-bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .period-filter-controls,
+    .period-filter-controls select {
+        width: 100%;
+    }
+
+    .period-filter-controls .form-control {
+        flex: 1;
+    }
+
+    .table-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .action-btn {
+        height: 36px;
+    }
+}
+
+</style>`;
+
+    const receitas = financeiroGlobal.filter(i => normalizarTipo(i.tipo)==="Receita").reduce((s,i)=>s+numero(i.valor),0);
+    const despesas = financeiroGlobal.filter(i => normalizarTipo(i.tipo)==="Despesa").reduce((s,i)=>s+numero(i.valor),0);
+    const lucro = receitas-despesas;
+
+    let corpo = "";
+    let titulo = "Relatório geral";
+
+    if (tipo === "pesagens") {
+        titulo = "Histórico de pesagens";
+        corpo = `<table><thead><tr><th>Data</th><th>Animal</th><th>Lote</th><th>Peso anterior</th><th>Peso atual</th><th>Ganho</th><th>GMD</th></tr></thead><tbody>
+        ${pesagensGlobal.map(p => `<tr><td>${formatarData(p.data)}</td><td>#${escapeHtml(p.brinco)}</td><td>${escapeHtml(p.lote)}</td><td>${numero(p.pesoAnterior)} kg</td><td>${numero(p.pesoAtual)} kg</td><td>${numero(p.ganho)} kg</td><td>${numero(p.gmd).toFixed(2)} kg/dia</td></tr>`).join("")}
+        </tbody></table>`;
+    } else if (tipo === "financeiro") {
+        titulo = "Relatório financeiro";
+        corpo = `<div class="kpis">
+            <div class="kpi"><small>Receitas</small><strong>${moeda(receitas)}</strong></div>
+            <div class="kpi"><small>Despesas</small><strong>${moeda(despesas)}</strong></div>
+            <div class="kpi"><small>Resultado</small><strong>${moeda(lucro)}</strong></div>
+            <div class="kpi"><small>Margem</small><strong>${receitas ? (lucro/receitas*100).toFixed(1) : "0.0"}%</strong></div>
+        </div>
+        <table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Valor</th></tr></thead><tbody>
+        ${financeiroGlobal.map(i => `<tr><td>${formatarData(i.data)}</td><td>${escapeHtml(i.descricao)}</td><td>${escapeHtml(i.categoria)}</td><td>${normalizarTipo(i.tipo)}</td><td>${moeda(i.valor)}</td></tr>`).join("")}
+        </tbody></table>`;
+    } else if (tipo === "rentabilidade") {
+        titulo = "Relatório de rentabilidade";
+        corpo = `<div class="kpis">
+            <div class="kpi"><small>Receita</small><strong>${moeda(receitas)}</strong></div>
+            <div class="kpi"><small>Despesa</small><strong>${moeda(despesas)}</strong></div>
+            <div class="kpi"><small>Resultado</small><strong>${moeda(lucro)}</strong></div>
+            <div class="kpi"><small>Margem</small><strong>${receitas ? (lucro/receitas*100).toFixed(1) : "0.0"}%</strong></div>
+        </div>
+        <table><thead><tr><th>Data</th><th>Lote</th><th>Animais</th><th>Peso total</th><th>Valor</th><th>Margem</th></tr></thead><tbody>
+        ${vendasGlobal.map(v => `<tr><td>${formatarData(v.data)}</td><td>${escapeHtml(v.lote)}</td><td>${numero(v.animais)}</td><td>${numero(v.pesoTotal)} kg</td><td>${moeda(v.valor)}</td><td>${numero(v.margem).toFixed(1)}%</td></tr>`).join("")}
+        </tbody></table>`;
+    } else {
+        titulo = "Relatório geral da fazenda";
+        const pesoMedio = rebanhoGlobal.length ? rebanhoGlobal.reduce((s,a)=>s+numero(a.peso),0)/rebanhoGlobal.length : 0;
+        corpo = `<div class="kpis">
+            <div class="kpi"><small>Rebanho</small><strong>${rebanhoGlobal.length}</strong></div>
+            <div class="kpi"><small>Peso médio</small><strong>${Math.round(pesoMedio)} kg</strong></div>
+            <div class="kpi"><small>Receitas</small><strong>${moeda(receitas)}</strong></div>
+            <div class="kpi"><small>Resultado</small><strong>${moeda(lucro)}</strong></div>
+        </div>
+        <h2>Estoque</h2>
+        <table><thead><tr><th>Produto</th><th>Quantidade</th><th>Autonomia</th></tr></thead><tbody>
+        ${estoqueGlobal.map(i => `<tr><td>${escapeHtml(i.produto)}</td><td>${numero(i.quantidade)} ${escapeHtml(i.unidade || "kg")}</td><td>${diasEstoque(i) ?? "-"} dias</td></tr>`).join("")}
+        </tbody></table>`;
+    }
+
+    return `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>${titulo}</title>${estilo}</head><body>
+        <h1>${titulo}</h1>
+        <div class="sub">${escapeHtml(configGlobal.fazenda)} • Gerado em ${new Date().toLocaleString("pt-BR")}</div>
+        ${corpo}
+        <script>window.onload=()=>setTimeout(()=>window.print(),250);<\/script>
+    </body></html>`;
+}
+
+function gerarRelatorio(tipo="geral") {
+    const popup = window.open("", "_blank", "width=1000,height=800");
+    if (!popup) {
+        toast("O navegador bloqueou a janela do relatório. Libere pop-ups para este site.", "warning");
+        return;
+    }
+    popup.document.open();
+    popup.document.write(montarRelatorio(tipo));
+    popup.document.close();
+}
+
+/* Compatibilidade com função antiga */
 function generateReport() {
-
-    alert(
-        "📄 RELATÓRIO DA FAZENDA\n\n" +
-        "O relatório será preparado com:\n\n" +
-        "✓ Indicadores do rebanho\n" +
-        "✓ Evolução do peso\n" +
-        "✓ Receitas e despesas\n" +
-        "✓ Estoque\n" +
-        "✓ Composição do rebanho\n" +
-        "✓ Resultado financeiro\n\n" +
-        "Em uma versão conectada ao banco de dados, " +
-        "este botão poderá gerar automaticamente um PDF."
-    );
-
+    gerarRelatorio("geral");
 }
 
+/* -------------------------
+   CONFIGURAÇÕES
+------------------------- */
 
-/* =========================
-   GRÁFICO REBANHO
-========================= */
+function preencherConfiguracoes() {
+    const mapa = {
+        cfgFazenda:configGlobal.fazenda,
+        cfgUsuario:configGlobal.usuario,
+        cfgIniciais:configGlobal.iniciais,
+        cfgEstoqueCritico:configGlobal.estoqueCritico,
+        cfgPesagemAtrasada:configGlobal.pesagemAtrasada
+    };
+    Object.entries(mapa).forEach(([id,v]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = v;
+    });
+    definirStatusNuvem(firebaseOnline ? "online" : "offline");
+}
 
-new Chart(
-    document.getElementById("rebanhoChart"),
-    {
+function salvarConfiguracoes() {
+    configGlobal = {
+        ...configGlobal,
+        fazenda:document.getElementById("cfgFazenda")?.value.trim() || DEFAULTS.config.fazenda,
+        usuario:document.getElementById("cfgUsuario")?.value.trim() || DEFAULTS.config.usuario,
+        iniciais:(document.getElementById("cfgIniciais")?.value.trim() || "US").toUpperCase().slice(0,3),
+        estoqueCritico:Math.max(1, numero(document.getElementById("cfgEstoqueCritico")?.value) || 7),
+        pesagemAtrasada:Math.max(1, numero(document.getElementById("cfgPesagemAtrasada")?.value) || 60)
+    };
+    localStorage.setItem(STORAGE_KEYS.config, JSON.stringify(configGlobal));
+    aplicarConfiguracoes();
+    atualizarTudo();
+    toast("Configurações salvas.");
+}
 
-        type: "line",
+function aplicarConfiguracoes() {
+    const farm = document.querySelector(".farm-info strong");
+    if (farm) farm.textContent = configGlobal.fazenda;
 
-        data: {
+    const profileName = document.querySelector(".profile-info strong");
+    if (profileName) profileName.textContent = configGlobal.usuario;
 
-            labels: [
-                "Set",
-                "Out",
-                "Nov",
-                "Dez",
-                "Jan",
-                "Fev",
-                "Mar",
-                "Abr",
-                "Mai",
-                "Jun",
-                "Jul",
-                "Ago"
-            ],
+    const avatar = document.querySelector(".avatar");
+    if (avatar) avatar.textContent = configGlobal.iniciais;
+}
 
-            datasets: [{
-                label: "Cabeças",
-                data: [
-                    218,
-                    221,
-                    225,
-                    229,
-                    232,
-                    235,
-                    238,
-                    240,
-                    242,
-                    244,
-                    246,
-                    248
-                ],
+function limparDadosLocais() {
+    if (!confirm("Deseja limpar os dados locais e restaurar os dados de demonstração? Os dados gravados no Firestore não serão apagados.")) return;
+    Object.values(STORAGE_KEYS).forEach(k => {
+        if (k !== STORAGE_KEYS.config) localStorage.removeItem(k);
+    });
 
-                borderColor: "#1f6b45",
-                backgroundColor: "rgba(31,107,69,.08)",
-                fill: true,
-                tension: .35,
-                pointRadius: 3
-            }]
+    rebanhoGlobal = clone(DEFAULTS.rebanho);
+    financeiroGlobal = clone(DEFAULTS.financeiro);
+    vendasGlobal = clone(DEFAULTS.vendas);
+    pesagensGlobal = clone(DEFAULTS.pesagens);
+    estoqueGlobal = clone(DEFAULTS.estoque);
+    operacoesGlobal = clone(DEFAULTS.operacoes);
 
-        },
+    atualizarTudo();
+    toast("Dados locais restaurados.");
+}
 
-        options: {
+/* -------------------------
+   GRÁFICOS
+------------------------- */
 
-            responsive: true,
-            maintainAspectRatio: false,
-
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-
-            scales: {
-                y: {
-                    beginAtZero: false
-                }
+function inicializarGraficos() {
+    if (!window.Chart) {
+        document.querySelectorAll(".chart-container, .modal-chart").forEach(c => {
+            if (c.querySelector("canvas")) {
+                c.innerHTML = '<div class="empty-state">Biblioteca de gráficos indisponível.</div>';
             }
-
-        }
-
+        });
+        toast("Chart.js não foi carregado. O restante do sistema continua funcionando.", "warning");
+        return;
     }
-);
 
+    rebanhoChartInstancia = new Chart(document.getElementById("rebanhoChart"), {
+        type:"line",
+        data:{
+            labels:["Set","Out","Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago"],
+            datasets:[{
+                label:"Cabeças",
+                data:[218,221,225,229,232,235,238,240,242,244,246,rebanhoGlobal.length],
+                borderColor:"#1f6b45",
+                backgroundColor:"rgba(31,107,69,.08)",
+                fill:true,
+                tension:.35,
+                pointRadius:3
+            }]
+        },
+        options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:false}} }
+    });
 
-/* =========================
-   GRÁFICO FINANCEIRO
-========================= */
-
-new Chart(
-    document.getElementById("financeChart"),
-    {
-
-        type: "bar",
-
-        data: {
-
-            labels: [
-                "Set",
-                "Out",
-                "Nov",
-                "Dez",
-                "Jan",
-                "Fev",
-                "Mar",
-                "Abr",
-                "Mai",
-                "Jun",
-                "Jul",
-                "Ago"
-            ],
-
-            datasets: [
-
-                {
-                    label: "Receitas",
-                    data: [
-                        52,
-                        57,
-                        61,
-                        64,
-                        59,
-                        66,
-                        70,
-                        72,
-                        76,
-                        79,
-                        81,
-                        86
-                    ],
-
-                    backgroundColor: "#35a66b",
-                    borderRadius: 5
-                },
-
-                {
-                    label: "Despesas",
-                    data: [
-                        42,
-                        44,
-                        47,
-                        50,
-                        46,
-                        51,
-                        54,
-                        55,
-                        59,
-                        60,
-                        63,
-                        61
-                    ],
-
-                    backgroundColor: "#e5a83a",
-                    borderRadius: 5
-                }
-
+    financeChartInstancia = new Chart(document.getElementById("financeChart"), {
+        type:"bar",
+        data:{
+            labels:["Set","Out","Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago"],
+            datasets:[
+                {label:"Receitas",data:[52,57,61,64,59,66,70,72,76,79,81,86],backgroundColor:"#35a66b",borderRadius:5},
+                {label:"Despesas",data:[42,44,47,50,46,51,54,55,59,60,63,61],backgroundColor:"#e5a83a",borderRadius:5}
             ]
-
         },
-
-        options: {
-
-            responsive: true,
-            maintainAspectRatio: false,
-
-            plugins: {
-                legend: {
-                    position: "bottom"
-                }
-            },
-
-            scales: {
-
-                y: {
-                    ticks: {
-                        callback: function(value) {
-                            return "R$ " + value + "k";
-                        }
-                    }
-                }
-
-            }
-
+        options:{
+            responsive:true,maintainAspectRatio:false,
+            plugins:{legend:{position:"bottom"}},
+            scales:{y:{ticks:{callback:value=>"R$ "+value+"k"}}}
         }
+    });
 
-    }
-);
-
-
-/* =========================
-   GRÁFICO PESO
-========================= */
-
-new Chart(
-    document.getElementById("pesoChart"),
-    {
-
-        type: "line",
-
-        data: {
-
-            labels: [
-                "Set",
-                "Out",
-                "Nov",
-                "Dez",
-                "Jan",
-                "Fev",
-                "Mar",
-                "Abr",
-                "Mai",
-                "Jun",
-                "Jul",
-                "Ago"
-            ],
-
-            datasets: [{
-                label: "Peso médio",
-                data: [
-                    351,
-                    358,
-                    365,
-                    372,
-                    378,
-                    384,
-                    389,
-                    394,
-                    399,
-                    404,
-                    408,
-                    412
-                ],
-
-                borderColor: "#3c82d6",
-                backgroundColor: "rgba(60,130,214,.08)",
-                fill: true,
-                tension: .35,
-                pointRadius: 3
+    pesoChartInstancia = new Chart(document.getElementById("pesoChart"), {
+        type:"line",
+        data:{
+            labels:["Set","Out","Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago"],
+            datasets:[{
+                label:"Peso médio",
+                data:[351,358,365,372,378,384,389,394,399,404,408,
+                    rebanhoGlobal.length ? Math.round(rebanhoGlobal.reduce((s,a)=>s+numero(a.peso),0)/rebanhoGlobal.length) : 0],
+                borderColor:"#3c82d6",
+                backgroundColor:"rgba(60,130,214,.08)",
+                fill:true,tension:.35,pointRadius:3
             }]
-
         },
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false}}}
+    });
 
-        options: {
-
-            responsive: true,
-            maintainAspectRatio: false,
-
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-
-            scales: {
-                y: {
-                    beginAtZero: false
-                }
-            }
-
-        }
-
-    }
-);
-
-
-/* =========================
-   COMPOSIÇÃO DO REBANHO
-========================= */
-
-new Chart(
-    document.getElementById("composicaoChart"),
-    {
-
-        type: "doughnut",
-
-        data: {
-
-            labels: [
-                "Vacas",
-                "Novilhas",
-                "Garrotes",
-                "Bezerros",
-                "Touros"
-            ],
-
-            datasets: [{
-                data: [
-                    72,
-                    48,
-                    61,
-                    59,
-                    8
-                ],
-
-                backgroundColor: [
-                    "#1f6b45",
-                    "#35a66b",
-                    "#77bd91",
-                    "#b5ddc4",
-                    "#d8a53b"
-                ],
-
-                borderWidth: 0
+    composicaoChartInstancia = new Chart(document.getElementById("composicaoChart"), {
+        type:"doughnut",
+        data:{
+            labels:["Vacas","Novilhas","Garrotes","Bezerros","Touros"],
+            datasets:[{
+                data:[0,0,0,0,0],
+                backgroundColor:["#1f6b45","#35a66b","#77bd91","#b5ddc4","#d8a53b"],
+                borderWidth:0
             }]
-
         },
-
-        options: {
-
-            responsive: true,
-            maintainAspectRatio: false,
-
-            cutout: "65%",
-
-            plugins: {
-                legend: {
-                    position: "bottom",
-                    labels: {
-                        usePointStyle: true,
-                        padding: 15
-                    }
-                }
-            }
-
+        options:{
+            responsive:true,maintainAspectRatio:false,cutout:"65%",
+            plugins:{legend:{position:"bottom",labels:{usePointStyle:true,padding:15}}}
         }
+    });
+}
 
-    }
-);
+/* -------------------------
+   ATUALIZAÇÃO GERAL
+------------------------- */
 
+function atualizarTudo() {
+    atualizarFiltroMesUI();
+    atualizarTabelaRebanhoNuvem();
+    atualizarTabelaPesagens();
+    atualizarTabelaFinanceiroNuvem();
+    atualizarTabelaVendasNuvem();
+    renderizarEstoque();
+    renderizarOperacoes();
+    renderizarAlertasDashboard();
+    atualizarDashboardDinamico();
+    aplicarConfiguracoes();
+}
 
-/* =========================
-   FECHAR MODAL CLICANDO FORA
-========================= */
+/* -------------------------
+   EVENTOS GERAIS
+------------------------- */
 
-document.getElementById("animalModal").addEventListener("click", function(e) {
-
-    if (e.target === this) {
-        closeAnimal();
-    }
-
+document.getElementById("animalModal")?.addEventListener("click", function(e) {
+    if (e.target === this) closeAnimal();
 });
 
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+        closeAnimal();
+        fecharModalAcao();
+        fecharSidebar();
+    }
+});
+
+window.addEventListener("resize", () => {
+    if (window.innerWidth > 800) fecharSidebar();
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+    aplicarConfiguracoes();
+    inicializarGraficos();
+    atualizarTudo();
+
+    const monthSelect = document.getElementById("globalMonthFilter");
+    if (monthSelect) {
+        monthSelect.addEventListener("change", e => aplicarFiltroMes(e.target.value));
+        monthSelect.value = mesGlobalSelecionado;
+    }
+
+    inicializarFirebaseSeguro();
+});
 </script>
+
 
 </body>
 </html>
