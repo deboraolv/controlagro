@@ -1390,8 +1390,8 @@ textarea.form-control {
                 <span class="kpi-label">REBANHO ATUAL</span>
                 <div class="kpi-icon green">🐂</div>
             </div>
-            <div class="kpi-value" id="kpiTotalRebanho">248</div>
-            <div class="kpi-change">Tempo real nuvem</div>
+            <div class="kpi-value" id="kpiTotalRebanho">—</div>
+            <div class="kpi-change" id="kpiRebanhoChange">Aguardando dados do Firebase</div>
         </div>
 
         <div class="kpi-card">
@@ -1399,8 +1399,8 @@ textarea.form-control {
                 <span class="kpi-label">PESO MÉDIO</span>
                 <div class="kpi-icon blue">⚖️</div>
             </div>
-            <div class="kpi-value">412 kg</div>
-            <div class="kpi-change">↑ 3,4% no período</div>
+            <div class="kpi-value" id="kpiPesoMedioDashboard">—</div>
+            <div class="kpi-change" id="kpiPesoChange">Aguardando pesagens</div>
         </div>
 
         <div class="kpi-card">
@@ -1408,8 +1408,8 @@ textarea.form-control {
                 <span class="kpi-label">GMD</span>
                 <div class="kpi-icon green">📈</div>
             </div>
-            <div class="kpi-value">0,72 kg</div>
-            <div class="kpi-change">↑ 0,08 kg/dia</div>
+            <div class="kpi-value" id="kpiGmdDashboard">—</div>
+            <div class="kpi-change" id="kpiGmdChange">Aguardando dados do rebanho</div>
         </div>
 
         <div class="kpi-card">
@@ -1417,8 +1417,8 @@ textarea.form-control {
                 <span class="kpi-label">RECEITA NO MÊS</span>
                 <div class="kpi-icon green">💵</div>
             </div>
-            <div class="kpi-value">R$ 86,4 mil</div>
-            <div class="kpi-change">↑ 12,6% vs. mês anterior</div>
+            <div class="kpi-value" id="kpiReceitaDashboard">—</div>
+            <div class="kpi-change" id="kpiReceitaChange">Aguardando lançamentos</div>
         </div>
 
         <div class="kpi-card">
@@ -1426,8 +1426,8 @@ textarea.form-control {
                 <span class="kpi-label">LUCRO ESTIMADO</span>
                 <div class="kpi-icon green">📊</div>
             </div>
-            <div class="kpi-value">R$ 24,8 mil</div>
-            <div class="kpi-change">Margem de 28,7%</div>
+            <div class="kpi-value" id="kpiLucroDashboard">—</div>
+            <div class="kpi-change" id="kpiLucroChange">Aguardando lançamentos</div>
         </div>
 
         <div class="kpi-card">
@@ -1435,8 +1435,8 @@ textarea.form-control {
                 <span class="kpi-label">ESTOQUE</span>
                 <div class="kpi-icon yellow">🌾</div>
             </div>
-            <div class="kpi-value">12,4 t</div>
-            <div class="kpi-change negative">2 itens em atenção</div>
+            <div class="kpi-value" id="kpiEstoqueDashboard">—</div>
+            <div class="kpi-change" id="kpiEstoqueChange">Aguardando estoque</div>
         </div>
 
     </div>
@@ -1488,7 +1488,7 @@ textarea.form-control {
 
             <div class="panel-header">
                 <h2>🐂 Composição do rebanho</h2>
-                <span>248 animais</span>
+                <span id="composicaoResumo">Aguardando dados</span>
             </div>
 
             <div class="chart-container">
@@ -1507,36 +1507,10 @@ textarea.form-control {
 
             <div class="panel-header">
                 <h2>🚨 Alertas importantes</h2>
-                <span>3 pendências</span>
+                <span id="dashboardAlertCount">Aguardando dados</span>
             </div>
 
-            <div class="alert-list">
-
-                <div class="alert danger">
-                    <div class="alert-icon">🔴</div>
-                    <div>
-                        <strong>Silagem em nível crítico</strong>
-                        <p>Estoque disponível para aproximadamente 5 dias.</p>
-                    </div>
-                </div>
-
-                <div class="alert warning">
-                    <div class="alert-icon">🟠</div>
-                    <div>
-                        <strong>Animais sem pesagem</strong>
-                        <p>18 animais estão há mais de 60 dias sem pesagem.</p>
-                    </div>
-                </div>
-
-                <div class="alert success">
-                    <div class="alert-icon">🟢</div>
-                    <div>
-                        <strong>Venda registrada</strong>
-                        <p>Venda do Lote 03 registrada com sucesso.</p>
-                    </div>
-                </div>
-
-            </div>
+            <div class="alert-list"><div class="empty-state">Carregando alertas do Firebase...</div></div>
 
         </div>
 
@@ -1544,61 +1518,11 @@ textarea.form-control {
 
             <div class="panel-header">
                 <h2>🌾 Estoque inteligente</h2>
-                <span>Atualizado hoje</span>
+                <span id="dashboardEstoqueAtualizacao">Aguardando Firebase</span>
             </div>
 
-            <div class="stock-item">
-
-                <div class="stock-info">
-                    <strong>Silagem</strong>
-                    <span>2.340 kg</span>
-                </div>
-
-                <div class="stock-bar">
-                    <div class="stock-progress danger" style="width:20%"></div>
-                </div>
-
-                <div class="stock-footer">
-                    🔴 Aproximadamente 5 dias de estoque
-                </div>
-
-            </div>
-
-            <div class="stock-item">
-
-                <div class="stock-info">
-                    <strong>Milho</strong>
-                    <span>4.820 kg</span>
-                </div>
-
-                <div class="stock-bar">
-                    <div class="stock-progress warning" style="width:42%"></div>
-                </div>
-
-                <div class="stock-footer">
-                    🟠 Aproximadamente 18 dias de estoque
-                </div>
-
-            </div>
-
-            <div class="stock-item">
-
-                <div class="stock-info">
-                    <strong>Ração</strong>
-                    <span>5.240 kg</span>
-                </div>
-
-                <div class="stock-bar">
-                    <div class="stock-progress" style="width:78%"></div>
-                </div>
-
-                <div class="stock-footer">
-                    🟢 Aproximadamente 32 dias de estoque
-                </div>
-
-            </div>
-
-        </div>
+            <div id="dashboardEstoqueLista"><div class="empty-state">Carregando estoque do Firebase...</div></div>
+</div>
 
     </div>
 
@@ -1628,22 +1552,22 @@ textarea.form-control {
 
         <div class="kpi-card">
             <span class="kpi-label">TOTAL</span>
-            <div class="kpi-value" id="kpiRebanhoTotal">248</div>
+            <div class="kpi-value" id="kpiRebanhoTotal">—</div>
         </div>
 
         <div class="kpi-card">
             <span class="kpi-label">PESO MÉDIO</span>
-            <div class="kpi-value" id="kpiRebanhoPesoMedio">412 kg</div>
+            <div class="kpi-value" id="kpiRebanhoPesoMedio">—</div>
         </div>
 
         <div class="kpi-card">
             <span class="kpi-label">GMD MÉDIO</span>
-            <div class="kpi-value">0,72 kg</div>
+            <div class="kpi-value" id="kpiRebanhoGmdMedio">—</div>
         </div>
 
         <div class="kpi-card">
             <span class="kpi-label">LOTES</span>
-            <div class="kpi-value">8</div>
+            <div class="kpi-value" id="kpiRebanhoLotes">—</div>
         </div>
 
     </div>
@@ -1731,39 +1655,7 @@ textarea.form-control {
                     </tr>
                 </thead>
 
-                <tbody>
-
-                    <tr>
-                        <td>18/08/2026</td>
-                        <td class="animal-id">#102</td>
-                        <td>Lote 03</td>
-                        <td>370 kg</td>
-                        <td>395 kg</td>
-                        <td>+25 kg</td>
-                        <td class="finance-positive">0,78 kg</td>
-                    </tr>
-
-                    <tr>
-                        <td>18/08/2026</td>
-                        <td class="animal-id">#118</td>
-                        <td>Lote 02</td>
-                        <td>344 kg</td>
-                        <td>362 kg</td>
-                        <td>+18 kg</td>
-                        <td class="finance-positive">0,64 kg</td>
-                    </tr>
-
-                    <tr>
-                        <td>15/08/2026</td>
-                        <td class="animal-id">#145</td>
-                        <td>Lote 05</td>
-                        <td>186 kg</td>
-                        <td>210 kg</td>
-                        <td>+24 kg</td>
-                        <td class="finance-positive">0,81 kg</td>
-                    </tr>
-
-                </tbody>
+                <tbody id="tabelaPesagensCorpo"><tr><td colspan="8"><div class="empty-state">Carregando pesagens do Firebase...</div></td></tr></tbody>
 
             </table>
 
@@ -1799,43 +1691,11 @@ textarea.form-control {
 
             <div class="panel-header">
                 <h2>Estoque atual</h2>
-                <span>12,4 toneladas</span>
+                <span>Aguardando Firebase</span>
             </div>
 
-            <div class="stock-item">
-                <div class="stock-info">
-                    <strong>Silagem</strong>
-                    <strong>2.340 kg</strong>
-                </div>
-                <div class="stock-bar">
-                    <div class="stock-progress danger" style="width:20%"></div>
-                </div>
-                <div class="stock-footer">Consumo: 420 kg/dia • 5 dias restantes</div>
-            </div>
-
-            <div class="stock-item">
-                <div class="stock-info">
-                    <strong>Milho</strong>
-                    <strong>4.820 kg</strong>
-                </div>
-                <div class="stock-bar">
-                    <div class="stock-progress warning" style="width:42%"></div>
-                </div>
-                <div class="stock-footer">Consumo: 268 kg/dia • 18 dias restantes</div>
-            </div>
-
-            <div class="stock-item">
-                <div class="stock-info">
-                    <strong>Ração</strong>
-                    <strong>5.240 kg</strong>
-                </div>
-                <div class="stock-bar">
-                    <div class="stock-progress" style="width:78%"></div>
-                </div>
-                <div class="stock-footer">Consumo: 164 kg/dia • 32 dias restantes</div>
-            </div>
-
-        </div>
+            <div class="empty-state">Carregando estoque do Firebase...</div>
+</div>
 
         <div class="panel">
 
@@ -1843,33 +1703,7 @@ textarea.form-control {
                 <h2>🚨 Alertas de estoque</h2>
             </div>
 
-            <div class="alert-list">
-
-                <div class="alert danger">
-                    <div>🔴</div>
-                    <div>
-                        <strong>Silagem — estoque crítico</strong>
-                        <p>2.340 kg disponíveis. Reposição recomendada.</p>
-                    </div>
-                </div>
-
-                <div class="alert warning">
-                    <div>🟠</div>
-                    <div>
-                        <strong>Milho — estoque em atenção</strong>
-                        <p>Previsão de 18 dias de consumo.</p>
-                    </div>
-                </div>
-
-                <div class="alert success">
-                    <div>🟢</div>
-                    <div>
-                        <strong>Ração — estoque adequado</strong>
-                        <p>32 dias de autonomia estimada.</p>
-                    </div>
-                </div>
-
-            </div>
+            <div class="alert-list"><div class="empty-state">Carregando alertas do Firebase...</div></div>
 
         </div>
 
@@ -1901,22 +1735,22 @@ textarea.form-control {
 
         <div class="finance-card">
             <small>RECEITAS</small>
-            <strong class="finance-positive" id="finReceitas">R$ 86.400</strong>
+            <strong class="finance-positive" id="finReceitas">—</strong>
         </div>
 
         <div class="finance-card">
             <small>DESPESAS</small>
-            <strong class="finance-negative" id="finDespesas">R$ 61.600</strong>
+            <strong class="finance-negative" id="finDespesas">—</strong>
         </div>
 
         <div class="finance-card">
             <small>LUCRO ESTIMADO</small>
-            <strong class="finance-positive" id="finLucro">R$ 24.800</strong>
+            <strong class="finance-positive" id="finLucro">—</strong>
         </div>
 
         <div class="finance-card">
             <small>MARGEM</small>
-            <strong>28,7%</strong>
+            <strong id="finMargem">—</strong>
         </div>
 
     </div>
@@ -2042,33 +1876,7 @@ textarea.form-control {
                 <h2>Atividades recentes</h2>
             </div>
 
-            <div class="alert-list">
-
-                <div class="alert success">
-                    <div>🌾</div>
-                    <div>
-                        <strong>Distribuição de alimentação</strong>
-                        <p>Lote 03 • Hoje às 07:20</p>
-                    </div>
-                </div>
-
-                <div class="alert success">
-                    <div>⚖️</div>
-                    <div>
-                        <strong>Pesagem realizada</strong>
-                        <p>46 animais • Ontem às 16:40</p>
-                    </div>
-                </div>
-
-                <div class="alert warning">
-                    <div>💉</div>
-                    <div>
-                        <strong>Manejo sanitário</strong>
-                        <p>Lote 05 • Programado para amanhã</p>
-                    </div>
-                </div>
-
-            </div>
+            <div class="alert-list"><div class="empty-state">Carregando atividades do Firebase...</div></div>
 
         </div>
 
@@ -2078,22 +1886,8 @@ textarea.form-control {
                 <h2>Próximas atividades</h2>
             </div>
 
-            <div class="stock-item">
-                <strong>Pesagem — Lote 04</strong>
-                <div class="stock-footer">Amanhã • 08:00</div>
-            </div>
-
-            <div class="stock-item">
-                <strong>Vacinação — Lote 05</strong>
-                <div class="stock-footer">27/08/2026 • 07:30</div>
-            </div>
-
-            <div class="stock-item">
-                <strong>Compra de alimentação</strong>
-                <div class="stock-footer">30/08/2026</div>
-            </div>
-
-        </div>
+            <div class="empty-state">Carregando atividades programadas do Firebase...</div>
+</div>
 
     </div>
 
@@ -2225,7 +2019,7 @@ textarea.form-control {
                 <div class="settings-row">
                     <div>
                         <strong>Firebase / Firestore</strong>
-                        <small>Rebanho, financeiro e vendas usam a nuvem quando disponível.</small>
+                        <small>Todos os módulos leem e gravam diretamente no Firestore.</small>
                     </div>
                     <button class="secondary-btn" onclick="testarConexaoFirebase()">Testar</button>
                 </div>
@@ -2289,8 +2083,8 @@ textarea.form-control {
                 <div class="animal-avatar">🐂</div>
 
                 <div>
-                    <h2 id="modalAnimalTitulo">Animal #102</h2>
-                    <p id="modalAnimalSub">Garrote • Lote 03 • Fazenda São Francisco</p>
+                    <h2 id="modalAnimalTitulo">Ficha do animal</h2>
+                    <p id="modalAnimalSub">Selecione um animal para visualizar os dados.</p>
                 </div>
 
             </div>
@@ -2299,69 +2093,7 @@ textarea.form-control {
 
         </div>
 
-        <div class="animal-grid" id="modalAnimalGridContent">
-
-            <div class="info-box">
-                <small>CATEGORIA</small>
-                <strong>Garrote</strong>
-            </div>
-
-            <div class="info-box">
-                <small>LOTE</small>
-                <strong>Lote 03</strong>
-            </div>
-
-            <div class="info-box">
-                <small>ENTRADA</small>
-                <strong>12/03/2026</strong>
-            </div>
-
-            <div class="info-box">
-                <small>DIAS NA FAZENDA</small>
-                <strong>147 dias</strong>
-            </div>
-
-            <div class="info-box">
-                <small>PESO INICIAL</small>
-                <strong>280 kg</strong>
-            </div>
-
-            <div class="info-box">
-                <small>PESO ATUAL</small>
-                <strong>395 kg</strong>
-            </div>
-
-            <div class="info-box">
-                <small>GANHO TOTAL</small>
-                <strong class="finance-positive">+115 kg</strong>
-            </div>
-
-            <div class="info-box">
-                <small>GMD</small>
-                <strong class="finance-positive">0,78 kg/dia</strong>
-            </div>
-
-            <div class="info-box">
-                <small>VALOR DE COMPRA</small>
-                <strong>R$ 4.200</strong>
-            </div>
-
-            <div class="info-box">
-                <small>CUSTO ACUMULADO</small>
-                <strong>R$ 2.180</strong>
-            </div>
-
-            <div class="info-box">
-                <small>VALOR ESTIMADO</small>
-                <strong>R$ 7.460</strong>
-            </div>
-
-            <div class="info-box">
-                <small>MARGEM ESTIMADA</small>
-                <strong class="finance-positive">R$ 1.080</strong>
-            </div>
-
-        </div>
+        <div class="animal-grid" id="modalAnimalGridContent"><div class="empty-state" style="grid-column:1/-1;">Os dados serão carregados do Firebase ao abrir uma ficha.</div></div>
 
         <div class="panel" style="box-shadow:none;border:1px solid var(--borda);">
 
@@ -2456,6 +2188,7 @@ let listenersAtivos = [];
 let syncInicialConcluido = false;
 
 let rebanhoGlobal = [];
+let rebanhoHistoricoGlobal = [];
 let financeiroGlobal = [];
 let vendasGlobal = [];
 let pesagensGlobal = [];
@@ -2592,6 +2325,112 @@ function diasEntre(dataInicial, dataFinal = hojeISO()) {
     const b = new Date(String(dataFinal).slice(0,10) + "T12:00:00");
     if (Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) return 0;
     return Math.max(0, Math.floor((b-a)/86400000));
+}
+
+
+function dataFirestoreParaDate(value) {
+    if (!value) return null;
+    if (typeof value.toDate === "function") {
+        const d = value.toDate();
+        return Number.isNaN(d.getTime()) ? null : d;
+    }
+    if (typeof value.seconds === "number") {
+        const d = new Date(value.seconds * 1000);
+        return Number.isNaN(d.getTime()) ? null : d;
+    }
+    const iso = normalizarDataISO(value);
+    if (iso) {
+        const d = new Date(`${iso}T12:00:00`);
+        return Number.isNaN(d.getTime()) ? null : d;
+    }
+    const d = new Date(value);
+    return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function ultimosMeses(qtd=12) {
+    const hoje = new Date();
+    const meses = [];
+    for (let i=qtd-1; i>=0; i--) {
+        const d = new Date(hoje.getFullYear(), hoje.getMonth()-i, 1);
+        meses.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`);
+    }
+    return meses;
+}
+
+function rotuloMesCurto(chave) {
+    const [ano, mes] = chave.split("-").map(Number);
+    const nomes = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    return `${nomes[mes-1]}/${String(ano).slice(-2)}`;
+}
+
+function fimDoMes(chave) {
+    const [ano, mes] = chave.split("-").map(Number);
+    return new Date(ano, mes, 0, 23, 59, 59, 999);
+}
+
+function mesAnterior(chave) {
+    const [ano, mes] = chave.split("-").map(Number);
+    const d = new Date(ano, mes-2, 1);
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+}
+
+function financeiroDoMes(chave) {
+    return financeiroGlobal.filter(i => chaveMes(i.data) === chave);
+}
+
+function receitaDoMes(chave) {
+    return financeiroDoMes(chave)
+        .filter(i => normalizarTipo(i.tipo) === "Receita")
+        .reduce((s,i) => s + numero(i.valor), 0);
+}
+
+function despesaDoMes(chave) {
+    return financeiroDoMes(chave)
+        .filter(i => normalizarTipo(i.tipo) === "Despesa")
+        .reduce((s,i) => s + numero(i.valor), 0);
+}
+
+function pesoMedioPesagensMes(chave) {
+    const dados = pesagensGlobal.filter(p => chaveMes(p.data) === chave);
+    if (!dados.length) return null;
+    return dados.reduce((s,p) => s + numero(p.pesoAtual), 0) / dados.length;
+}
+
+function rebanhoNoFimDoMes(chave) {
+    const limite = fimDoMes(chave);
+    return rebanhoHistoricoGlobal.filter(animal => {
+        const entrada = dataFirestoreParaDate(animal.dataEntrada);
+        if (!entrada || entrada > limite) return false;
+        const exclusao = dataFirestoreParaDate(animal.deletedAt);
+        return !exclusao || exclusao > limite;
+    }).length;
+}
+
+function variacaoPercentual(atual, anterior) {
+    if (!anterior) return null;
+    return ((atual - anterior) / Math.abs(anterior)) * 100;
+}
+
+function textoVariacao(atual, anterior, sufixo="vs. mês anterior") {
+    const v = variacaoPercentual(atual, anterior);
+    if (v === null || !Number.isFinite(v)) return "Sem base suficiente para comparação";
+    const sinal = v > 0 ? "↑" : v < 0 ? "↓" : "→";
+    return `${sinal} ${Math.abs(v).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})}% ${sufixo}`;
+}
+
+function moedaCompacta(value) {
+    return new Intl.NumberFormat("pt-BR", {
+        style:"currency",
+        currency:"BRL",
+        notation:"compact",
+        maximumFractionDigits:1
+    }).format(numero(value));
+}
+
+function formatarAtualizacaoFirebase(value) {
+    const d = dataFirestoreParaDate(value);
+    if (!d) return "Sem data de atualização";
+    return `Atualizado em ${d.toLocaleDateString("pt-BR")} às ${d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}`;
 }
 
 function toast(mensagem, tipo="success") {
@@ -2747,7 +2586,22 @@ const LEGACY_STORAGE_KEYS = {
     config: "controlagro_config"
 };
 
-const LEGACY_MIGRATION_KEY = "controlagro_migracao_firebase_v2";
+const LEGACY_MIGRATION_KEY = "controlagro_migracao_firebase_v3";
+
+const DEMO_LEGACY_IDS = {
+    rebanho: new Set(["local-102","local-118","local-145"]),
+    financeiro: new Set(["local-fin-1","local-fin-2","local-fin-3"]),
+    vendas: new Set(["local-v-1"]),
+    pesagens: new Set(["local-p-1","local-p-2","local-p-3"]),
+    estoque: new Set(["silagem","milho","racao"]),
+    operacoes: new Set(["local-o-1","local-o-2","local-o-3"])
+};
+
+function ehRegistroDemonstracaoLegado(tipo, item) {
+    const id = String(item?.id || "").trim().toLowerCase();
+    const ids = DEMO_LEGACY_IDS[tipo];
+    return !!ids && ids.has(id);
+}
 
 function lerLegacyLocalStorage(chave) {
     try {
@@ -2817,7 +2671,10 @@ async function migrarDadosLegadosParaFirebase() {
             snapshotExistente.docs.map(doc => chaveNegocio(tipo, { id:doc.id, ...doc.data() }))
         );
 
-        const pendentes = dadosLegados.filter(item => !chavesExistentes.has(chaveNegocio(tipo, item)));
+        const pendentes = dadosLegados.filter(item =>
+            !ehRegistroDemonstracaoLegado(tipo, item) &&
+            !chavesExistentes.has(chaveNegocio(tipo, item))
+        );
         if (!pendentes.length) continue;
 
         // Firestore batch aceita até 500 operações. Usamos blocos menores.
@@ -2882,6 +2739,58 @@ async function migrarDadosLegadosParaFirebase() {
     }
 }
 
+
+async function limparRegistrosDemonstracaoMigrados() {
+    if (!db) return;
+
+    const tipos = ["rebanho","financeiro","vendas","pesagens","estoque","operacoes"];
+    let removidos = 0;
+
+    for (const tipo of tipos) {
+        const ids = DEMO_LEGACY_IDS[tipo];
+        if (!ids) continue;
+
+        for (const id of ids) {
+            try {
+                const ref = collectionRef(tipo).doc(id);
+                const snap = await ref.get();
+                if (!snap.exists) continue;
+
+                const data = snap.data();
+
+                // Só remove automaticamente registros que vieram da antiga
+                // migração local e possuem um dos IDs conhecidos de demonstração.
+                if (data.migratedFromLegacyLocalStorage === true && !data.deletedAt) {
+                    const batch = db.batch();
+                    batch.update(ref, {
+                        deletedAt:firebase.firestore.FieldValue.serverTimestamp(),
+                        updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+                        removedAsDemoData:true
+                    });
+
+                    adicionarAuditoriaAoBatch(
+                        batch,
+                        tipo,
+                        "REMOVER_DADO_DEMONSTRACAO",
+                        id,
+                        { id, ...data },
+                        null
+                    );
+
+                    await batch.commit();
+                    removidos++;
+                }
+            } catch (e) {
+                console.warn(`Falha ao revisar registro de demonstração ${tipo}/${id}:`, e);
+            }
+        }
+    }
+
+    if (removidos > 0) {
+        toast(`${removidos} registro(s) antigos de demonstração foram removidos das telas e mantidos no histórico.`, "warning");
+    }
+}
+
 /* -------------------------
    FIREBASE / OFFLINE CACHE
 ------------------------- */
@@ -2921,6 +2830,7 @@ async function inicializarFirebaseSeguro() {
         }
 
         await migrarDadosLegadosParaFirebase();
+        await limparRegistrosDemonstracaoMigrados();
         iniciarSincronizacaoFirebase();
         monitorarConectividade();
     } catch (e) {
@@ -2950,10 +2860,9 @@ function ouvirColecao(nome, aplicar) {
     const unsubscribe = collectionRef(nome).onSnapshot(
         { includeMetadataChanges: true },
         snapshot => {
-            const dados = snapshot.docs
-                .map(doc => ({ id: doc.id, ...doc.data() }))
-                .filter(item => !item.deletedAt);
-            aplicar(dados);
+            const todos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const dados = todos.filter(item => !item.deletedAt);
+            aplicar(dados, todos);
 
             if (snapshot.metadata.fromCache && !navigator.onLine) {
                 definirStatusNuvem("offline", "Exibindo cache local persistente do Firestore.");
@@ -2983,7 +2892,7 @@ function iniciarSincronizacaoFirebase() {
     });
     listenersAtivos = [];
 
-    ouvirColecao("rebanho", dados => { rebanhoGlobal = dados; });
+    ouvirColecao("rebanho", (dados, todos) => { rebanhoGlobal = dados; rebanhoHistoricoGlobal = todos; });
     ouvirColecao("financeiro", dados => { financeiroGlobal = dados; });
     ouvirColecao("vendas", dados => { vendasGlobal = dados; });
     ouvirColecao("pesagens", dados => { pesagensGlobal = dados; });
@@ -3491,7 +3400,7 @@ function closeAnimal() {
 ------------------------- */
 
 function atualizarTabelaPesagens() {
-    const tbody = document.querySelector("#pesagens tbody");
+    const tbody = document.getElementById("tabelaPesagensCorpo");
     if (!tbody) return;
 
     const dados = [...pesagensGlobal]
@@ -3765,6 +3674,62 @@ function renderizarEstoque() {
 
     panel.insertAdjacentHTML("beforeend", itensHtml);
     renderizarAlertasEstoque();
+}
+
+
+function renderizarEstoqueDashboard() {
+    const container = document.getElementById("dashboardEstoqueLista");
+    const atualizacao = document.getElementById("dashboardEstoqueAtualizacao");
+    if (!container) return;
+
+    if (!estoqueGlobal.length) {
+        container.innerHTML = '<div class="empty-state">Nenhum item de estoque cadastrado no Firebase.</div>';
+        if (atualizacao) atualizacao.textContent = "Sem registros";
+        return;
+    }
+
+    const itens = [...estoqueGlobal].sort((a,b) => {
+        const da = diasEstoque(a);
+        const dbb = diasEstoque(b);
+        return (da ?? Number.MAX_SAFE_INTEGER) - (dbb ?? Number.MAX_SAFE_INTEGER);
+    });
+
+    const datas = itens
+        .map(i => dataFirestoreParaDate(i.updatedAt || i.createdAt))
+        .filter(Boolean)
+        .sort((a,b) => b-a);
+
+    if (atualizacao) {
+        atualizacao.textContent = datas[0] ? formatarAtualizacaoFirebase(datas[0]) : "Dados do Firebase";
+    }
+
+    const limiteSeguro = Math.max(1, numero(configGlobal.estoqueCritico) * 3);
+
+    container.innerHTML = itens.map(item => {
+        const dias = diasEstoque(item);
+        const classe = classeEstoque(item);
+        const pct = dias === null ? 0 : Math.max(3, Math.min(100, (dias / limiteSeguro) * 100));
+        const consumo = numero(item.consumoDia);
+        const textoDias = dias === null
+            ? "Consumo médio não informado"
+            : `Aproximadamente ${dias} dia${dias === 1 ? "" : "s"} de estoque`;
+        const icone = classe === "danger" ? "🔴" : classe === "warning" ? "🟠" : dias === null ? "⚪" : "🟢";
+
+        return `
+            <div class="stock-item">
+                <div class="stock-info">
+                    <strong>${escapeHtml(item.produto || "Produto sem nome")}</strong>
+                    <span>${numero(item.quantidade).toLocaleString("pt-BR",{maximumFractionDigits:2})} ${escapeHtml(item.unidade || "kg")}</span>
+                </div>
+                <div class="stock-bar">
+                    <div class="stock-progress ${classe}" style="width:${pct}%"></div>
+                </div>
+                <div class="stock-footer">
+                    ${icone} ${textoDias}${consumo ? ` • Consumo: ${consumo.toLocaleString("pt-BR",{maximumFractionDigits:2})} ${escapeHtml(item.unidade || "kg")}/dia` : ""}
+                </div>
+            </div>
+        `;
+    }).join("");
 }
 
 function renderizarAlertasEstoque() {
@@ -4456,8 +4421,9 @@ function renderizarAlertasDashboard() {
         </div>
     `).join("");
 
-    const span = list.closest(".panel")?.querySelector(".panel-header span");
-    if (span) span.textContent = `${alertas.filter(a => a.nivel !== "success").length} pendência(s)`;
+    const pendencias = alertas.filter(a => a.nivel !== "success").length;
+    const span = document.getElementById("dashboardAlertCount") || list.closest(".panel")?.querySelector(".panel-header span");
+    if (span) span.textContent = `${pendencias} pendência${pendencias === 1 ? "" : "s"}`;
 }
 
 function showAlerts() {
@@ -4482,7 +4448,16 @@ function showAlerts() {
 
 function atualizarDashboardDinamico() {
     const total = rebanhoGlobal.length;
-    const media = total ? rebanhoGlobal.reduce((s,a) => s + numero(a.peso), 0) / total : 0;
+    const media = total ? rebanhoGlobal.reduce((s,a) => s + numero(a.peso), 0) / total : null;
+
+    const gmdValores = rebanhoGlobal
+        .map(a => numero(a.gmd))
+        .filter(v => Number.isFinite(v) && v !== 0);
+    const gmdMedio = gmdValores.length ? gmdValores.reduce((s,v)=>s+v,0) / gmdValores.length : null;
+
+    const lotes = new Set(
+        rebanhoGlobal.map(a => String(a.lote || "").trim()).filter(Boolean)
+    ).size;
 
     const financeiroPeriodo = financeiroGlobal.filter(i => registroNoMes(i.data));
     const receitas = financeiroPeriodo
@@ -4493,11 +4468,16 @@ function atualizarDashboardDinamico() {
         .reduce((s,i) => s + numero(i.valor), 0);
 
     const lucro = receitas - despesas;
-    const margem = receitas ? lucro/receitas*100 : 0;
+    const margem = receitas ? lucro / receitas * 100 : null;
 
     const estoqueKg = estoqueGlobal
         .filter(i => String(i.unidade || "kg").toLowerCase() === "kg")
         .reduce((s,i) => s + numero(i.quantidade), 0);
+
+    const itensAtencao = estoqueGlobal.filter(i => {
+        const classe = classeEstoque(i);
+        return classe === "warning" || classe === "danger";
+    }).length;
 
     const setText = (id, value) => {
         const el = document.getElementById(id);
@@ -4506,65 +4486,127 @@ function atualizarDashboardDinamico() {
 
     setText("kpiTotalRebanho", total.toLocaleString("pt-BR"));
     setText("kpiRebanhoTotal", total.toLocaleString("pt-BR"));
+    setText("kpiRebanhoLotes", lotes.toLocaleString("pt-BR"));
 
-    const kpiPesoMedio = document.getElementById("kpiRebanhoPesoMedio");
-    if (kpiPesoMedio) {
-        kpiPesoMedio.innerHTML = `
-            ${Math.round(media).toLocaleString("pt-BR")} kg
-            <span class="weight-conv">@15: ${arroba15(media).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})} • @30: ${arroba30(media).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
-        `;
-    }
+    const gmdTexto = gmdMedio === null
+        ? "Sem dados"
+        : `${gmdMedio.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})} kg/dia`;
+
+    setText("kpiGmdDashboard", gmdTexto);
+    setText("kpiRebanhoGmdMedio", gmdTexto);
+
+    const pesoHtml = media === null
+        ? "Sem dados"
+        : `${Math.round(media).toLocaleString("pt-BR")} kg
+           <span class="weight-conv">@15: ${arroba15(media).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})} • @30: ${arroba30(media).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}</span>`;
+
+    const pesoRebanho = document.getElementById("kpiRebanhoPesoMedio");
+    if (pesoRebanho) pesoRebanho.innerHTML = pesoHtml;
+
+    const pesoDashboard = document.getElementById("kpiPesoMedioDashboard");
+    if (pesoDashboard) pesoDashboard.innerHTML = pesoHtml;
 
     setText("finReceitas", moeda(receitas));
     setText("finDespesas", moeda(despesas));
     setText("finLucro", moeda(lucro));
+    setText("finMargem", margem === null ? "Sem receita no período" : `${margem.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})}%`);
 
-    const dashboardKpis = document.querySelectorAll("#dashboard .kpi-card .kpi-value");
-    if (dashboardKpis[1]) {
-        dashboardKpis[1].innerHTML = `
-            ${Math.round(media).toLocaleString("pt-BR")} kg
-            <span class="weight-conv">@15: ${arroba15(media).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})} • @30: ${arroba30(media).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
-        `;
+    setText("kpiReceitaDashboard", moeda(receitas));
+    setText("kpiLucroDashboard", moeda(lucro));
+    setText("kpiEstoqueDashboard", `${(estoqueKg/1000).toLocaleString("pt-BR",{maximumFractionDigits:2})} t`);
+
+    setText("kpiRebanhoChange", "Dados ativos sincronizados com o Firebase");
+    setText(
+        "kpiGmdChange",
+        gmdMedio === null
+            ? "Nenhum GMD disponível"
+            : `${gmdValores.length} animal${gmdValores.length === 1 ? "" : "is"} com GMD`
+    );
+
+    const periodoTexto = mesGlobalSelecionado === "all"
+        ? "Todo o histórico"
+        : nomeMes(mesGlobalSelecionado);
+
+    setText("kpiReceitaChange", periodoTexto);
+    setText(
+        "kpiLucroChange",
+        margem === null
+            ? "Sem margem calculável no período"
+            : `Margem: ${margem.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})}%`
+    );
+    setText(
+        "kpiEstoqueChange",
+        `${itensAtencao} item${itensAtencao === 1 ? "" : "s"} em atenção`
+    );
+
+    const mesAtual = mesAtualChave();
+    const pesoAtualMes = pesoMedioPesagensMes(mesAtual);
+    const pesoMesAnterior = pesoMedioPesagensMes(mesAnterior(mesAtual));
+    const pesoChange = document.getElementById("kpiPesoChange");
+
+    if (pesoChange) {
+        if (pesoAtualMes === null) {
+            pesoChange.textContent = "Sem pesagens no mês atual";
+        } else if (pesoMesAnterior === null) {
+            pesoChange.textContent = "Sem pesagens no mês anterior para comparar";
+        } else {
+            pesoChange.textContent = textoVariacao(pesoAtualMes, pesoMesAnterior);
+        }
     }
-    if (dashboardKpis[3]) dashboardKpis[3].textContent = moeda(receitas);
-    if (dashboardKpis[4]) dashboardKpis[4].textContent = moeda(lucro);
-    if (dashboardKpis[5]) dashboardKpis[5].textContent = `${(estoqueKg/1000).toLocaleString("pt-BR",{maximumFractionDigits:1})} t`;
 
-    const margemEl = document.querySelector("#financeiro .finance-card:nth-child(4) strong");
-    if (margemEl) margemEl.textContent = `${margem.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})}%`;
+    if (mesGlobalSelecionado !== "all") {
+        const receitaAtual = receitaDoMes(mesGlobalSelecionado);
+        const receitaAnterior = receitaDoMes(mesAnterior(mesGlobalSelecionado));
+        const receitaChange = document.getElementById("kpiReceitaChange");
+        if (receitaChange) receitaChange.textContent = textoVariacao(receitaAtual, receitaAnterior);
+    }
 
-    const compSpan = document.querySelector("#dashboard .grid-main .panel:nth-child(2) .panel-header span");
-    if (compSpan) compSpan.textContent = `${total} animais`;
+    const composicaoResumo = document.getElementById("composicaoResumo");
+    if (composicaoResumo) {
+        composicaoResumo.textContent = `${total} animal${total === 1 ? "" : "is"}`;
+    }
 
+    renderizarEstoqueDashboard();
     atualizarGraficosDinamicos();
 }
 
 function atualizarGraficosDinamicos() {
+    const meses = ultimosMeses(12);
+    const labels = meses.map(rotuloMesCurto);
+
+    if (rebanhoChartInstancia) {
+        rebanhoChartInstancia.data.labels = labels;
+        rebanhoChartInstancia.data.datasets[0].data = meses.map(rebanhoNoFimDoMes);
+        rebanhoChartInstancia.update();
+    }
+
+    if (financeChartInstancia) {
+        financeChartInstancia.data.labels = labels;
+        financeChartInstancia.data.datasets[0].data = meses.map(receitaDoMes);
+        financeChartInstancia.data.datasets[1].data = meses.map(despesaDoMes);
+        financeChartInstancia.update();
+    }
+
+    if (pesoChartInstancia) {
+        pesoChartInstancia.data.labels = labels;
+        pesoChartInstancia.data.datasets[0].data = meses.map(pesoMedioPesagensMes);
+        pesoChartInstancia.update();
+    }
+
     if (composicaoChartInstancia) {
-        const cats = ["Vacas","Novilhas","Garrotes","Bezerros","Touros"];
-        const counts = [
+        const categorias = ["Vacas","Novilhas","Garrotes","Bezerros","Touros","Outros"];
+        const contagens = [
             rebanhoGlobal.filter(a => /^vaca/i.test(a.categoria || "")).length,
             rebanhoGlobal.filter(a => /^novilh/i.test(a.categoria || "")).length,
             rebanhoGlobal.filter(a => /^garrot/i.test(a.categoria || "")).length,
             rebanhoGlobal.filter(a => /^bezerr/i.test(a.categoria || "")).length,
-            rebanhoGlobal.filter(a => /^touro/i.test(a.categoria || "")).length
+            rebanhoGlobal.filter(a => /^touro/i.test(a.categoria || "")).length,
+            rebanhoGlobal.filter(a => !/^(vaca|novilh|garrot|bezerr|touro)/i.test(a.categoria || "")).length
         ];
-        composicaoChartInstancia.data.labels = cats;
-        composicaoChartInstancia.data.datasets[0].data = counts;
+
+        composicaoChartInstancia.data.labels = categorias;
+        composicaoChartInstancia.data.datasets[0].data = contagens;
         composicaoChartInstancia.update();
-    }
-
-    if (pesoChartInstancia) {
-        const media = rebanhoGlobal.length
-            ? Math.round(rebanhoGlobal.reduce((s,a)=>s+numero(a.peso),0)/rebanhoGlobal.length)
-            : 0;
-        pesoChartInstancia.data.datasets[0].data[pesoChartInstancia.data.datasets[0].data.length - 1] = media;
-        pesoChartInstancia.update();
-    }
-
-    if (rebanhoChartInstancia) {
-        rebanhoChartInstancia.data.datasets[0].data[rebanhoChartInstancia.data.datasets[0].data.length - 1] = rebanhoGlobal.length;
-        rebanhoChartInstancia.update();
     }
 }
 
@@ -4797,10 +4839,10 @@ function inicializarGraficos() {
     rebanhoChartInstancia = new Chart(document.getElementById("rebanhoChart"), {
         type:"line",
         data:{
-            labels:["Set","Out","Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago"],
+            labels:[],
             datasets:[{
-                label:"Cabeças",
-                data:[218,221,225,229,232,235,238,240,242,244,246,0],
+                label:"Animais ativos",
+                data:[],
                 borderColor:"#1f6b45",
                 backgroundColor:"rgba(31,107,69,.08)",
                 fill:true,
@@ -4808,52 +4850,68 @@ function inicializarGraficos() {
                 pointRadius:3
             }]
         },
-        options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:false}} }
+        options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins:{legend:{display:false}},
+            scales:{y:{beginAtZero:true,ticks:{precision:0}}}
+        }
     });
 
     financeChartInstancia = new Chart(document.getElementById("financeChart"), {
         type:"bar",
         data:{
-            labels:["Set","Out","Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago"],
+            labels:[],
             datasets:[
-                {label:"Receitas",data:[52,57,61,64,59,66,70,72,76,79,81,86],backgroundColor:"#35a66b",borderRadius:5},
-                {label:"Despesas",data:[42,44,47,50,46,51,54,55,59,60,63,61],backgroundColor:"#e5a83a",borderRadius:5}
+                {label:"Receitas",data:[],backgroundColor:"#35a66b",borderRadius:5},
+                {label:"Despesas",data:[],backgroundColor:"#e5a83a",borderRadius:5}
             ]
         },
         options:{
-            responsive:true,maintainAspectRatio:false,
+            responsive:true,
+            maintainAspectRatio:false,
             plugins:{legend:{position:"bottom"}},
-            scales:{y:{ticks:{callback:value=>"R$ "+value+"k"}}}
+            scales:{y:{beginAtZero:true,ticks:{callback:value=>moedaCompacta(value)}}}
         }
     });
 
     pesoChartInstancia = new Chart(document.getElementById("pesoChart"), {
         type:"line",
         data:{
-            labels:["Set","Out","Nov","Dez","Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago"],
+            labels:[],
             datasets:[{
-                label:"Peso médio",
-                data:[351,358,365,372,378,384,389,394,399,404,408,0],
+                label:"Peso médio das pesagens",
+                data:[],
                 borderColor:"#3c82d6",
                 backgroundColor:"rgba(60,130,214,.08)",
-                fill:true,tension:.35,pointRadius:3
+                fill:true,
+                tension:.35,
+                pointRadius:3,
+                spanGaps:true
             }]
         },
-        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false}}}
+        options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins:{legend:{display:false}},
+            scales:{y:{beginAtZero:false}}
+        }
     });
 
     composicaoChartInstancia = new Chart(document.getElementById("composicaoChart"), {
         type:"doughnut",
         data:{
-            labels:["Vacas","Novilhas","Garrotes","Bezerros","Touros"],
+            labels:[],
             datasets:[{
-                data:[0,0,0,0,0],
-                backgroundColor:["#1f6b45","#35a66b","#77bd91","#b5ddc4","#d8a53b"],
+                data:[],
+                backgroundColor:["#1f6b45","#35a66b","#77bd91","#b5ddc4","#d8a53b","#8a9690"],
                 borderWidth:0
             }]
         },
         options:{
-            responsive:true,maintainAspectRatio:false,cutout:"65%",
+            responsive:true,
+            maintainAspectRatio:false,
+            cutout:"65%",
             plugins:{legend:{position:"bottom",labels:{usePointStyle:true,padding:15}}}
         }
     });
